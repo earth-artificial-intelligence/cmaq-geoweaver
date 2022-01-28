@@ -1,0 +1,9 @@
+{
+  "id" : "9xb8ucoby3p2ipl9uzxu",
+  "name" : "cmaq_ai_test",
+  "description" : "cmaq_ai_test",
+  "owner" : "111111",
+  "confidential" : "FALSE",
+  "edges" : "[{\"source\":{\"title\":\"function_data_shifting\",\"id\":\"1q33ie-5WtxN\",\"x\":414.70684814453125,\"y\":131.4284210205078,\"color\":\"green\"},\"target\":{\"title\":\"data_processing\",\"id\":\"106i1i-gNrcI\",\"x\":633.2938842773438,\"y\":195.75155639648438,\"color\":\"green\"}}]",
+  "nodes" : "[{\"title\":\"function_data_shifting\",\"id\":\"1q33ie-5WtxN\",\"x\":414.70684814453125,\"y\":131.4284210205078,\"color\":\"green\"},{\"title\":\"data_processing\",\"id\":\"106i1i-gNrcI\",\"x\":633.2938842773438,\"y\":195.75155639648438,\"color\":\"green\"}]"
+}
