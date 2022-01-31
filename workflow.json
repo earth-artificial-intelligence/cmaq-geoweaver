@@ -1,0 +1,9 @@
+{
+  "id" : "zvn9gw9x4xdrruxub7g5",
+  "name" : "cmaq_ai_test",
+  "description" : "cmaq_geoweaver",
+  "owner" : "111111",
+  "confidential" : "FALSE",
+  "edges" : "[{\"source\":{\"title\":\"preprocess\",\"id\":\"im9rct-Z45f8\",\"x\":269,\"y\":164},\"target\":{\"title\":\"AutoML\",\"id\":\"jciipj-8bfsQ\",\"x\":455,\"y\":270}},{\"source\":{\"title\":\"preprocess\",\"id\":\"im9rct-Z45f8\",\"x\":269,\"y\":164},\"target\":{\"title\":\"XGBoost\",\"id\":\"106i1i-VG4Jn\",\"x\":487,\"y\":77}}]",
+  "nodes" : "[{\"title\":\"preprocess\",\"id\":\"im9rct-Z45f8\",\"x\":269,\"y\":164},{\"title\":\"XGBoost\",\"id\":\"106i1i-VG4Jn\",\"x\":487,\"y\":77},{\"title\":\"AutoML\",\"id\":\"jciipj-8bfsQ\",\"x\":455,\"y\":270}]"
+}
