@@ -1,18 +1,22 @@
-# Write first python in Geoweaver
+# NASA GEOWEAVER
+# CMAQ-AI Model: Poocessing the data - shifting columns of NO2
+
+# Checking required packages are installed or not
+
 import sys
 import subprocess
-import pkg_resources
+#import pkg_resources
 
 # Required packages to run this process.
-required = {'pandas','pathlib'}
-installed = {pkg.key for pkg in pkg_resources.working_set}
-missing = required - installed
+#required = {'pandas','pathlib'}
+#installed = {pkg.key for pkg in pkg_resources.working_set}
+#missing = required - installed
 
-if missing:
-    print("Packages missing and will be installed: ", missing)
-    python = sys.executable
-    subprocess.check_call(
-        [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)
+#if missing:
+ #   print("Packages missing and will be installed: ", missing)
+ #   python = sys.executable
+ #   subprocess.check_call(
+    #    [python, '-m', 'pip3', 'install', *missing], stdout=subprocess.DEVNULL)
 
 ################################
 #  END OF PACKAGES VALIDATION  #
@@ -23,8 +27,6 @@ if missing:
 import pandas as pd
 import datetime
 import os
-from pathlib import Path
-home = str(Path.home())
 
 # defining function for shifting data
 month_i=[1,2,3,4,5,6,7,8,9,10,11,12]
@@ -56,15 +58,16 @@ def shift(file):
             list_final.append(list3)
     return list_final
 
-
   
 # Importing and merging 2020 and 2021 dataset
-df1 = pd.read_csv(f'{home}/Geoweaver/full_20_lstm.csv')
-df2 = pd.read_csv(f'{home}/Geoweaver/full_21_lstm.csv')
+
+df1 = pd.read_csv('/home/mislam25/cmaq/full_20_lstm.csv')
+df2 = pd.read_csv('/home/mislam25/cmaq/full_21_lstm.csv')
+
 #merging two dataframe vertically
 mrg=df1.append(df2, ignore_index=True)
-df3_rs=pd.read_csv(f'{home}/Geoweaver/merged_rs.csv')
-# merging
+df3_rs=pd.read_csv('/home/mislam25/cmaq/merged_rs.csv')
+
 final=pd.merge(mrg,df3_rs, on=['year', 'month','day','hours','Station.ID'])
 
 #shifting CMAQ NO2
@@ -75,4 +78,7 @@ data_frame = pd.concat(shift_df) # concatening the list
 data_new1 = data_frame.drop(['Unnamed: 0'],axis=1)
 data_new=data_new1.dropna() 
 final_df = data_new[data_new.AirNOW_O3!= -999]
-final_df.to_csv(f'{home}/Geoweaver/merged_2020_2021.csv')
+
+# saving the file into local drive
+final_df.to_csv('/home/mislam25/cmaq/merged_2020_2021.csv')
+

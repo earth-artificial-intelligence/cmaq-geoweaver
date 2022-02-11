@@ -1,0 +1,61 @@
+[{
+  "history_id" : "ssvyxpbbd10",
+  "history_input" : "# NASA GEOWEAVER\n# CMAQ-AI Model: Poocessing the data - shifting columns of NO2\n\n# Checking required packages are installed or not\n\nimport sys\nimport subprocess\n#import pkg_resources\n\n# Required packages to run this process.\n#required = {'pandas','pathlib'}\n#installed = {pkg.key for pkg in pkg_resources.working_set}\n#missing = required - installed\n\n#if missing:\n #   print(\"Packages missing and will be installed: \", missing)\n #   python = sys.executable\n #   subprocess.check_call(\n    #    [python, '-m', 'pip3', 'install', *missing], stdout=subprocess.DEVNULL)\n\n################################\n#  END OF PACKAGES VALIDATION  #\n################################\n\n## importing necessary libraries\n\nimport pandas as pd\nimport datetime\nimport os\n\n# defining function for shifting data\nmonth_i=[1,2,3,4,5,6,7,8,9,10,11,12]\ndef shift(file):\n    station=file['Station.ID'].unique()\n    file['date']=pd.to_datetime(file[[\"year\", \"month\", \"day\",\"hours\"]]) # creating date\n    file['dayofyear'] = pd.to_datetime(file['date']).dt.dayofyear # converting monthly days to yearly dasy\n    dfs = dict(tuple(file.groupby('Station.ID'))) # grouping the data by station\n#    print(dfs)\n    list_final=[]\n    for site in station:\n        list1=dfs[site]  # selecting dataset for each station\n        o3_max=list1.loc[list1.groupby(\"dayofyear\")[\"AirNOW_O3\"].idxmax()] # daily max values\n        o3_month=pd.DataFrame(o3_max.groupby('month',as_index=False)['hours'].mean()) # monthly average hour\n        no2_max=list1.loc[list1.groupby(\"dayofyear\")[\"CMAQ12KM_NO2\"].idxmax()] # daily amx values\n        no2_month=pd.DataFrame(no2_max.groupby('month',as_index=False)['hours'].mean()) # montly average hour\n        merge_hour=pd.concat([o3_month,no2_month],axis = 1) # merging two table\n        merge_hour.columns = ['month1','hours1', 'month2','hours2'] # renaming column name\n        merge_hour['hours_diff']=merge_hour['hours1']-merge_hour['hours2']\n        merge_hour.hours_diff = merge_hour.hours_diff.astype(int) # converting hours_diff to int\n        months = dict(tuple(list1.groupby('month')))   # grouping the data by month\n        diff=merge_hour['hours_diff'] # extracting hours difference field\n        mon=merge_hour['month1'] # extracting month field\n\n        for (m,n) in zip(mon,diff):\n            list2= months[m] # selecting dataset for each month and for each station\n            list3=list2.loc[list2['month'] == m] # subsetting dataset for each month\n            list3['CMAQ12KM_NO2_new'] = list3['CMAQ12KM_NO2'].shift(n) # shifting rows for each month\n            list_final.append(list3)\n    return list_final\n\n  \n# Importing and merging 2020 and 2021 dataset\n\ndf1 = pd.read_csv('/home/mislam25/cmaq/full_20_lstm.csv')\ndf2 = pd.read_csv('/home/mislam25/cmaq/full_21_lstm.csv')\n\n#merging two dataframe vertically\nmrg=df1.append(df2, ignore_index=True)\ndf3_rs=pd.read_csv('/home/mislam25/cmaq/merged_rs.csv')\n\nfinal=pd.merge(mrg,df3_rs, on=['year', 'month','day','hours','Station.ID'])\n\n#shifting CMAQ NO2\nshift_df=shift(final)\ndata_frame = pd.concat(shift_df) # concatening the list\n\n# droping no data from all column and AirNOW_O3\ndata_new1 = data_frame.drop(['Unnamed: 0'],axis=1)\ndata_new=data_new1.dropna() \nfinal_df = data_new[data_new.AirNOW_O3!= -999]\n\n# saving the file into local drive\nfinal_df.to_csv('/home/mislam25/cmaq/merged_2020_2021.csv')\n",
+  "history_output" : "pre_processing.py\ntraining_xgboost.py\ntraining_automl.py\nprediction_xgboost.py\nprediction_automl.py\ntraining_random_forest.py\nprediction_random_forest.py\ntraining_autokeras.py\nprediction_autokeras.py\ntest.py\n",
+  "history_begin_time" : 1644612274637,
+  "history_end_time" : 1644612365625,
+  "history_notes" : null,
+  "history_process" : "im9rct",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+},{
+  "history_id" : "vzksv2mi92z",
+  "history_input" : "# NASA GEOWEAVER\n# CMAQ-AI Model: Training Voting-XGBoost model\n\n# Importing necessary libraries\nimport pandas as pd\nimport sklearn\nfrom numpy import mean\nfrom numpy import std\nfrom sklearn.ensemble import VotingRegressor\nfrom matplotlib import pyplot\nfrom xgboost.sklearn import XGBRegressor\n\n# importing data\nfinal=pd.read_csv('/home/mislam25/cmaq/merged_2020_2021.csv')\n\n# defining training variables\ntrain=final.loc[final['year']==2020]\n\n# Processing training  data\nX = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear','datetime'],axis=1)\ny = train['AirNOW_O3']\n\n# Defining voting-ensemble based xgboost model\nmodels = list()\nmodels.append(('cart1', XGBRegressor(max_depth=1)))\nmodels.append(('cart2', XGBRegressor(max_depth=2)))\nmodels.append(('cart3', XGBRegressor(max_depth=3)))\nmodels.append(('cart4', XGBRegressor(max_depth=4)))\nmodels.append(('cart5', XGBRegressor(max_depth=5)))\nmodels.append(('cart6', XGBRegressor(max_depth=6)))\n# define the voting ensemble\nensemble = VotingRegressor(estimators=models)\n\n\n# fit the model on all available data\nensemble.fit(X, y)\n\n# save the model to disk\nfilename = '/home/mislam25/cmaq/xgboost.sav'\npickle.dump(ensemble, open(filename, 'wb'))\n",
+  "history_output" : "mkdir: cannot create directory ‘IXI3Zv5jyWYppsLcM1B3J5GedH’: File exists\npre_processing.py\ntraining_xgboost.py\ntraining_automl.py\nprediction_xgboost.py\nprediction_automl.py\ntraining_random_forest.py\nprediction_random_forest.py\ntraining_autokeras.py\nprediction_autokeras.py\ntest.py\nTraceback (most recent call last):\n  File \"/home/mislam25/IXI3Zv5jyWYppsLcM1B3J5GedH/training_xgboost.py\", line 40, in <module>\n    pickle.dump(ensemble, open(filename, 'wb'))\nNameError: name 'pickle' is not defined\n",
+  "history_begin_time" : 1644612366179,
+  "history_end_time" : 1644612507913,
+  "history_notes" : null,
+  "history_process" : "106i1i",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+},{
+  "history_id" : "zhgd0c7wnxn",
+  "history_input" : null,
+  "history_output" : "C:\\Users\\didar\\gw-workspace\\temp\\IXI3Zv5jyWYppsLcM1B3J5GedH.tar is not a regular file or directory",
+  "history_begin_time" : 1644612508577,
+  "history_end_time" : 1644612530866,
+  "history_notes" : null,
+  "history_process" : "mx09zi",
+  "host_id" : "w6jk5o",
+  "indicator" : "Failed"
+},{
+  "history_id" : "v1tehf0znop",
+  "history_input" : "# NASA Geoweaver\n# CMAQ-AI Model: Voting-Random Forest\n\n# Importing necessary libraries\n\nimport pandas as pd\n## Voting XGBoost\nimport sklearn\nfrom sklearn.model_selection import cross_val_score\nfrom sklearn.model_selection import RepeatedKFold\nfrom sklearn.ensemble import VotingRegressor\nfrom sklearn.ensemble import RandomForestRegressor\n\n# import data\nfinal=pd.read_csv('/home/mislam25/cmaq/merged_2020_2021.csv')\n\n# defining and processing training variables\ntrain=final.loc[final['year']==2020]\n\nX = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear','datetime'],axis=1)\ny = train['AirNOW_O3']\n\n# define the voting-random forest model\nmodels = list()\nmodels.append(('cart1', RandomForestRegressor(max_depth=1)))\nmodels.append(('cart2', RandomForestRegressor(max_depth=2)))\nmodels.append(('cart3', RandomForestRegressor(max_depth=3)))\nmodels.append(('cart4', RandomForestRegressor(max_depth=4)))\nmodels.append(('cart5', RandomForestRegressor(max_depth=5)))\nmodels.append(('cart6', RandomForestRegressor(max_depth=6)))\n# define the voting ensemble\nensemble = VotingRegressor(estimators=models)\n\n# fit the model on all available data\nensemble.fit(X, y)\n\n# save the model to disk\nfilename = '/home/mislam25/cmaq/rf.sav'\npickle.dump(ensemble, open(filename, 'wb'))\n",
+  "history_output" : "pre_processing.py\ntraining_xgboost.py\ntraining_automl.py\nprediction_xgboost.py\nprediction_automl.py\ntraining_random_forest.py\nprediction_random_forest.py\ntraining_autokeras.py\nprediction_autokeras.py\ntest.py\n",
+  "history_begin_time" : 1644612366180,
+  "history_end_time" : 1644612507919,
+  "history_notes" : null,
+  "history_process" : "q2io1w",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+},{
+  "history_id" : "bg64781tfrw",
+  "history_input" : "# NASA Geoweaver\n# CMAQ-AI Model: Autokeras for Automated-Deep Learning\n\n#\n#import subprocess\n#subprocess.run([\"salloc\", \"-p\", \"gpuq\", \"-q\", \"gpu\", \"--ntasks-per-node=1\", \"--gres=gpu:A100.40gb:1\", \"-t\", \"0-00:12:00\" ])\n\n# Importing necessary libraries\nimport pandas as pd\nfrom numpy import asarray\nfrom sklearn.model_selection import train_test_split\nfrom autokeras import StructuredDataRegressor\nfrom keras.models import Sequential\nfrom keras.layers import Dense\nfrom keras.models import model_from_json\nimport numpy\nimport os\nimport tensorflow as tf\n\n# load dataset\nfinal=pd.read_csv('/home/mislam25/cmaq/merged_2020_2021.csv')\n\n# defining training variables\ntrain=final.loc[final['year']==2020]\n\n# processing training  data\nX = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear','datetime'],axis=1)\ny = train['AirNOW_O3']\nX.head()\nX=X.values.astype('float32')\ny=y.values.astype('float32')\n\n\n\n# load dataset\n# separate into train and test sets\n#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=1)\n#print(X_train.shape, X_test.shape, y_train.shape, y_test.shape)\n# define the search\nsearch = StructuredDataRegressor(max_trials=15, loss='mean_absolute_error')\n# perform the search\n#search.fit(x=X_train, y=y_train, verbose=0)\nsearch.fit(x=X, y=y, verbose=0)\n# evaluate the model\n#mae, _ = search.evaluate(X_test, y_test, verbose=0)\n#print('MAE: %.3f' % mae)\n# use the model to make a prediction\n#X_new = asarray([[108]]).astype('float32')\n#yhat = search.predict(X_new)\n#print('Predicted: %.3f' % yhat[0])\n# get the best performing model\nmodel = search.export_model()\n# summarize the loaded model\n#model.summary()\n# save the best performing model to file\nmodel.save('/home/mislam25/cmaq/autokeras',save_format=\"tf\")",
+  "history_output" : "Running",
+  "history_begin_time" : 1644612530687,
+  "history_end_time" : 1644612508967,
+  "history_notes" : null,
+  "history_process" : "5o4fxj",
+  "host_id" : "w6jk5o",
+  "indicator" : "Running"
+},{
+  "history_id" : "rqn1wdl15hl",
+  "history_input" : null,
+  "history_output" : "C:\\Users\\didar\\gw-workspace\\temp\\IXI3Zv5jyWYppsLcM1B3J5GedH.tar is not a regular file or directory",
+  "history_begin_time" : 1644612508091,
+  "history_end_time" : 1644612530862,
+  "history_notes" : null,
+  "history_process" : "oyz4io",
+  "host_id" : "w6jk5o",
+  "indicator" : "Failed"
+}]
