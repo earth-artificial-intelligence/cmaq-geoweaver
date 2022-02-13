@@ -10,6 +10,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import RepeatedKFold
 from sklearn.ensemble import VotingRegressor
 from sklearn.ensemble import RandomForestRegressor
+import pickle
 
 # import data
 final=pd.read_csv('/home/mislam25/cmaq/merged_2020_2021.csv')

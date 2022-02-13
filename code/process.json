@@ -10,7 +10,7 @@
   "id" : "106i1i",
   "name" : "training_xgboost",
   "description" : null,
-  "code" : "# NASA GEOWEAVER\n# CMAQ-AI Model: Training Voting-XGBoost model\n\n# Importing necessary libraries\nimport pandas as pd\nimport sklearn\nfrom numpy import mean\nfrom numpy import std\nfrom sklearn.ensemble import VotingRegressor\nfrom matplotlib import pyplot\nfrom xgboost.sklearn import XGBRegressor\n\n# importing data\nfinal=pd.read_csv('/home/mislam25/cmaq/merged_2020_2021.csv')\n\n# defining training variables\ntrain=final.loc[final['year']==2020]\n\n# Processing training  data\nX = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear','datetime'],axis=1)\ny = train['AirNOW_O3']\n\n# Defining voting-ensemble based xgboost model\nmodels = list()\nmodels.append(('cart1', XGBRegressor(max_depth=1)))\nmodels.append(('cart2', XGBRegressor(max_depth=2)))\nmodels.append(('cart3', XGBRegressor(max_depth=3)))\nmodels.append(('cart4', XGBRegressor(max_depth=4)))\nmodels.append(('cart5', XGBRegressor(max_depth=5)))\nmodels.append(('cart6', XGBRegressor(max_depth=6)))\n# define the voting ensemble\nensemble = VotingRegressor(estimators=models)\n\n\n# fit the model on all available data\nensemble.fit(X, y)\n\n# save the model to disk\nfilename = '/home/mislam25/cmaq/xgboost.sav'\npickle.dump(ensemble, open(filename, 'wb'))\n",
+  "code" : "# NASA GEOWEAVER\n# CMAQ-AI Model: Training Voting-XGBoost model\n\n# Importing necessary libraries\nimport pandas as pd\nimport sklearn\nfrom numpy import mean\nfrom numpy import std\nfrom sklearn.ensemble import VotingRegressor\nfrom matplotlib import pyplot\nfrom xgboost.sklearn import XGBRegressor\nimport pickle\n\n# importing data\nfinal=pd.read_csv('/home/mislam25/cmaq/merged_2020_2021.csv')\n\n# defining training variables\ntrain=final.loc[final['year']==2020]\n\n# Processing training  data\nX = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear','datetime'],axis=1)\ny = train['AirNOW_O3']\n\n# Defining voting-ensemble based xgboost model\nmodels = list()\nmodels.append(('cart1', XGBRegressor(max_depth=1)))\nmodels.append(('cart2', XGBRegressor(max_depth=2)))\nmodels.append(('cart3', XGBRegressor(max_depth=3)))\nmodels.append(('cart4', XGBRegressor(max_depth=4)))\nmodels.append(('cart5', XGBRegressor(max_depth=5)))\nmodels.append(('cart6', XGBRegressor(max_depth=6)))\n# define the voting ensemble\nensemble = VotingRegressor(estimators=models)\n\n\n# fit the model on all available data\nensemble.fit(X, y)\n\n# save the model to disk\nfilename = '/home/mislam25/cmaq/xgboost.sav'\npickle.dump(ensemble, open(filename, 'wb'))\n",
   "lang" : "python",
   "owner" : "111111",
   "confidential" : "FALSE"
@@ -19,14 +19,6 @@
   "name" : "prediction_xgboost",
   "description" : null,
   "code" : "# NASA Geoweaver\n# CMAQ-AI model: Prediction by Voting-XGBoost\n\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\n# importing data\nfinal=pd.read_csv('/home/mislam25/cmaq/merged_2020_2021.csv')\n\n# defining  testing variables\ntest=final.loc[final['year']==2021]\n\n# processing test data\ntest_X = test.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear','datetime'],axis=1)\ntest_y = test['AirNOW_O3']\ntest_X.head()\n\n# load the model from disk\nfilename = '/home/mislam25/cmaq/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(test_X)\n\n# adding prediction values to test dataset\ntest['prediction'] = pred.tolist()\n\n# saving the dataset into local drive\ntest.to_csv('/home/mislam25/cmaq/prediction_xgboost.csv')",
-  "lang" : "python",
-  "owner" : "111111",
-  "confidential" : "FALSE"
-},{
-  "id" : "q2io1w",
-  "name" : "training_random_forest",
-  "description" : null,
-  "code" : "# NASA Geoweaver\n# CMAQ-AI Model: Voting-Random Forest\n\n# Importing necessary libraries\n\nimport pandas as pd\n## Voting XGBoost\nimport sklearn\nfrom sklearn.model_selection import cross_val_score\nfrom sklearn.model_selection import RepeatedKFold\nfrom sklearn.ensemble import VotingRegressor\nfrom sklearn.ensemble import RandomForestRegressor\n\n# import data\nfinal=pd.read_csv('/home/mislam25/cmaq/merged_2020_2021.csv')\n\n# defining and processing training variables\ntrain=final.loc[final['year']==2020]\n\nX = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear','datetime'],axis=1)\ny = train['AirNOW_O3']\n\n# define the voting-random forest model\nmodels = list()\nmodels.append(('cart1', RandomForestRegressor(max_depth=1)))\nmodels.append(('cart2', RandomForestRegressor(max_depth=2)))\nmodels.append(('cart3', RandomForestRegressor(max_depth=3)))\nmodels.append(('cart4', RandomForestRegressor(max_depth=4)))\nmodels.append(('cart5', RandomForestRegressor(max_depth=5)))\nmodels.append(('cart6', RandomForestRegressor(max_depth=6)))\n# define the voting ensemble\nensemble = VotingRegressor(estimators=models)\n\n# fit the model on all available data\nensemble.fit(X, y)\n\n# save the model to disk\nfilename = '/home/mislam25/cmaq/rf.sav'\npickle.dump(ensemble, open(filename, 'wb'))\n",
   "lang" : "python",
   "owner" : "111111",
   "confidential" : "FALSE"
@@ -51,6 +43,14 @@
   "name" : "prediction_random_forest",
   "description" : null,
   "code" : "# NASA Geoweaver\n# CMAQ-AI Model: Prediction by random forest\n\n# import necessary libraries\nimport pandas as pd\nimport pickle\n# import data\nfinal=pd.read_csv('/home/mislam25/cmaq/merged_2020_2021.csv')\n\n# defining  and processing test variables\ntest=final.loc[final['year']==2021]\n\ntest_X = test.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear','datetime'],axis=1)\ntest_y = test['AirNOW_O3']\n\n# load the model from disk\nfilename = '/home/mislam25/cmaq/rf.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(test_X)\n\n# adding prediction values to test dataset\ntest['prediction'] = pred.tolist()\ntest.to_csv('/home/mislam25/cmaq/prediction_rf.csv')",
+  "lang" : "python",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "q2io1w",
+  "name" : "training_random_forest",
+  "description" : null,
+  "code" : "# NASA Geoweaver\n# CMAQ-AI Model: Voting-Random Forest\n\n# Importing necessary libraries\n\nimport pandas as pd\n## Voting XGBoost\nimport sklearn\nfrom sklearn.model_selection import cross_val_score\nfrom sklearn.model_selection import RepeatedKFold\nfrom sklearn.ensemble import VotingRegressor\nfrom sklearn.ensemble import RandomForestRegressor\nimport pickle\n\n# import data\nfinal=pd.read_csv('/home/mislam25/cmaq/merged_2020_2021.csv')\n\n# defining and processing training variables\ntrain=final.loc[final['year']==2020]\n\nX = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear','datetime'],axis=1)\ny = train['AirNOW_O3']\n\n# define the voting-random forest model\nmodels = list()\nmodels.append(('cart1', RandomForestRegressor(max_depth=1)))\nmodels.append(('cart2', RandomForestRegressor(max_depth=2)))\nmodels.append(('cart3', RandomForestRegressor(max_depth=3)))\nmodels.append(('cart4', RandomForestRegressor(max_depth=4)))\nmodels.append(('cart5', RandomForestRegressor(max_depth=5)))\nmodels.append(('cart6', RandomForestRegressor(max_depth=6)))\n# define the voting ensemble\nensemble = VotingRegressor(estimators=models)\n\n# fit the model on all available data\nensemble.fit(X, y)\n\n# save the model to disk\nfilename = '/home/mislam25/cmaq/rf.sav'\npickle.dump(ensemble, open(filename, 'wb'))\n",
   "lang" : "python",
   "owner" : "111111",
   "confidential" : "FALSE"
