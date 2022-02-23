@@ -5,6 +5,7 @@
 
 import sys
 import subprocess
+print('running_preprocess')
 #import pkg_resources
 
 # Required packages to run this process.
@@ -16,7 +17,7 @@ import subprocess
  #   print("Packages missing and will be installed: ", missing)
  #   python = sys.executable
  #   subprocess.check_call(
-    #    [python, '-m', 'pip3', 'install', *missing], stdout=subprocess.DEVNULL)
+    #    [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)
 
 ################################
 #  END OF PACKAGES VALIDATION  #
@@ -26,7 +27,6 @@ import subprocess
 
 import pandas as pd
 import datetime
-import os
 
 # defining function for shifting data
 month_i=[1,2,3,4,5,6,7,8,9,10,11,12]
@@ -60,25 +60,32 @@ def shift(file):
 
   
 # Importing and merging 2020 and 2021 dataset
-
-df1 = pd.read_csv('/home/mislam25/cmaq/full_20_lstm.csv')
-df2 = pd.read_csv('/home/mislam25/cmaq/full_21_lstm.csv')
-
+df1 = pd.read_csv('/home/mislam25/cmaq/2020.csv')
+df2 = pd.read_csv('/home/mislam25/cmaq/2021.csv')
+#df1 = pd.read_csv('D:/Research/CMAQ/local_test/2020.csv')
+#df2 = pd.read_csv('D:/Research/CMAQ/local_test/2021.csv')
 #merging two dataframe vertically
 mrg=df1.append(df2, ignore_index=True)
-df3_rs=pd.read_csv('/home/mislam25/cmaq/merged_rs.csv')
+# Changing columns name with index number
+mapping = {mrg.columns[0]: 'Station.ID', mrg.columns[4]: 'AirNOW_O3',mrg.columns[5]: 'AirNOW_NO2',mrg.columns[6]: 'AirNOW_CO',mrg.columns[8]: 'CMAQ12KM_NO2'}
+mrg_rename = mrg.rename(columns=mapping)
 
-final=pd.merge(mrg,df3_rs, on=['year', 'month','day','hours','Station.ID'])
+# dropping unnecessary columns
+mrg_rename.drop(su.columns[[5,6]], axis = 1, inplace = True)
+
+# ignoring tropomi remote sensing data
+#df3_rs=pd.read_csv('/home/mislam25/cmaq/merged_rs.csv')
+
+#final=pd.merge(mrg,df3_rs, on=['year', 'month','day','hours','Station.ID'])
 
 #shifting CMAQ NO2
-shift_df=shift(final)
-data_frame = pd.concat(shift_df) # concatening the list
-
-# droping no data from all column and AirNOW_O3
-data_new1 = data_frame.drop(['Unnamed: 0'],axis=1)
-data_new=data_new1.dropna() 
+shift_df=shift(mrg_rename)
+agg_data = pd.concat(shift_df) # concatening the list
+# droping no data from all column and AirNOW_O3)
+data_new=agg_data.dropna() 
 final_df = data_new[data_new.AirNOW_O3!= -999]
 
 # saving the file into local drive
-final_df.to_csv('/home/mislam25/cmaq/merged_2020_2021.csv')
+#final_df.to_csv('D:/Research/CMAQ/local_test/merged_2020_2021.csv',index=False)
+final_df.to_csv('/home/mislam25/cmaq/merged_2020_2021.csv',index=False)
 

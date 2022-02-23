@@ -2,23 +2,23 @@
 # CMAQ-AI Model: Voting-Random Forest
 
 # Importing necessary libraries
-
+print('running training rf')
 import pandas as pd
 ## Voting XGBoost
 import sklearn
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import RepeatedKFold
 from sklearn.ensemble import VotingRegressor
 from sklearn.ensemble import RandomForestRegressor
 import pickle
 
-# import data
-final=pd.read_csv('/home/mislam25/cmaq/merged_2020_2021.csv')
 
-# defining and processing training variables
+# importing data
+final=pd.read_csv('/home/mislam25/cmaq/merged_2020_2021.csv')
+#final=pd.read_csv('D:/Research/CMAQ/local_test/merged_2020_2021.csv')
+# defining training variables
 train=final.loc[final['year']==2020]
 
-X = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear','datetime'],axis=1)
+# Processing training  data
+X = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear'],axis=1)
 y = train['AirNOW_O3']
 
 # define the voting-random forest model
@@ -37,5 +37,7 @@ ensemble.fit(X, y)
 
 # save the model to disk
 filename = '/home/mislam25/cmaq/rf.sav'
+#filename = 'D:/Research/CMAQ/local_test/rf.sav'
 pickle.dump(ensemble, open(filename, 'wb'))
+
 

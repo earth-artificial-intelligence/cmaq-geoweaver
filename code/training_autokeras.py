@@ -1,9 +1,7 @@
 # NASA Geoweaver
 # CMAQ-AI Model: Autokeras for Automated-Deep Learning
 
-#
-#import subprocess
-#subprocess.run(["salloc", "-p", "gpuq", "-q", "gpu", "--ntasks-per-node=1", "--gres=gpu:A100.40gb:1", "-t", "0-00:12:00" ])
+print('running training autokeras')
 
 # Importing necessary libraries
 import pandas as pd
@@ -14,17 +12,17 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.models import model_from_json
 import numpy
-import os
 import tensorflow as tf
 
 # load dataset
 final=pd.read_csv('/home/mislam25/cmaq/merged_2020_2021.csv')
+#final=pd.read_csv('D:/Research/CMAQ/merged_2020_2021.csv')
 
 # defining training variables
 train=final.loc[final['year']==2020]
 
 # processing training  data
-X = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear','datetime'],axis=1)
+X = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear'],axis=1)
 y = train['AirNOW_O3']
 X.head()
 X=X.values.astype('float32')
@@ -54,3 +52,4 @@ model = search.export_model()
 #model.summary()
 # save the best performing model to file
 model.save('/home/mislam25/cmaq/autokeras',save_format="tf")
+#model.save('D:/Research/CMAQ/local_test/autokeras',save_format="tf")
