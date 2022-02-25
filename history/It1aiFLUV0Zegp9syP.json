@@ -1,0 +1,111 @@
+[{
+  "history_id" : "akr2sat680v",
+  "history_input" : "#!/bin/bash\n#write your bash script\nsalloc -p normal  -n 1  --cpus-per-task=12 --mem=15GB -t 0-00:05:00 python text_to_csv_2021.py",
+  "history_output" : "/bin/bash: ./geoweaver-9AB1aXpfL7O1REmnuFs35A8Cve.sh: No such file or directory\nrm: cannot remove './geoweaver-9AB1aXpfL7O1REmnuFs35A8Cve.sh': No such file or directory\n",
+  "history_begin_time" : 1645718056899,
+  "history_end_time" : 1645718065182,
+  "history_notes" : null,
+  "history_process" : "ol8aa4",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+},{
+  "history_id" : "ut4icy4k3o6",
+  "history_input" : "#!/bin/bash\n#write your bash script\nsalloc -p normal  -n 1  --cpus-per-task=12 --mem=15GB -t 0-00:05:00 python text_to_csv_2020.py",
+  "history_output" : "bash: ./geoweaver-9AB1aXpfL7O1REmnuFs35A8Cve.sh: /bin/bash: bad interpreter: Text file busy\n",
+  "history_begin_time" : 1645718056900,
+  "history_end_time" : 1645718065165,
+  "history_notes" : null,
+  "history_process" : "r41da2",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+},{
+  "history_id" : "2bzivh9fgq5",
+  "history_input" : "#!/bin/bash\n#write your bash script\nsalloc -p normal  -n 1  --cpus-per-task=12 --mem=15GB -t 0-00:05:00 python pre_processing.py",
+  "history_output" : "salloc: Pending job allocation 45570\nsalloc: job 45570 queued and waiting for resources\nsalloc: job 45570 has been allocated resources\nsalloc: Granted job allocation 45570\nsalloc: Waiting for resource configuration\nsalloc: Nodes hop067 are ready for job\npython: can't open file '/home/mislam25/pre_processing.py': [Errno 2] No such file or directory\nsalloc: Relinquishing job allocation 45570\nsalloc: Job allocation 45570 has been revoked.\n",
+  "history_begin_time" : 1645718066195,
+  "history_end_time" : 1645718080743,
+  "history_notes" : null,
+  "history_process" : "ftn2kp",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+},{
+  "history_id" : "gwh5g4vn5te",
+  "history_input" : "#!/bin/bash\n#write your bash script\nsalloc -p normal  -n 1  --cpus-per-task=12 --mem=15GB -t 0-00:05:00 python exploratory_data_analysis.py",
+  "history_output" : "salloc: Pending job allocation 45571\nsalloc: job 45571 queued and waiting for resources\nsalloc: job 45571 has been allocated resources\nsalloc: Granted job allocation 45571\nsalloc: Waiting for resource configuration\nsalloc: Nodes hop067 are ready for job\npython: can't open file '/home/mislam25/exploratory_data_analysis.py': [Errno 2] No such file or directory\nsalloc: Relinquishing job allocation 45571\nsalloc: Job allocation 45571 has been revoked.\n",
+  "history_begin_time" : 1645718081286,
+  "history_end_time" : 1645718094151,
+  "history_notes" : null,
+  "history_process" : "wfd3c5",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+},{
+  "history_id" : "4y7ermubziv",
+  "history_input" : "#!/bin/bash\n#write your bash script\nsalloc -p normal  -n 1  --cpus-per-task=12 --mem=15GB -t 0-00:05:00 python training_xgboost.py",
+  "history_output" : "/bin/bash: ./geoweaver-9AB1aXpfL7O1REmnuFs35A8Cve.sh: No such file or directory\nrm: cannot remove './geoweaver-9AB1aXpfL7O1REmnuFs35A8Cve.sh': No such file or directory\n",
+  "history_begin_time" : 1645718094846,
+  "history_end_time" : 1645718103636,
+  "history_notes" : null,
+  "history_process" : "j7uo3v",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+},{
+  "history_id" : "utwm6r25n1c",
+  "history_input" : "#!/bin/bash\n#write your bash script\nsalloc -p normal  -n 1  --cpus-per-task=12 --mem=15GB -t 0-00:05:00 python prediction_xgboost.py",
+  "history_output" : "bash: ./geoweaver-9AB1aXpfL7O1REmnuFs35A8Cve.sh: /bin/bash: bad interpreter: Text file busy\n",
+  "history_begin_time" : 1645718104222,
+  "history_end_time" : 1645718112472,
+  "history_notes" : null,
+  "history_process" : "zt10an",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+},{
+  "history_id" : "t6skkq0sfnw",
+  "history_input" : "#!/bin/bash\n#write your bash script\nsalloc -p normal  -n 1  --cpus-per-task=12 --mem=15GB -t 0-00:05:00 python training_random_forest.py",
+  "history_output" : "bash: ./geoweaver-9AB1aXpfL7O1REmnuFs35A8Cve.sh: /bin/bash: bad interpreter: Text file busy\n",
+  "history_begin_time" : 1645718095085,
+  "history_end_time" : 1645718103627,
+  "history_notes" : null,
+  "history_process" : "48iyth",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+},{
+  "history_id" : "z9lffstw9wy",
+  "history_input" : "#!/bin/bash\n#write your bash script\nsalloc -p normal  -n 1  --cpus-per-task=12 --mem=15GB -t 0-00:05:00 python prediction_random_forest.py",
+  "history_output" : "salloc: Pending job allocation 45572\nsalloc: job 45572 queued and waiting for resources\nsalloc: job 45572 has been allocated resources\nsalloc: Granted job allocation 45572\nsalloc: Waiting for resource configuration\nsalloc: Nodes hop067 are ready for job\npython: can't open file '/home/mislam25/prediction_random_forest.py': [Errno 2] No such file or directory\nsalloc: Relinquishing job allocation 45572\nsalloc: Job allocation 45572 has been revoked.\n",
+  "history_begin_time" : 1645718104658,
+  "history_end_time" : 1645718116898,
+  "history_notes" : null,
+  "history_process" : "bembwt",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+},{
+  "history_id" : "359p2z1izaq",
+  "history_input" : "#!/bin/bash\n#write your bash script\nsalloc -p normal  -n 1  --cpus-per-task=12 --mem=15GB -t 0-00:05:00 python training_autokeras.py",
+  "history_output" : "bash: line 2: ./geoweaver-9AB1aXpfL7O1REmnuFs35A8Cve.sh: No such file or directory\nrm: cannot remove './geoweaver-9AB1aXpfL7O1REmnuFs35A8Cve.sh': No such file or directory\n",
+  "history_begin_time" : 1645718095083,
+  "history_end_time" : 1645718103635,
+  "history_notes" : null,
+  "history_process" : "l0t844",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+},{
+  "history_id" : "vw9f071uvgo",
+  "history_input" : "#!/bin/bash\n#write your bash script\nsalloc -p normal  -n 1  --cpus-per-task=12 --mem=15GB -t 0-00:05:00 python prediction_autokeras.py",
+  "history_output" : "/bin/bash: ./geoweaver-9AB1aXpfL7O1REmnuFs35A8Cve.sh: No such file or directory\nrm: cannot remove './geoweaver-9AB1aXpfL7O1REmnuFs35A8Cve.sh': No such file or directory\n",
+  "history_begin_time" : 1645718104144,
+  "history_end_time" : 1645718112485,
+  "history_notes" : null,
+  "history_process" : "zmy3vb",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+},{
+  "history_id" : "fc7e8n6cycq",
+  "history_input" : "#!/bin/bash\n#write your bash script\nsalloc -p normal  -n 1  --cpus-per-task=12 --mem=15GB -t 0-00:05:00 python model_comparison.py",
+  "history_output" : "salloc: Pending job allocation 45573\nsalloc: job 45573 queued and waiting for resources\nsalloc: job 45573 has been allocated resources\nsalloc: Granted job allocation 45573\nsalloc: Waiting for resource configuration\nsalloc: Nodes hop067 are ready for job\npython: can't open file '/home/mislam25/model_comparison.py': [Errno 2] No such file or directory\nsalloc: Relinquishing job allocation 45573\nsalloc: Job allocation 45573 has been revoked.\n",
+  "history_begin_time" : 1645718117511,
+  "history_end_time" : 1645718131171,
+  "history_notes" : null,
+  "history_process" : "z1t6b2",
+  "host_id" : "w6jk5o",
+  "indicator" : "Done"
+}]

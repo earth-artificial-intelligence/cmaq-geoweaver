@@ -71,7 +71,7 @@ mapping = {mrg.columns[0]: 'Station.ID', mrg.columns[4]: 'AirNOW_O3',mrg.columns
 mrg_rename = mrg.rename(columns=mapping)
 
 # dropping unnecessary columns
-mrg_rename.drop(su.columns[[5,6]], axis = 1, inplace = True)
+mrg_rename.drop(mrg_rename.columns[[5,6]], axis = 1, inplace = True)
 
 # ignoring tropomi remote sensing data
 #df3_rs=pd.read_csv('/home/mislam25/cmaq/merged_rs.csv')
