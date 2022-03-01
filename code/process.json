@@ -70,4 +70,12 @@
   "lang" : "shell",
   "owner" : "111111",
   "confidential" : "FALSE"
+},{
+  "id" : "uzx599",
+  "name" : "prediction_visualization",
+  "description" : null,
+  "code" : "\n## importing necessary libraries\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport plotly.express as px\n# importing data\npred=pd.read_csv('/home/mislam25/cmaq/prediction/prediction_xgboost.csv')\ntime_=pred['YYYYMMDDHH'].unique()\ndfs = dict(tuple(pred.groupby('YYYYMMDDHH'))) # grouping the data by YYMMDDHH\n\nfor t in time_:\n  subset=dfs[t]\n  fig = px.density_mapbox(subset, lat='Latitude', lon='Longitude', z='prediction', radius=10,\n                        center=dict(lat=32.777701, lon=-111.358871), zoom=6.5,\n                        mapbox_style=\"stamen-terrain\")\n  # Set figure title\n  fig.update_layout(title_text=\"Date-time: \"+str(t)+\"(YY:MM:DD:HH)\", title_x=0.5)\n  # saving figures\n  fig.write_image(\"/home/mislam25/cmaq/maps/\"+\"pred\"+str(t)+\".png\")",
+  "lang" : "python",
+  "owner" : "111111",
+  "confidential" : "FALSE"
 }]
