@@ -55,59 +55,59 @@
   "owner" : "111111",
   "confidential" : "FALSE"
 },{
-  "id" : "vefwgw",
+  "id" : "tf0wia",
   "name" : "text_to_csv_daily",
   "description" : null,
-  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython text_to_csv_daily.py",
-  "lang" : "shell",
+  "code" : "# NASA GEOWEAVER\n# CMAQ-AI Model: Poocessing the data - shifting columns of NO2\n\n# importing necessary libraries\nimport glob\nimport pandas as pd\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\nfiles=glob.glob(home+'/cmaq/*.txt')\nmerged=[]\nfor file in files:\n\tdf=pd.read_csv(file)\n\tmerged.append(df)\ndata_frame = pd.concat(merged)\ndata_frame['YYYYMMDDHH'] = data_frame['YYYYMMDDHH'].map(str)\ndata_frame['year'] = data_frame['YYYYMMDDHH'].str[:4]\ndata_frame['month'] = data_frame['YYYYMMDDHH'].str[4:6]\ndata_frame['day'] = data_frame['YYYYMMDDHH'].str[6:8]\ndata_frame['hours'] = data_frame['YYYYMMDDHH'].str[8:10]\ndata_frame.to_csv(home+'/cmaq/daily_cmaq.csv',index=False)\n\n",
+  "lang" : "python",
   "owner" : "111111",
   "confidential" : "FALSE"
 },{
-  "id" : "gaxwis",
-  "name" : "pre_processing_test_data",
+  "id" : "im9rct",
+  "name" : "pre_processing",
   "description" : null,
-  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython pre_processing.py",
-  "lang" : "shell",
+  "code" : "# NASA GEOWEAVER\n# CMAQ-AI Model: Poocessing the data - shifting columns of NO2\n\n# Import libraries\nimport pandas as pd\nimport datetime\nfrom pathlib import Path\nfrom time import sleep\nprint(\"preprocess\")\n# home directory\nhome = str(Path.home())\n\n# defining function for shifting data\nmonth_i=[1,2,3,4,5,6,7,8,9,10,11,12]\ndef shift(file):\n    station=file['Station.ID'].unique()\n    file['date']=pd.to_datetime(file[[\"year\", \"month\", \"day\",\"hours\"]]) # creating date\n    file['dayofyear'] = pd.to_datetime(file['date']).dt.dayofyear # converting monthly days to yearly dasy\n    dfs = dict(tuple(file.groupby('Station.ID'))) # grouping the data by station\n#    print(dfs)\n    list_final=[]\n    for site in station:\n        list1=dfs[site]  # selecting dataset for each station\n        o3_max=list1.loc[list1.groupby(\"dayofyear\")[\"AirNOW_O3\"].idxmax()] # daily max values\n        o3_month=pd.DataFrame(o3_max.groupby('month',as_index=False)['hours'].mean()) # monthly average hour\n        no2_max=list1.loc[list1.groupby(\"dayofyear\")[\"CMAQ12KM_NO2\"].idxmax()] # daily amx values\n        no2_month=pd.DataFrame(no2_max.groupby('month',as_index=False)['hours'].mean()) # montly average hour\n        merge_hour=pd.concat([o3_month,no2_month],axis = 1) # merging two table\n        merge_hour.columns = ['month1','hours1', 'month2','hours2'] # renaming column name\n        merge_hour['hours_diff']=merge_hour['hours1']-merge_hour['hours2']\n        merge_hour.hours_diff = merge_hour.hours_diff.astype(int) # converting hours_diff to int\n        months = dict(tuple(list1.groupby('month')))   # grouping the data by month\n        diff=merge_hour['hours_diff'] # extracting hours difference field\n        mon=merge_hour['month1'] # extracting month field\n\n        for (m,n) in zip(mon,diff):\n            list2= months[m] # selecting dataset for each month and for each station\n            list3=list2.loc[list2['month'] == m] # subsetting dataset for each month\n            list3['CMAQ12KM_NO2_new'] = list3['CMAQ12KM_NO2'].shift(n) # shifting rows for each month\n            list_final.append(list3)\n    return list_final\n\n  \n# Importing and merging 2020 and 2021 dataset\ndf1 = pd.read_csv(home+'/cmaq/daily_cmaq.csv')\n#df2 = pd.read_csv(home+'/cmaq/2021.csv')\n\n#merging two dataframe vertically\n#mrg=df1.append(df2, ignore_index=True)\n# Changing columns name with index number\nmapping = {df1.columns[0]: 'Station.ID', df1.columns[4]: 'AirNOW_O3',df1.columns[5]: 'AirNOW_NO2',df1.columns[6]: 'AirNOW_CO',df1.columns[8]: 'CMAQ12KM_NO2'}\nmrg_rename = df1.rename(columns=mapping)\n\n# dropping unnecessary columns\nmrg_rename.drop(mrg_rename.columns[[5,6]], axis = 1, inplace = True)\n\n# ignoring tropomi remote sensing data\n#df3_rs=pd.read_csv('/home/mislam25/cmaq/merged_rs.csv')\n\n#final=pd.merge(mrg,df3_rs, on=['year', 'month','day','hours','Station.ID'])\n\n#shifting CMAQ NO2\nshift_df=shift(mrg_rename)\nagg_data = pd.concat(shift_df) # concatening the list\n\n# droping no data from all column and AirNOW_O3)\ndata_new=agg_data.dropna() \nfinal_df = data_new[data_new.AirNOW_O3!= -999]\n\n# saving the file into local drive\nfinal_df.to_csv(home+'/cmaq/test_2022.csv',index=False)\nsleep(10)\n",
+  "lang" : "python",
   "owner" : "111111",
   "confidential" : "FALSE"
 },{
-  "id" : "nlrst4",
+  "id" : "mx09zi",
   "name" : "prediction_xgboost",
   "description" : null,
-  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n\npython prediction_xgboost.py",
-  "lang" : "shell",
+  "code" : "# NASA Geoweaver\n# CMAQ-AI model: Prediction by Voting-XGBoost\nprint(\"prediction_xgboost\")\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(home+'/cmaq/test_2022.csv')\n\n# defining  testing variables\ntest=final.loc[final['year']==2022]\n# processing test data\ntest_X = test.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear'],axis=1)\ntest_y = test['AirNOW_O3']\ntest_X.head()\n\n# load the model from disk\nfilename = home+'/cmaq/models/xgboost.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(test_X)\n\n# adding prediction values to test dataset\ntest['prediction'] = pred.tolist()\n\n# saving the dataset into local drive\ntest.to_csv(home+'/cmaq/prediction_files/prediction_xgboost.csv',index=False)",
+  "lang" : "python",
   "owner" : "111111",
   "confidential" : "FALSE"
 },{
-  "id" : "iyccbr",
+  "id" : "oyz4io",
   "name" : "prediction_random_forest",
   "description" : null,
-  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython prediction_random_forest.py",
-  "lang" : "shell",
+  "code" : "# NASA Geoweaver\n# CMAQ-AI Model: Prediction by random forest\nprint(\"predictin_rf\")\n# import necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# import data\nfinal=pd.read_csv(home+'/cmaq/test_2022.csv')\n\n# defining  and processing test variables\ntest=final.loc[final['year']==2022]\n\ntest_X = test.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear'],axis=1)\ntest_y = test['AirNOW_O3']\n\n# load the model from disk\nfilename = home+'/cmaq/models/rf.sav'\n#filename = 'D:/Research/CMAQ/local_test/rf.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(test_X)\n\n# adding prediction values to test dataset\ntest['prediction'] = pred.tolist()\ntest.to_csv(home+'/cmaq/prediction_files/prediction_rf.csv',index=False)\nsleep(10)",
+  "lang" : "python",
   "owner" : "111111",
   "confidential" : "FALSE"
 },{
-  "id" : "7njd45",
+  "id" : "2gxied",
   "name" : "prediction_autokeras",
   "description" : null,
-  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:30:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n  \npython prediction_autokeras.py",
-  "lang" : "shell",
+  "code" : "## NASA GEOWEAVER##\n# CMAQ-AI Model: Autokeras prediction\nprint(\"prediction_autokeras\")\n# Importing necessariy libraries\nimport pandas as pd\nimport tensorflow as tf\nfrom keras.models import load_model\nimport autokeras as ak\nfrom time import sleep\nfrom pathlib import Path\n# home directory\nhome = str(Path.home())\n\n# Import processed data\nfinal=pd.read_csv(home+'/cmaq/test_2022.csv')\n\n# defining and processing testing variables\ntest=final.loc[final['year']==2022]\ntest_X = test.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear'],axis=1)\ntest_y = test['AirNOW_O3']\ntext_X=test_X.values.astype('float32')\n\n# load the model from disk\nloaded_model =load_model(home+'/cmaq/models/autokeras',custom_objects=ak.CUSTOM_OBJECTS)\n#loaded_model =load_model('D:/Research/CMAQ/local_test/autokeras',custom_objects=ak.CUSTOM_OBJECTS)\n\n# Make prediction\npred = loaded_model.predict(test_X)\n# adding prediction values to test dataset and save the result\ntest['prediction'] = pred.tolist()\ntest['prediction'] = test['prediction'].str.get(0)\ntest.to_csv(home+'/cmaq/prediction_files/prediction_autokeras.csv',index=False)",
+  "lang" : "python",
   "owner" : "111111",
   "confidential" : "FALSE"
 },{
-  "id" : "j76bv1",
+  "id" : "nuklx4",
   "name" : "model_comparison",
   "description" : null,
-  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=1\n#SBATCH --ntasks-per-node=1                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython model_comparison.py",
-  "lang" : "shell",
+  "code" : "# Write first python in Geoweaver\nimport pandas as pd\nfrom sklearn.metrics import mean_squared_error\nimport glob\nfrom time import sleep\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\n\ndf=glob.glob(home+'/cmaq/prediction_files/*.csv')\nfor i in df:\n  file=pd.read_csv(i)\n  mse=mean_squared_error(file['AirNOW_O3'],file['prediction'])\n  print(i+\"- \"+\"MSE: \",mse)\n\nsleep(10)\n",
+  "lang" : "python",
   "owner" : "111111",
   "confidential" : "FALSE"
 },{
-  "id" : "nhpfyr",
+  "id" : "uzx599",
   "name" : "prediction_visualization",
   "description" : null,
-  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=1\n#SBATCH --ntasks-per-node=1                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n \npython prediction_visualization.py",
-  "lang" : "shell",
+  "code" : "\n## importing necessary libraries\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport plotly.express as px\nimport glob\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\n\n# importing data\npred=pd.read_csv(home+'/cmaq/prediction_files/prediction_xgboost.csv')\ntime_=pred['YYYYMMDDHH'].unique()\ndfs = dict(tuple(pred.groupby('YYYYMMDDHH'))) # grouping the data by YYMMDDHH\n\nfor t in time_:\n  subset=dfs[t]\n  fig = px.density_mapbox(subset, lat='Latitude', lon='Longitude', z='prediction', radius=10,\n                        center=dict(lat=32.777701, lon=-111.358871), zoom=6.5,\n                        mapbox_style=\"stamen-terrain\")\n  # Set figure title\n  fig.update_layout(title_text=\"Date-time: \"+str(t)+\"(YY:MM:DD:HH)\", title_x=0.5)\n  # saving figures\n  fig.write_image(home+\"/cmaq/prediction_maps/\"+\"pred\"+str(t)+\".png\")\n",
+  "lang" : "python",
   "owner" : "111111",
   "confidential" : "FALSE"
 }]
