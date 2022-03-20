@@ -1,0 +1,41 @@
+[{
+  "history_id" : "t98dhku1isj",
+  "history_input" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=1\n#SBATCH --ntasks-per-node=1                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned  \npython environment_setting.py",
+  "history_output" : "",
+  "history_begin_time" : 1646769898093,
+  "history_end_time" : 1646769964970,
+  "history_notes" : null,
+  "history_process" : "ennz3x",
+  "host_id" : "vneyuq",
+  "indicator" : "Done"
+},{
+  "history_id" : "402tp2mpvhh",
+  "history_input" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=1\n#SBATCH --ntasks-per-node=1                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned  \npython text_to_csv_20_21.py",
+  "history_output" : "",
+  "history_begin_time" : 1646769965549,
+  "history_end_time" : 1646770025112,
+  "history_notes" : null,
+  "history_process" : "1wyqlm",
+  "host_id" : "vneyuq",
+  "indicator" : "Done"
+},{
+  "history_id" : "9jnikv8d36e",
+  "history_input" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=1\n#SBATCH --ntasks-per-node=1                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n  \npython preprocessing_training_data.py",
+  "history_output" : "preprocess\n",
+  "history_begin_time" : 1646770025419,
+  "history_end_time" : 1646770096037,
+  "history_notes" : null,
+  "history_process" : "kyfevh",
+  "host_id" : "vneyuq",
+  "indicator" : "Done"
+},{
+  "history_id" : "kzcj55tavu6",
+  "history_input" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=1\n#SBATCH --ntasks-per-node=1                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython training_xgboost.py",
+  "history_output" : "training_xgboost\n",
+  "history_begin_time" : 1646770096851,
+  "history_end_time" : 1646770207536,
+  "history_notes" : null,
+  "history_process" : "ykn4bh",
+  "host_id" : "vneyuq",
+  "indicator" : "Done"
+}]

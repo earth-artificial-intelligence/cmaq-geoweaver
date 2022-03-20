@@ -1,0 +1,113 @@
+[{
+  "id" : "ennz3x",
+  "name" : "environment_setting",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=1                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned  \npython environment_setting.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "1wyqlm",
+  "name" : "text_to_csv_20_21",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned  \npython text_to_csv_20_21.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "kyfevh",
+  "name" : "preprocessing_training_data",
+  "description" : "shell",
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=1\n#SBATCH --ntasks-per-node=1                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n  \npython preprocessing_training_data.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "ykn4bh",
+  "name" : "training_xgboost",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython training_xgboost.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "3ymzeo",
+  "name" : "data_daily_CMAQ_ncl",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\nmodule load ncl\n# to see ID and state of GPUs assigned\ncd ~/cmaq\ndateYesterday=$(date -d \"1 day ago\" '+%-d')\ndateMonth=$(date -d \"yesterday\" '+%-m')\nncl dateMonth=$dateMonth dateYesterday=$dateYesterday /groups/ESS/mislam25/cmaq12_airnow_O3.ncl\n\n#ncl /home/mislam25/cmaq12_airnow_O3_mod.ncl\n",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "vefwgw",
+  "name" : "text_to_csv_daily",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython text_to_csv_daily.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "gaxwis",
+  "name" : "pre_processing_test_data",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython pre_processing.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "nlrst4",
+  "name" : "prediction_xgboost",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n\npython prediction_xgboost.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "m5w7t2",
+  "name" : "training_random_forest",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:30:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython training_random_forest.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "4tj3ws",
+  "name" : "training_autokeras",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython training_autokeras.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "iyccbr",
+  "name" : "prediction_random_forest",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython prediction_random_forest.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "7njd45",
+  "name" : "prediction_autokeras",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:30:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n  \npython prediction_autokeras.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "j76bv1",
+  "name" : "model_comparison",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=1\n#SBATCH --ntasks-per-node=1                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython model_comparison.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "nhpfyr",
+  "name" : "prediction_visualization",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=1\n#SBATCH --ntasks-per-node=1                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n \npython prediction_visualization.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+}]
