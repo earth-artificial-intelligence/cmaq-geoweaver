@@ -1,49 +1,33 @@
 [{
-  "id" : "9xdvh6",
+  "id" : "ennz3x",
   "name" : "environment_setting",
   "description" : null,
-  "code" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n    print(\"Packages missing and will be installed: \", missing)\n    python = sys.executable\n    subprocess.check_call(\n        [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
-  "lang" : "python",
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=1                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned  \npython environment_setting.py",
+  "lang" : "shell",
   "owner" : "111111",
   "confidential" : "FALSE"
 },{
-  "id" : "55afa1",
+  "id" : "1wyqlm",
   "name" : "text_to_csv_20_21",
   "description" : null,
-  "code" : "## importing necessary libraries\nimport glob\nimport pandas as pd\nfrom pathlib import Path\n# home directory\nhome = str(Path.home())\nfiles=glob.glob(r'/groups/ESS/mislam25/cmaq_results_2020_2021/*.txt')\n#files=glob.glob(r'D:/Research/CMAQ/2021/text/*.txt')\ndata_frame = pd.DataFrame()\nmerged=[]\nfor file in files:\n    df=pd.read_csv(file)\n    merged.append(df)\ndata_frame = pd.concat(merged)\ndata_frame['YYYYMMDDHH'] = data_frame['YYYYMMDDHH'].map(str)\ndata_frame['year'] = data_frame['YYYYMMDDHH'].str[:4]\ndata_frame['month'] = data_frame['YYYYMMDDHH'].str[4:6]\ndata_frame['day'] = data_frame['YYYYMMDDHH'].str[6:8]\ndata_frame['hours'] = data_frame['YYYYMMDDHH'].str[8:10]\ndata_frame.to_csv(home+'/cmaq/cmaq_2020_2021.csv',index=False)\n#data_frame.to_csv('D:/Research/CMAQ/local_test/2021.csv',index=False)",
-  "lang" : "python",
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned  \npython text_to_csv_20_21.py",
+  "lang" : "shell",
   "owner" : "111111",
   "confidential" : "FALSE"
 },{
-  "id" : "gyhv1i",
+  "id" : "kyfevh",
   "name" : "preprocessing_training_data",
-  "description" : null,
-  "code" : "# NASA GEOWEAVER\n# CMAQ-AI Model: Poocessing the data - shifting columns of NO2\n\n# Import libraries\nimport pandas as pd\nimport datetime\nfrom pathlib import Path\nfrom time import sleep\nprint(\"preprocess\")\n# home directory\nhome = str(Path.home())\n\n# defining function for shifting data\nmonth_i=[1,2,3,4,5,6,7,8,9,10,11,12]\ndef shift(file):\n    station=file['Station.ID'].unique()\n    file['date']=pd.to_datetime(file[[\"year\", \"month\", \"day\",\"hours\"]]) # creating date\n    file['dayofyear'] = pd.to_datetime(file['date']).dt.dayofyear # converting monthly days to yearly dasy\n    dfs = dict(tuple(file.groupby('Station.ID'))) # grouping the data by station\n#    print(dfs)\n    list_final=[]\n    for site in station:\n        list1=dfs[site]  # selecting dataset for each station\n        o3_max=list1.loc[list1.groupby(\"dayofyear\")[\"AirNOW_O3\"].idxmax()] # daily max values\n        o3_month=pd.DataFrame(o3_max.groupby('month',as_index=False)['hours'].mean()) # monthly average hour\n        no2_max=list1.loc[list1.groupby(\"dayofyear\")[\"CMAQ12KM_NO2\"].idxmax()] # daily amx values\n        no2_month=pd.DataFrame(no2_max.groupby('month',as_index=False)['hours'].mean()) # montly average hour\n        merge_hour=pd.concat([o3_month,no2_month],axis = 1) # merging two table\n        merge_hour.columns = ['month1','hours1', 'month2','hours2'] # renaming column name\n        merge_hour['hours_diff']=merge_hour['hours1']-merge_hour['hours2']\n        merge_hour.hours_diff = merge_hour.hours_diff.astype(int) # converting hours_diff to int\n        months = dict(tuple(list1.groupby('month')))   # grouping the data by month\n        diff=merge_hour['hours_diff'] # extracting hours difference field\n        mon=merge_hour['month1'] # extracting month field\n\n        for (m,n) in zip(mon,diff):\n            list2= months[m] # selecting dataset for each month and for each station\n            list3=list2.loc[list2['month'] == m] # subsetting dataset for each month\n            list3['CMAQ12KM_NO2_new'] = list3['CMAQ12KM_NO2'].shift(n) # shifting rows for each month\n            list_final.append(list3)\n    return list_final\n\n  \n# Importing and merging 2020 and 2021 dataset\ndf1 = pd.read_csv(home+'/cmaq/cmaq_2020_2021.csv')\n#df2 = pd.read_csv(home+'/cmaq/2021.csv')\n\n#merging two dataframe vertically\n#mrg=df1.append(df2, ignore_index=True)\n# Changing columns name with index number\nmapping = {df1.columns[0]: 'Station.ID', df1.columns[4]: 'AirNOW_O3',df1.columns[5]: 'AirNOW_NO2',df1.columns[6]: 'AirNOW_CO',df1.columns[8]: 'CMAQ12KM_NO2'}\nmrg_rename = df1.rename(columns=mapping)\n\n# dropping unnecessary columns\nmrg_rename.drop(mrg_rename.columns[[5,6]], axis = 1, inplace = True)\n\n# ignoring tropomi remote sensing data\n#df3_rs=pd.read_csv('/home/mislam25/cmaq/merged_rs.csv')\n\n#final=pd.merge(mrg,df3_rs, on=['year', 'month','day','hours','Station.ID'])\n\n#shifting CMAQ NO2\nshift_df=shift(mrg_rename)\nagg_data = pd.concat(shift_df) # concatening the list\n\n# droping no data from all column and AirNOW_O3)\ndata_new=agg_data.dropna() \nfinal_df = data_new[data_new.AirNOW_O3!= -999]\n\n# saving the file into local drive\nfinal_df.to_csv(home+'/cmaq/merged_2020_2021.csv',index=False)\nsleep(10)\n",
-  "lang" : "python",
+  "description" : "shell",
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=1\n#SBATCH --ntasks-per-node=1                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n  \npython preprocessing_training_data.py",
+  "lang" : "shell",
   "owner" : "111111",
   "confidential" : "FALSE"
 },{
-  "id" : "106i1i",
+  "id" : "ykn4bh",
   "name" : "training_xgboost",
   "description" : null,
-  "code" : "# NASA GEOWEAVER\n# CMAQ-AI Model: Training Voting-XGBoost model\nprint(\"training_xgboost\")\n# Importing necessary libraries\nimport pandas as pd\nimport sklearn\nfrom sklearn.ensemble import VotingRegressor\nfrom xgboost.sklearn import XGBRegressor\nimport pickle\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\n\n# importing data\nfinal=pd.read_csv(home+'/cmaq/merged_2020_2021.csv')\n\n# defining training variables\n#train=final.loc[final['year']==2022]\ntrain=final[final['year'].isin([2020,2021])]\n\n# Processing training  data\nX = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear'],axis=1)\ny = train['AirNOW_O3']\n\n# Defining voting-ensemble based xgboost model\nmodels = list()\nmodels.append(('cart1', XGBRegressor(max_depth=1)))\nmodels.append(('cart2', XGBRegressor(max_depth=2)))\nmodels.append(('cart3', XGBRegressor(max_depth=3)))\nmodels.append(('cart4', XGBRegressor(max_depth=4)))\nmodels.append(('cart5', XGBRegressor(max_depth=5)))\nmodels.append(('cart6', XGBRegressor(max_depth=6)))\n# define the voting ensemble\nensemble = VotingRegressor(estimators=models)\n\n# fit the model on all available data\nensemble.fit(X, y)\n\n# save the model to disk\nfilename = home+'/cmaq/models/xgboost.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\npickle.dump(ensemble, open(filename, 'wb'))\n",
-  "lang" : "python",
-  "owner" : "111111",
-  "confidential" : "FALSE"
-},{
-  "id" : "q2io1w",
-  "name" : "training_random_forest",
-  "description" : null,
-  "code" : "# NASA Geoweaver\n# CMAQ-AI Model: Voting-Random Forest\nprint(\"training_rf\")\n# Importing necessary libraries\nimport pandas as pd\nfrom sklearn.ensemble import VotingRegressor\nfrom sklearn.ensemble import RandomForestRegressor\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n\n# importing data\nfinal=pd.read_csv(home+'/cmaq/merged_2020_2021.csv')\n\n# defining training variables\ntrain=final[final['year'].isin([2020,2021])]\n\n# Processing training  data\nX = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear'],axis=1)\ny = train['AirNOW_O3']\n\n# define the voting-random forest model\nmodels = list()\nmodels.append(('cart1', RandomForestRegressor(max_depth=1)))\nmodels.append(('cart2', RandomForestRegressor(max_depth=2)))\nmodels.append(('cart3', RandomForestRegressor(max_depth=3)))\nmodels.append(('cart4', RandomForestRegressor(max_depth=4)))\nmodels.append(('cart5', RandomForestRegressor(max_depth=5)))\nmodels.append(('cart6', RandomForestRegressor(max_depth=6)))\n# define the voting ensemble\nensemble = VotingRegressor(estimators=models)\n\n# fit the model on all available data\nensemble.fit(X, y)\n\n# save the model to disk\nfilename = home+'/cmaq/models/rf.sav'\n#filename = 'D:/Research/CMAQ/local_test/rf.sav'\npickle.dump(ensemble, open(filename, 'wb'))\n\n",
-  "lang" : "python",
-  "owner" : "111111",
-  "confidential" : "FALSE"
-},{
-  "id" : "5o4fxj",
-  "name" : "training_autokeras",
-  "description" : null,
-  "code" : "# NASA Geoweaver\n# CMAQ-AI Model: Autokeras for Automated-Deep Learning\nprint(\"training_autokeras\")\n# Importing necessary libraries\nimport pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom autokeras import StructuredDataRegressor\nfrom keras.models import Sequential\nfrom keras.layers import Dense\nfrom keras.models import model_from_json\nimport tensorflow as tf\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n\n# load dataset\nfinal=pd.read_csv(home+'/cmaq/merged_2020_2021.csv')\n\n# defining training variables\ntrain=final[final['year'].isin([2020,2021])]\n\n# processing training  data\nX = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear'],axis=1)\ny = train['AirNOW_O3']\nX.head()\nX=X.values.astype('float32')\ny=y.values.astype('float32')\n\n# load dataset\n# separate into train and test sets\n#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=1)\n#print(X_train.shape, X_test.shape, y_train.shape, y_test.shape)\n# define the search\nsearch = StructuredDataRegressor(max_trials=15, loss='mean_absolute_error')\n# perform the search\n#search.fit(x=X_train, y=y_train, verbose=0)\nsearch.fit(x=X, y=y, verbose=0)\n# evaluate the model\n#mae, _ = search.evaluate(X_test, y_test, verbose=0)\n#print('MAE: %.3f' % mae)\n# use the model to make a prediction\n#X_new = asarray([[108]]).astype('float32')\n#yhat = search.predict(X_new)\n#print('Predicted: %.3f' % yhat[0])\n# get the best performing model\nmodel = search.export_model()\n# summarize the loaded model\nmodel.summary()\nprint(search)\n# save the best performing model to file\nmodel.save(home+'/cmaq/models/autokeras',save_format=\"tf\")\nsleep(10)\n",
-  "lang" : "python",
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython training_xgboost.py",
+  "lang" : "shell",
   "owner" : "111111",
   "confidential" : "FALSE"
 },{
@@ -75,6 +59,22 @@
   "name" : "prediction_xgboost",
   "description" : null,
   "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n\npython prediction_xgboost.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "m5w7t2",
+  "name" : "training_random_forest",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:30:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython training_random_forest.py",
+  "lang" : "shell",
+  "owner" : "111111",
+  "confidential" : "FALSE"
+},{
+  "id" : "4tj3ws",
+  "name" : "training_autokeras",
+  "description" : null,
+  "code" : "#!/bin/bash\n#SBATCH --partition=gpuq                    # the DGX only belongs in the 'gpu'  partition\n#SBATCH --qos=gpu                           # need to select 'gpu' QoS\n#SBATCH --job-name=python-gpu\n#SBATCH --output=python-gpu.%j.out\n#SBATCH --error=python-gpu.%j.err\n#SBATCH --nodes=2\n#SBATCH --ntasks-per-node=2                 # up to 128; \n#SBATCH --gres=gpu:A100.40gb:1              # up to 8; only request what you need\n#SBATCH --mem-per-cpu=3500M                 # memory per CORE; total memory is 1 TB (1,000,000 MB)\n#SBATCH --export=ALL \n#SBATCH --time=0-00:20:00                   # set to 1hr; please choose carefully\n\nset echo\numask 0027\n\n# to see ID and state of GPUs assigned\n\npython training_autokeras.py",
   "lang" : "shell",
   "owner" : "111111",
   "confidential" : "FALSE"
