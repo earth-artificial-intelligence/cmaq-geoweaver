@@ -1,0 +1,31 @@
+[{
+  "history_id" : "e4nnidp47d1",
+  "history_input" : "## importing necessary libraries\nimport glob\nimport pandas as pd\nfrom pathlib import Path\n# home directory\nhome = str(Path.home())\nfiles=glob.glob(r'/groups/ESS/mislam25/cmaq_results_2020_2021/*.txt')\n#files=glob.glob(r'D:/Research/CMAQ/2021/text/*.txt')\ndata_frame = pd.DataFrame()\nmerged=[]\nfor file in files:\n    df=pd.read_csv(file)\n    merged.append(df)\ndata_frame = pd.concat(merged)\ndata_frame['YYYYMMDDHH'] = data_frame['YYYYMMDDHH'].map(str)\ndata_frame['year'] = data_frame['YYYYMMDDHH'].str[:4]\ndata_frame['month'] = data_frame['YYYYMMDDHH'].str[4:6]\ndata_frame['day'] = data_frame['YYYYMMDDHH'].str[6:8]\ndata_frame['hours'] = data_frame['YYYYMMDDHH'].str[8:10]\nnew_df=data_frame.drop(['Station ID','CMAQ_NO(ppb)','AirNOW_NO2(ppb)','AirNOW_CO(ppm)'],axis=1)\nfinal_df = new_df.rename(columns={new_df.columns[3]: 'AirNOW_O3'})\nfinal_df = final_df[final_df.AirNOW_O3!= -999]\nfinal_df.to_csv(home+'/cmaq/merged_2020_2021.csv',index=False)\n",
+  "history_output" : "",
+  "history_begin_time" : 1648065451810,
+  "history_end_time" : 1648065635954,
+  "history_notes" : null,
+  "history_process" : "55afa1",
+  "host_id" : "vneyuq",
+  "indicator" : "Done"
+},{
+  "history_id" : "0arepex0p5s",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n    print(\"Packages missing and will be installed: \", missing)\n    python = sys.executable\n    subprocess.check_call(\n        [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1648065268507,
+  "history_end_time" : 1648065451638,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "vneyuq",
+  "indicator" : "Done"
+},{
+  "history_id" : "58kbi6ychep",
+  "history_input" : "# NASA GEOWEAVER\n# CMAQ-AI Model: Poocessing the data - shifting columns of NO2\n\n## importing necessary libraries\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n\n# importing data\nfinal=pd.read_csv(home+'/cmaq/merged_2020_2021.csv')\n\n# defining training variables\nyear_2020=final.loc[final['year']==2020]\n\n# Processing training  data\nselected_vars = year_2020.drop(['YYYYMMDDHH','year'],axis=1)\n\n########################################################\n## Correlation matrix heatmap\n# Correlation between different variables\ncorr = selected_vars.corr()\n# Set up the matplotlib plot configuration\nf, ax = plt.subplots(figsize=(18, 10))\n# Generate a mask for upper traingle\nmask = np.triu(np.ones_like(corr, dtype=bool))\n# Configure a custom diverging colormap\ncmap = sns.diverging_palette(230, 20, as_cmap=True)\n# Draw the heatmap\nsns.heatmap(corr, annot=True, mask = mask, cmap=cmap)\nbottom, top = ax.get_ylim()\nax.set_ylim(bottom + 0.5, top + 0.5)\n#ax.set(xlim=(0, 12))\nplt.savefig(home+'/cmaq/exploratory_analysis/correlation.png')\n########################################################\n\n# plotting r2 values of different variables vs AirNOW_O3\n########################################################\ncolumns=list(selected_vars)\nfor i in columns:\n  try:\n  \tsns.lmplot(x=i, y=\"AirNOW_O3\", data=selected_vars);\n  \tplt.savefig(home+'/cmaq/exploratory_analysis/'+i+'_AirNOW_O3.png')\n  except FileNotFoundError:\n    pass\n    \n########################################################\n",
+  "history_output" : "Running",
+  "history_begin_time" : 1648065667277,
+  "history_end_time" : 1648065636085,
+  "history_notes" : null,
+  "history_process" : "smwp7r",
+  "host_id" : "vneyuq",
+  "indicator" : "Running"
+}]
