@@ -1,28 +1,44 @@
 # Write first python in Geoweaver
+# Write first python in Geoweaver
+# Write first python in Geoweaver
 import xarray as xr
 import pandas as pd
 import glob, os
-import datetime
 import numpy as np
 from pathlib import Path
-
+from datetime import datetime, timedelta
 # home directory
 home = str(Path.home())
-today=datetime.datetime.today().strftime('%Y%m%d')
-pday_= datetime.datetime.today() - datetime.timedelta(days=1)
-pday=pday_.strftime('%Y%m%d')
-fday_= datetime.datetime.today() + datetime.timedelta(days=1)
-fday=fday_.strftime('%Y%m%d')
-days=[pday,today]
 
+
+days=[]
+from datetime import date, timedelta
+
+sdate = date(2021, 4, 5)   # start date
+edate = date(2021, 4, 6)   # end date
+
+delta = edate - sdate       # as timedelta
+
+for i in range(delta.days + 1):
+    day = sdate + timedelta(days=i)
+    list_day=day.strftime('%Y%m%d')
+    days.append(list_day)
 aa,bb,cc,dd,ee,ff,gg,hh,ii,jj,kk,ll,mm,nn,oo1,pp,qq,rr,ss=[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]
-
 #ff=[]
+# k = time dimension - start from 12 to match with data
+t = [12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11]
 for i in days:
-  files = glob.glob("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/"+"COMBINE3D_ACONC_v531_gcc_AQF5X_"+i+"_extracted.nc")
+  # read cmaq results
+  # old files before 20210315 are not in diractory. must choose later date.
+  if int(i)>=20210315 and int(i)<=20210902:
+    files = glob.glob("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/"+"COMBINE3D_ACONC_v531_gcc_AQF5X_"+i+"_extracted.nc")
+  else:
+    files = glob.glob("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/"+"COMBINE3D_ACONC_v531_gcc_AQF5X_"+i+"_extracted.nc")
   for j in files:
+
     df = xr.open_dataset(j)
-    for k in range(24):
+    for k in t:
+  	# O3 variable
   	# O3 variable
       oo=df.variables['O3'][:].values[k,0]
       oo3=np.ravel(oo)
@@ -48,15 +64,23 @@ for i in days:
       oo3=np.ravel(oo)
       o3tp=np.transpose(oo3)
       ee.append(o3tp)
-        # NO
-#      oo=df.variables['NO'][:].values[k,0]
-#      oo3=np.ravel(oo)
-#     o3tp=np.transpose(oo3)
-#      ff.append(o3tp)
-  files = glob.glob("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/emis2021/12km/all/"+"emis_mole_all_"+i+"_AQF5X_cmaq_cb6ae7_2017gb_17j.ncf")
+      
+      
+  # read emission results
+  # old files before 20210315 are not in diractory. must choose later date.
+  if int(i)>=20191231 and int(i)<=20210902:
+    files = glob.glob("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/emis2021/12km/all/"+"emis_mole_all_"+i+"_AQF5X_nobeis_2016fh_16j.ncf")
+  elif int(i)==20220303:
+    files = glob.glob("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/emis2021/12km/all/"+"emis_mole_all_"+i+"_AQF5X_cmaq_cb6ae7_2017gb_17j.ncf")
+
+# set todays date if they don't change dataformate    
+#  else if int(i)>=20220313 and int(i)<=int(today):
+  elif int(i)>=20220313 and int(i)<=20220331:
+    files = glob.glob("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/emis2021/12km/all/"+"emis_mole_all_"+i+"_AQF5X_cmaq_cb6ae7_2017gb_17j.ncf")
   for j in files:
+
     df = xr.open_dataset(j)
-    for k in range(24):
+    for k in t:
   	# CO variable
       oo=df.variables['CO'][:].values[k,0]
       oo3=np.ravel(oo)
@@ -71,12 +95,14 @@ for i in days:
       oo=df.variables['NO'][:].values[k,0]
       oo3=np.ravel(oo)
       o3tp=np.transpose(oo3)
-      hh.append(o3tp)
+      hh.append(o3tp)  
       
+# read mcip results 
+# date must be later of 20210101
   files = glob.glob("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/"+"METCRO2D_"+i+".nc")
   for j in files:
     df = xr.open_dataset(j)
-    for k in range(24):
+    for k in t:
   	# CO variable
       oo=df.variables['PRSFC'][:].values[k,0]
       oo3=np.ravel(oo)
@@ -127,8 +153,8 @@ for i in days:
       oo3=np.ravel(oo)
       o3tp=np.transpose(oo3)
       rr.append(o3tp)
-
-
+      
+      
 cmaq_O3=list(np.concatenate(aa).flat) 
 cmaq_NO2=list(np.concatenate(bb).flat) 
 cmaq_CO=list(np.concatenate(cc).flat) 
@@ -165,23 +191,16 @@ LON=np.tile(lon_flt,48)
 # date-time dimension for today
 time0=[]
 t = ['12','13','14','15','16','17','18','19','20','21','22','23','00','01','02','03','04','05','06','07','08','09','10','11']
-for i in t:
-    time_0=np.full((265,442),today+i)
+for i in days:
+  for j in t:
+    time_0=np.full((265,442),i+j)
     time0.append(time_0)
-t_today=list(np.concatenate(time0).flat)  
+YYMMDDHH=list(np.concatenate(time0).flat)  
 
-# date time dimension for yesterday
-time1=[]
-for i in t:
-    time_1=np.full((265,442),pday+i)
-    time1.append(time_1)
-t_pday=list(np.concatenate(time1).flat)
 
-# stacking 2 days values
-time_var=np.vstack((t_pday,t_today))
-YYMMDDHH=list(np.concatenate(time_var).flat)
 
 # saving variables
 dat=pd.DataFrame({'Latitude':LAT,'Longitude':LON,'YYYYMMDDHH':YYMMDDHH,'CMAQ12KM_O3(ppb)':cmaq_O3,'CMAQ12KM_NO2(ppb)':cmaq_NO2,'CMAQ12KM_CO(ppm)':cmaq_CO,'CMAQ_EC(ug/m3)':cmaq_PM25_EC,'CMAQ_OC(ug/m3)':cmaq_PM25_CO,'NO2(moles/s)':NO2_emi,'CO(moles/s)':CO_emi,'NO(moles/s)':NO_emi,'PRSFC(Pa)':PRSFC,'PBL(m)':PBL,'TEMP2(K)':TEMP2,'WSPD10(m/s)':WSPD10,'WDIR10(degree)':WDIR10,'WSTAR(m/s)':WSTAR,'RGRND(W/m2)':RGRND,'RN(cm)':RN,'RC(cm)':RC,'CFRAC':CFRAC})
-dat.to_csv(home+'/cmaq/test_data.csv',index=False)
+print(dat.head())
+dat.to_csv(home+'/cmaq/training_data.csv',index=False)
 

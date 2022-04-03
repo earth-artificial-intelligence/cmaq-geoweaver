@@ -6,7 +6,7 @@ import subprocess
 import pkg_resources
 
 # Required packages to run this process.
-required = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2'}
+required = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
 
@@ -16,6 +16,7 @@ if missing:
     subprocess.check_call(
         [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)
 
+
 ################################
 #  END OF PACKAGES Installation  #
 
@@ -23,7 +24,7 @@ if missing:
 # Creating directoris 
 from pathlib import Path
 home = str(Path.home())
-folders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models']
+folders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']
 for folder in folders:
   paths=Path(home+'/'+folder)
   paths.mkdir(parents=True,exist_ok=True)
