@@ -1,6 +1,4 @@
-# Write first python in Geoweaver
-# Write first python in Geoweaver
-# Write first python in Geoweaver
+
 import xarray as xr
 import pandas as pd
 import glob, os
@@ -14,8 +12,8 @@ home = str(Path.home())
 days=[]
 from datetime import date, timedelta
 
-sdate = date(2021, 4, 5)   # start date
-edate = date(2021, 4, 6)   # end date
+sdate = date(2021, 12, 30)   # start date
+edate = date(2022, 1, 1)   # end date
 
 delta = edate - sdate       # as timedelta
 
@@ -38,5 +36,3 @@ for i in days:
       # write line to output file
       outF.write(line)
     outF.close()
-
-

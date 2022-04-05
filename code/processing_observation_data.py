@@ -2,14 +2,15 @@
 import glob
 import pandas as pd
 from pathlib import Path
+import numpy as np
 # home directory
 home = str(Path.home())
 
 days=[]
 from datetime import date, timedelta
 
-sdate = date(2021, 4, 5)   # start date
-edate = date(2021, 4, 6)   # end date
+sdate = date(2021, 12, 30)   # start date
+edate = date(2022, 1, 1)   # end date
 
 delta = edate - sdate       # as timedelta
 
@@ -21,24 +22,32 @@ for i in range(delta.days + 1):
     
 data_frame = pd.DataFrame()
 merged=[]
+date_time=[]
 time = ['12','13','14','15','16','17','18','19','20','21','22','23','00','01','02','03','04','05','06','07','08','09','10','11']
 for d in days:
   for t in time:
+
     files=glob.glob(home+"/cmaq/observation/AQF5X_Hourly_"+d+t+".txt")
     for file in files:
-      df=pd.read_csv(file, delimiter=" ",header=0,skiprows=1)
-      df['YYYYMMDDHH']=d+t
-      merged.append(df)
-data_frame = pd.concat(merged)
-data_frame = data_frame.replace(',','', regex=True)
+
+      data = np.loadtxt(file, skiprows=1,dtype='str')
+      dt=d+t
+      dt=np.tile(dt,2822) # 2822 total station number
+      date_time.append(dt)
+      merged.append(data)
+data_frame = np.concatenate(merged)
+data_frame =np.delete(data_frame, np.s_[4:9], axis=1) 
+#data_frame.drop(data_frame.columns[[4, 5,6,7,8]], axis = 1, inplace = True)
+df = pd.DataFrame(data_frame, columns = ['StationID','Latitude','Longitude','AirNOW_O3'])
+
+dt = np.concatenate(date_time)
+
+#dt = np.concatenate(date_time)
+#print(len(dt))
+dff=df.replace(',','', regex=True)
+dff['YYYYMMDDHH'] = dt.tolist()
+dff.to_csv(home+"/cmaq/observation.csv",index=False)
 
 
-# dropping unnecessary variables
-data_frame.drop(data_frame.columns[[4, 5,6,7,8]], axis = 1, inplace = True)
-# Changing columns name with index number
-#mapping = {data_frame.columns[0]: 'StationID', data_frame.columns[1]: 'Latitude',data_frame.columns[2]: 'Longitude',data_frame.columns[3]: 'AirNOW_O3'}
-mapping = {data_frame.columns[0]: 'StationID',data_frame.columns[1]: 'Latitude',data_frame.columns[2]: 'Longitude',data_frame.columns[3]: 'AirNOW_O3'}
-df = data_frame.rename(columns=mapping)
 
-df.to_csv(home+"/cmaq/observation.csv",index=False)
 

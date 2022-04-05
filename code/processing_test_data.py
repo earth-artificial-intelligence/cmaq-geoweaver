@@ -3,23 +3,16 @@ import pandas as pd
 import glob, os
 import numpy as np
 from pathlib import Path
-from datetime import datetime, timedelta
+import datetime
 # home directory
 home = str(Path.home())
 
-
-days=[]
-from datetime import date, timedelta
-
-sdate = date(2021, 12, 30)   # start date
-edate = date(2022, 1, 1)   # end date
-
-delta = edate - sdate       # as timedelta
-
-for i in range(delta.days + 1):
-    day = sdate + timedelta(days=i)
-    list_day=day.strftime('%Y%m%d')
-    days.append(list_day)
+today=datetime.datetime.today().strftime('%Y%m%d')
+pday_= datetime.datetime.today() - datetime.timedelta(days=1)
+pday=pday_.strftime('%Y%m%d')
+fday_= datetime.datetime.today() + datetime.timedelta(days=1)
+fday=fday_.strftime('%Y%m%d')
+days=[today,pday]
 aa,bb,cc,dd,ee,ff,gg,hh,ii,jj,kk,ll,mm,nn,oo1,pp,qq,rr,ss=[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]
 #ff=[]
 # k = time dimension - start from 12 to match with data
@@ -246,6 +239,6 @@ print(len(YYMMDDHH))
 # saving variables
 dat=pd.DataFrame({'Latitude':LAT,'Longitude':LON,'YYYYMMDDHH':YYMMDDHH,'CMAQ12KM_O3(ppb)':cmaq_O3,'CMAQ12KM_NO2(ppb)':cmaq_NO2,'CMAQ12KM_CO(ppm)':cmaq_CO,'CMAQ_EC(ug/m3)':cmaq_PM25_EC,'CMAQ_OC(ug/m3)':cmaq_PM25_CO,'CO(moles/s)':CO_emi,'NO2(moles/s)':NO2_emi,'PRSFC(Pa)':PRSFC,'PBL(m)':PBL,'TEMP2(K)':TEMP2,'WSPD10(m/s)':WSPD10,'WDIR10(degree)':WDIR10,'WSTAR(m/s)':WSTAR,'RGRND(W/m2)':RGRND,'RN(cm)':RN,'RC(cm)':RC,'CFRAC':CFRAC})
 print(dat.head())
-dat.to_csv(home+'/cmaq/training_data.csv',index=False)
+dat.to_csv(home+'/cmaq/test_data.csv',index=False)
 
 

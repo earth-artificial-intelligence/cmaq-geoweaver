@@ -22,6 +22,3 @@ training_data['hours'] = training_data['YYYYMMDDHH'].str[8:10]
 new_df=training_data.drop(['StationID','Latitude_y','Longitude_y','YYYYMMDDHH'],axis=1)
 final_df = new_df[new_df.AirNOW_O3!= -999]
 final_df.to_csv(home+"/cmaq/training.csv",index=False)
-
-
-
