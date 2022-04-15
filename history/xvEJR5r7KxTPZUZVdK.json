@@ -1,0 +1,51 @@
+[{
+  "history_id" : "mrhnvkfojqs",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\n#required = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2'}\n#installed = {pkg.key for pkg in pkg_resources.working_set}\n#missing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1646615455117,
+  "history_end_time" : 1646615556706,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "ps8gocnb4g1",
+  "history_input" : "# NASA GEOWEAVER\n# CMAQ-AI Model: Poocessing the data - shifting columns of NO2\n\n# Import libraries\nimport pandas as pd\nimport datetime\nfrom pathlib import Path\nfrom time import sleep\nprint(\"preprocess\")\n# home directory\nhome = str(Path.home())\n\n# defining function for shifting data\nmonth_i=[1,2,3,4,5,6,7,8,9,10,11,12]\ndef shift(file):\n    station=file['Station.ID'].unique()\n    file['date']=pd.to_datetime(file[[\"year\", \"month\", \"day\",\"hours\"]]) # creating date\n    file['dayofyear'] = pd.to_datetime(file['date']).dt.dayofyear # converting monthly days to yearly dasy\n    dfs = dict(tuple(file.groupby('Station.ID'))) # grouping the data by station\n#    print(dfs)\n    list_final=[]\n    for site in station:\n        list1=dfs[site]  # selecting dataset for each station\n        o3_max=list1.loc[list1.groupby(\"dayofyear\")[\"AirNOW_O3\"].idxmax()] # daily max values\n        o3_month=pd.DataFrame(o3_max.groupby('month',as_index=False)['hours'].mean()) # monthly average hour\n        no2_max=list1.loc[list1.groupby(\"dayofyear\")[\"CMAQ12KM_NO2\"].idxmax()] # daily amx values\n        no2_month=pd.DataFrame(no2_max.groupby('month',as_index=False)['hours'].mean()) # montly average hour\n        merge_hour=pd.concat([o3_month,no2_month],axis = 1) # merging two table\n        merge_hour.columns = ['month1','hours1', 'month2','hours2'] # renaming column name\n        merge_hour['hours_diff']=merge_hour['hours1']-merge_hour['hours2']\n        merge_hour.hours_diff = merge_hour.hours_diff.astype(int) # converting hours_diff to int\n        months = dict(tuple(list1.groupby('month')))   # grouping the data by month\n        diff=merge_hour['hours_diff'] # extracting hours difference field\n        mon=merge_hour['month1'] # extracting month field\n\n        for (m,n) in zip(mon,diff):\n            list2= months[m] # selecting dataset for each month and for each station\n            list3=list2.loc[list2['month'] == m] # subsetting dataset for each month\n            list3['CMAQ12KM_NO2_new'] = list3['CMAQ12KM_NO2'].shift(n) # shifting rows for each month\n            list_final.append(list3)\n    return list_final\n\n  \n# Importing and merging 2020 and 2021 dataset\ndf1 = pd.read_csv(home+'/cmaq/daily_cmaq.csv')\n#df2 = pd.read_csv(home+'/cmaq/2021.csv')\n\n#merging two dataframe vertically\n#mrg=df1.append(df2, ignore_index=True)\n# Changing columns name with index number\nmapping = {df1.columns[0]: 'Station.ID', df1.columns[4]: 'AirNOW_O3',df1.columns[5]: 'AirNOW_NO2',df1.columns[6]: 'AirNOW_CO',df1.columns[8]: 'CMAQ12KM_NO2'}\nmrg_rename = df1.rename(columns=mapping)\n\n# dropping unnecessary columns\nmrg_rename.drop(mrg_rename.columns[[5,6]], axis = 1, inplace = True)\n\n# ignoring tropomi remote sensing data\n#df3_rs=pd.read_csv('/home/mislam25/cmaq/merged_rs.csv')\n\n#final=pd.merge(mrg,df3_rs, on=['year', 'month','day','hours','Station.ID'])\n\n#shifting CMAQ NO2\nshift_df=shift(mrg_rename)\nagg_data = pd.concat(shift_df) # concatening the list\n\n# droping no data from all column and AirNOW_O3)\ndata_new=agg_data.dropna() \nfinal_df = data_new[data_new.AirNOW_O3!= -999]\n\n# saving the file into local drive\nfinal_df.to_csv(home+'/cmaq/merged_2020_2021.csv',index=False)\nsleep(10)\n",
+  "history_output" : "preprocess\n",
+  "history_begin_time" : 1646615672056,
+  "history_end_time" : 1646615826172,
+  "history_notes" : null,
+  "history_process" : "im9rct",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "u7iwycm14io",
+  "history_input" : "# NASA GEOWEAVER\n# CMAQ-AI Model: Poocessing the data - shifting columns of NO2\n\n## importing necessary libraries\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n\n# importing data\nfinal=pd.read_csv(home+'/cmaq/merged_2020_2021.csv')\n\n# defining training variables\nyear_2020=final.loc[final['year']==2020]\n\n# Processing training  data\nselected_vars = year_2020.drop(['Station.ID','YYYYMMDDHH','year','date','dayofyear'],axis=1)\n\n########################################################\n## Correlation matrix heatmap\n# Correlation between different variables\ncorr = selected_vars.corr()\n# Set up the matplotlib plot configuration\nf, ax = plt.subplots(figsize=(18, 10))\n# Generate a mask for upper traingle\nmask = np.triu(np.ones_like(corr, dtype=bool))\n# Configure a custom diverging colormap\ncmap = sns.diverging_palette(230, 20, as_cmap=True)\n# Draw the heatmap\nsns.heatmap(corr, annot=True, mask = mask, cmap=cmap)\nbottom, top = ax.get_ylim()\nax.set_ylim(bottom + 0.5, top + 0.5)\n#ax.set(xlim=(0, 12))\nplt.savefig(home+'/cmaq/exploratory_analysis/correlation.png')\n########################################################\n\n# plotting r2 values of different variables vs AirNOW_O3\n########################################################\ncolumns=list(selected_vars)\nfor i in columns:\n  try:\n  \tsns.lmplot(x=i, y=\"AirNOW_O3\", data=selected_vars);\n  \tplt.savefig(home+'/cmaq/exploratory_analysis/'+i+'_AirNOW_O3.png')\n  except FileNotFoundError:\n    pass\n    \n########################################################\nsleep(10)",
+  "history_output" : "Running",
+  "history_begin_time" : 1646615829128,
+  "history_end_time" : 1646615826528,
+  "history_notes" : null,
+  "history_process" : "smwp7r",
+  "host_id" : "p6wvf2",
+  "indicator" : "Running"
+},{
+  "history_id" : "0byktauqnvd",
+  "history_input" : "# NASA GEOWEAVER\n# CMAQ-AI Model: Poocessing the data - shifting columns of NO2\n\n# importing necessary libraries\nimport glob\nimport pandas as pd\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\nprint(home+'*.txt')\nfiles=glob.glob(home+'/*.txt')\nprint(files)\nmerged=[]\nfor file in files:\n\tdf=pd.read_csv(file)\n\tmerged.append(df)\ndata_frame = pd.concat(merged)\ndata_frame['YYYYMMDDHH'] = data_frame['YYYYMMDDHH'].map(str)\ndata_frame['year'] = data_frame['YYYYMMDDHH'].str[:4]\ndata_frame['month'] = data_frame['YYYYMMDDHH'].str[4:6]\ndata_frame['day'] = data_frame['YYYYMMDDHH'].str[6:8]\ndata_frame['hours'] = data_frame['YYYYMMDDHH'].str[8:10]\ndata_frame.to_csv(home+'/cmaq/daily_cmaq.csv',index=False)\n\nsleep(5) # Sleep for 5 secs to give time for .csv file to save and ensure next node picks it up",
+  "history_output" : "/home/aalnaim*.txt\n['/home/aalnaim/hourly_cmaq12km_airnow_pollutants_20220304.txt']\n",
+  "history_begin_time" : 1646615557360,
+  "history_end_time" : 1646615672014,
+  "history_notes" : null,
+  "history_process" : "tf0wia",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "pal4xoxxtsq",
+  "history_input" : "module load ncl\n\n\ndateYesterday=$(date -d \"2 day ago\" '+%-d')\ndateMonth=$(date -d \"yesterday\" '+%-m')\ncd\nncl dateMonth=$dateMonth dateYesterday=$dateYesterday /groups/ESS/aalnaim/cmaq12_airnow_O3.ncl\n",
+  "history_output" : " Copyright (C) 1995-2019 - All Rights Reserved\n University Corporation for Atmospheric Research\n NCAR Command Language Version 6.6.2\n The use of this software is governed by a License Agreement.\n See http://www.ncl.ucar.edu/ for more details.\n\n\nVariable: sdate\nType: integer\nTotal Size: 4 bytes\n            1 values\nNumber of Dimensions: 1\nDimensions and sizes:\t[1]\nCoordinates: \nNumber Of Attributes: 1\n  calendar :\tstandard\n(0)\t20220304\n",
+  "history_begin_time" : 1646615424797,
+  "history_end_time" : 1646615455016,
+  "history_notes" : null,
+  "history_process" : "3ymzeo",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+}]
