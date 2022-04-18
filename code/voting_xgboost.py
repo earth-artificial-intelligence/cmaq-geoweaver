@@ -1,6 +1,6 @@
 # NASA GEOWEAVER
 # CMAQ-AI Model: Training Voting-XGBoost model
-print("training_xgboost")
+
 # Importing necessary libraries
 import pandas as pd
 import sklearn
@@ -13,15 +13,13 @@ from pathlib import Path
 home = str(Path.home())
 
 # importing data
-final=pd.read_csv(home+'/cmaq/merged_2020_2021.csv')
+final=pd.read_csv(home+'/cmaq/training.csv')
 
-# defining training variables
-#train=final.loc[final['year']==2022]
-train=final[final['year'].isin([2020,2021])]
+final=final.dropna()
 
 # Processing training  data
-X = train.drop(['AirNOW_O3','Station.ID','YYYYMMDDHH','year','date','dayofyear'],axis=1)
-y = train['AirNOW_O3']
+X = final.drop(['AirNOW_O3'],axis=1)
+y = final['AirNOW_O3']
 
 # Defining voting-ensemble based xgboost model
 models = list()
@@ -41,4 +39,5 @@ ensemble.fit(X, y)
 filename = home+'/cmaq/models/xgboost.sav'
 #filename = 'D:/Research/CMAQ/local_test/xgboost.sav'
 pickle.dump(ensemble, open(filename, 'wb'))
+
 
