@@ -12,7 +12,7 @@ home = str(Path.home())
 days=[]
 from datetime import date, timedelta
 
-sdate = date(2021, 12, 30)   # start date
+sdate = date(2021, 9, 30)   # start date
 edate = date(2022, 1, 1)   # end date
 
 delta = edate - sdate       # as timedelta

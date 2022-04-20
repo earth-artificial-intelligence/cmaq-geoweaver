@@ -1,4 +1,44 @@
 [{
+  "history_id" : "geyhIAC4Hj1z8BTLH0",
+  "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;l8vlic-w3mvM;b8uv5z-OspIE;361yw7-wP6mY;6oifw4-98FnL;",
+  "history_output" : "7b7q5k61ot5;mmwwhemloao;xfr15hl3s0o;b45u3e93gvh;7td16xnrxss;t59moyyfae7;qv5uac976zt;mk7uon7ya8f;9sr73gwlrok;ui5x2vpwlrt;",
+  "history_begin_time" : 1650459989913,
+  "history_end_time" : 1650460208496,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "3wgogh;",
+  "indicator" : "Running"
+},{
+  "history_id" : "HGCeQCeTVvb0QWQcAb",
+  "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;l8vlic-w3mvM;b8uv5z-OspIE;361yw7-wP6mY;6oifw4-98FnL;",
+  "history_output" : "d44g231bn8b;l7wrcq1tyyd;bocufqhozph;3grtz50a4ot;h61wrejusdq;4tx9cz40ila;5qq8x9xhzje;e4wnkxatr5h;a9kcaij1geg;b4ek5o4zhlp;",
+  "history_begin_time" : 1650388787868,
+  "history_end_time" : 1650388968995,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "3wgogh;",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "XZR40GIt12EWTL7qpT",
+  "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;l8vlic-w3mvM;b8uv5z-OspIE;361yw7-wP6mY;6oifw4-98FnL;",
+  "history_output" : "xd91taowm11;7vinhdqu4kn;xcco40b9qo6;x6y7ieknkpp;50dqnimw31p;anguedbzdv0;hw1hmwiu5ag;1ybcswq06rh;35jhq07fui8;t8cxcgdwgu1;",
+  "history_begin_time" : 1650388517704,
+  "history_end_time" : 1650388692856,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "3wgogh;",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "BQionbkhJBNpFp1quZ",
+  "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;l8vlic-w3mvM;b8uv5z-OspIE;361yw7-wP6mY;6oifw4-98FnL;",
+  "history_output" : "6c25agqkanw;k6wt3hlvdhb;p0zzyvr63v6;kd7a6pgas0x;aja8owsjp0k;pemr9ab6gbu;5hf82eysmr0;3avzpti9jx9;ptynu3ws893;8suzaa4z12t;",
+  "history_begin_time" : 1650388240926,
+  "history_end_time" : 1650388314141,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "3wgogh;",
+  "indicator" : "Stopped"
+},{
   "history_id" : "owiDOECvb0I4mk7jdc",
   "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;l8vlic-w3mvM;b8uv5z-OspIE;361yw7-wP6mY;6oifw4-98FnL;",
   "history_output" : "ctdpt9eblx6;xud3ppmrj23;fsg1cgyuqb6;iqk0r94iss6;a7c91896dhw;7lxad71eov1;2vxwx3h42ee;z20aw1llntk;qme58d7bkch;p20m01wlgz3;",

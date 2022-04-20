@@ -1,4 +1,4 @@
-# NASA GEOWEAVER
+# Write first python in Geoweaver# NASA GEOWEAVER
 # CMAQ-AI Model: Training Voting-XGBoost model
 
 # Importing necessary libraries
@@ -34,7 +34,6 @@ ensemble = VotingRegressor(estimators=models)
 
 # fit the model on all available data
 ensemble.fit(X, y)
-
 # save the model to disk
 filename = home+'/cmaq/models/xgboost.sav'
 #filename = 'D:/Research/CMAQ/local_test/xgboost.sav'
