@@ -21,8 +21,8 @@ for t in time_:
   gdf = gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.Longitude, df.Latitude))
   gdf = gdf.set_crs("EPSG:4326",allow_override=True)
   #gdf = gdf.set_crs("EPSG:4326")
-  gdf.plot(column='prediction')
-  plt.savefig(home+"/cmaq/prediction_maps/maps/"+str(t)+".tif")
+  gdf.plot(column='prediction',cmap='bwr')
+  plt.savefig(home+"/cmaq/prediction_maps/"+str(t)+".tif")
   
 
   

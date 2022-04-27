@@ -9,7 +9,8 @@ from time import sleep
 home = str(Path.home())
 # importing data
 final=pd.read_csv(home+'/cmaq/testing.csv')
-X = final.drop(['YYYYMMDDHH'],axis=1)
+print(final.head())
+X = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)
 # defining  testing variables
 # processing test data
 

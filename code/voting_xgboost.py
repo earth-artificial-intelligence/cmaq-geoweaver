@@ -14,11 +14,11 @@ home = str(Path.home())
 
 # importing data
 final=pd.read_csv(home+'/cmaq/training.csv')
-
+print(final.head())
 final=final.dropna()
 
 # Processing training  data
-X = final.drop(['AirNOW_O3'],axis=1)
+X = final.drop(['AirNOW_O3','Latitude_x','Longitude_x'],axis=1)
 y = final['AirNOW_O3']
 
 # Defining voting-ensemble based xgboost model

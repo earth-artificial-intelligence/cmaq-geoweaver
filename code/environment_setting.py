@@ -6,8 +6,8 @@ import subprocess
 import pkg_resources
 
 # Required packages to run this process.
-required = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy'}
-#required = {'GDAL'}
+required = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}
+#required = {'xgboost'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
 
@@ -18,7 +18,7 @@ if missing:
         [python, '-m', 'pip', 'install', *missing],
       stdout=subprocess.DEVNULL)
     #subprocess.check_call(
-        #[python, '-m', 'conda', 'install', '-c','conda-forge','gdal', *missing],
+        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],
       #stdout=subprocess.DEVNULL)
 
 
