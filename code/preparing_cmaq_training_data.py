@@ -11,8 +11,8 @@ home = str(Path.home())
 days=[]
 from datetime import date, timedelta
 
-sdate = date(2021, 12, 30)   # start date
-edate = date(2022, 1, 1)   # end date
+sdate = date(2021, 10, 30)   # start date
+edate = date(2021, 10, 30)   # end date
 
 delta = edate - sdate       # as timedelta
 
@@ -20,7 +20,8 @@ for i in range(delta.days + 1):
     day = sdate + timedelta(days=i)
     list_day=day.strftime('%Y%m%d')
     days.append(list_day)
-aa,bb,cc,dd,ee,ff,gg,hh,ii,jj,kk,ll,mm,nn,oo1,pp,qq,rr,ss=[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]
+aa,bb,cc,dd,ee,ff,gg,hh,ii,jj,kk,ll,mm,nn,oo1,pp,qq,rr,ss=(
+    [] for i in range(19))
 #ff=[]
 # k = time dimension - start from 12 to match with data
 t = [12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11]
@@ -55,12 +56,7 @@ for i in days:
       o3tp=np.transpose(oo3)
       o3tp=np.round(o3tp)
       cc.append(o3tp)
-       # PM25_EC
-      oo=df.variables['PM25_EC'][:].values[k,0]
-      oo3=np.ravel(oo)
-      o3tp=np.transpose(oo3)
-      o3tp=np.round(o3tp)
-      dd.append(o3tp)
+
       # PM25_CO
       oo=df.variables['PM25_OC'][:].values[k,0]
       oo3=np.ravel(oo)
@@ -90,12 +86,7 @@ for i in days:
       o3tp=np.transpose(oo3)
       o3tp=np.round(o3tp)
       ff.append(o3tp)
-  	# NO2
-      oo=df.variables['NO2'][:].values[k,0]
-      oo3=np.ravel(oo)
-      o3tp=np.transpose(oo3)
-      o3tp=np.round(o3tp)
-      gg.append(o3tp)
+
       # NO
 #      oo=df.variables['NO'][:].values[k,0]
 #      oo3=np.ravel(oo)
@@ -139,30 +130,14 @@ for i in days:
       o3tp=np.transpose(oo3)
       o3tp=np.round(o3tp)
       mm.append(o3tp)
-            # NO
-      oo=df.variables['WSTAR'][:].values[k,0]
-      oo3=np.ravel(oo)
-      o3tp=np.transpose(oo3)
-      o3tp=np.round(o3tp)
-      nn.append(o3tp)
+
             # NO
       oo=df.variables['RGRND'][:].values[k,0]
       oo3=np.ravel(oo)
       o3tp=np.transpose(oo3)
       o3tp=np.round(o3tp)
       oo1.append(o3tp)
-            # NO
-      oo=df.variables['RN'][:].values[k,0]
-      oo3=np.ravel(oo)
-      o3tp=np.transpose(oo3)
-      o3tp=np.round(o3tp)
-      pp.append(o3tp)
-        	# NO2
-      oo=df.variables['RC'][:].values[k,0]
-      oo3=np.ravel(oo)
-      o3tp=np.transpose(oo3)
-      o3tp=np.round(o3tp)
-      qq.append(o3tp)
+
         	# NO2
       oo=df.variables['CFRAC'][:].values[k,0]
       oo3=np.ravel(oo)
@@ -180,18 +155,14 @@ del bb
 cmaq_CO=list(np.concatenate(cc).flat) 
 print(len(cmaq_CO))
 del cc
-cmaq_PM25_EC=list(np.concatenate(dd).flat) 
-print(len(cmaq_PM25_EC))
-del dd
+
 cmaq_PM25_CO=list(np.concatenate(ee).flat)
 
 del ee
 CO_emi=list(np.concatenate(ff).flat) 
 print(len(CO_emi))
 del ff
-NO2_emi=list(np.concatenate(gg).flat) 
-print(len(NO2_emi))
-del gg
+
 #NO_emi=list(np.concatenate(hh).flat) 
 #del hh
 PRSFC=list(np.concatenate(ii).flat) 
@@ -204,14 +175,10 @@ WSPD10=list(np.concatenate(ll).flat)
 del ll
 WDIR10=list(np.concatenate(mm).flat)
 del mm
-WSTAR=list(np.concatenate(nn).flat) 
-del nn
+
 RGRND=list(np.concatenate(oo1).flat) 
 del oo1
-RN=list(np.concatenate(pp).flat)
-del pp
-RC=list(np.concatenate(qq).flat)
-del qq
+
 CFRAC=list(np.concatenate(rr).flat)
 print(len(CFRAC))
 del rr
@@ -244,7 +211,7 @@ print(len(YYMMDDHH))
 
 
 # saving variables
-dat=pd.DataFrame({'Latitude':LAT,'Longitude':LON,'YYYYMMDDHH':YYMMDDHH,'CMAQ12KM_O3(ppb)':cmaq_O3,'CMAQ12KM_NO2(ppb)':cmaq_NO2,'CMAQ12KM_CO(ppm)':cmaq_CO,'CMAQ_EC(ug/m3)':cmaq_PM25_EC,'CMAQ_OC(ug/m3)':cmaq_PM25_CO,'CO(moles/s)':CO_emi,'NO2(moles/s)':NO2_emi,'PRSFC(Pa)':PRSFC,'PBL(m)':PBL,'TEMP2(K)':TEMP2,'WSPD10(m/s)':WSPD10,'WDIR10(degree)':WDIR10,'WSTAR(m/s)':WSTAR,'RGRND(W/m2)':RGRND,'RN(cm)':RN,'RC(cm)':RC,'CFRAC':CFRAC})
+dat=pd.DataFrame({'Latitude':LAT,'Longitude':LON,'YYYYMMDDHH':YYMMDDHH,'CMAQ12KM_O3(ppb)':cmaq_O3,'CMAQ12KM_NO2(ppb)':cmaq_NO2,'CMAQ12KM_CO(ppm)':cmaq_CO,'CMAQ_OC(ug/m3)':cmaq_PM25_CO,'CO(moles/s)':CO_emi,'PRSFC(Pa)':PRSFC,'PBL(m)':PBL,'TEMP2(K)':TEMP2,'WSPD10(m/s)':WSPD10,'WDIR10(degree)':WDIR10,'RGRND(W/m2)':RGRND,'CFRAC':CFRAC})
 print(dat.head())
 dat.to_csv(home+'/cmaq/training_data.csv',index=False)
 

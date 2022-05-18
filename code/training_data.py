@@ -5,12 +5,12 @@ from pathlib import Path
 home = str(Path.home())
 cmaq=pd.read_csv(home+"/cmaq/training_data.csv")
 obs=pd.read_csv(home+"/cmaq/observation.csv")
-ref_stations=pd.read_csv(home+"/station_cmaq_location.csv")
+ref_stations=pd.read_csv("/groups/ESS/mislam25/station_cmaq_location.csv")
 
 new_df = pd.merge(ref_stations, cmaq,  how='left', left_on=['Latitude_y','Longitude_y'], right_on = ['Latitude','Longitude'])
 new_df.to_csv(home+"/cmaq/subset.csv")
 final = pd.merge(obs, new_df,  how='left', left_on=['Latitude','Longitude','YYYYMMDDHH'], right_on = ['Latitude_x','Longitude_x','YYYYMMDDHH'])
-final.to_csv(home+"/cmaq/subset.csv",index=False)
+#final.to_csv(home+"/cmaq/subset.csv",index=False)
 final=final.drop_duplicates(keep=False)
 training_data = final.loc[:,~final.columns.duplicated()]
 # dropping unnecessary variables
