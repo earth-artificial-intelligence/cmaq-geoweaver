@@ -12,8 +12,8 @@ home = str(Path.home())
 days=[]
 from datetime import date, timedelta
 
-sdate = date(2021, 12, 30)   # start date
-edate = date(2022, 1, 1)   # end date
+sdate = date(2021, 10, 30)   # start date
+edate = date(2021, 10, 30)   # end date
 
 delta = edate - sdate       # as timedelta
 
@@ -31,7 +31,7 @@ for i in days:
       text = file.read()
     new_string = text.replace('"', '')
 
-    outF = open("/home/mislam25/cmaq/observation/AQF5X_Hourly_"+i+t+".txt", "w")
+    outF = open(home + "/cmaq/observation/AQF5X_Hourly_"+i+t+".txt", "w")
     for line in new_string:
       # write line to output file
       outF.write(line)
