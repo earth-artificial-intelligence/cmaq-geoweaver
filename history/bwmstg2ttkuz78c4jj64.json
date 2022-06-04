@@ -1,4 +1,34 @@
 [{
+  "history_id" : "nrF8AVhHyrTYINZn0c",
+  "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;b8uv5z-OspIE;u2h4a7-V1f9F;l8vlic-STu5Y;6oifw4-lD7Pr;",
+  "history_output" : "y6g9jumhjdy;u6bzgtx7y98;hy5qya1ftv9;r288uox51mz;roejvy25vnr;q7e5vckskb5;mn93h8cah4t;ifr081x96un;v3vg3p2o9a5;vxj5quygipi;",
+  "history_begin_time" : 1654315420937,
+  "history_end_time" : 1654315421510,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "p6wvf2;",
+  "indicator" : "Running"
+},{
+  "history_id" : "hUCrZUurX1f28rFfoL",
+  "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;b8uv5z-OspIE;u2h4a7-V1f9F;l8vlic-STu5Y;6oifw4-lD7Pr;",
+  "history_output" : "c6jxmjsn19q;sy41cw68am7;lycyobo27fi;x8o6x8iv61a;j1u0hbpmp4m;u3adbpenprr;s7bmrd1rpz9;j21agcpkbgf;z1w02j1tf7k;pe51w6p3gvq;",
+  "history_begin_time" : 1654314830975,
+  "history_end_time" : 1654314831974,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "p6wvf2;",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "ztBlTx96gVYcUIVte0",
+  "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;b8uv5z-OspIE;u2h4a7-V1f9F;l8vlic-STu5Y;6oifw4-lD7Pr;",
+  "history_output" : "7luc6p00qzq;ecaupy132v1;2jdxr4x3rhi;2wauypb4b8j;b7l1epyaprc;nh9r8kpgplw;2jgffomod4x;2f2w45qs9i3;holzd7tpsp6;s59iq6x6tv0;",
+  "history_begin_time" : 1654224391284,
+  "history_end_time" : 1654224391878,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "p6wvf2;",
+  "indicator" : "Stopped"
+},{
   "history_id" : "qBAW0P8UfxRUt9OzO9",
   "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;b8uv5z-OspIE;u2h4a7-V1f9F;l8vlic-STu5Y;6oifw4-lD7Pr;",
   "history_output" : "bwbdzhzp0t6;p2wirg795b9;gnzw6cyz0bn;xhs0hfj3vt1;wci4nagb4g6;86jiqh87wnv;vgq2339nmrc;qcrvrr07fj2;xtsxvek50qi;vtvaz3j99z7;",
