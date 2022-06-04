@@ -1,4 +1,14 @@
 [{
+  "history_id" : "LeT17qzgeBOjbUMx7b",
+  "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;b8uv5z-OspIE;u2h4a7-V1f9F;l8vlic-STu5Y;6oifw4-lD7Pr;",
+  "history_output" : "fyrdd6a96lp;mio4k3c2oqo;9z7m40i2z5e;03kb607gma6;owyhfo0w3kl;2nbvwn43c52;43g0l0snuv0;wfxll3la452;vmerw3ts4jr;zl0dxas1fen;",
+  "history_begin_time" : 1654317498206,
+  "history_end_time" : 1654318014269,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "roeaa3;",
+  "indicator" : "Done"
+},{
   "history_id" : "nrF8AVhHyrTYINZn0c",
   "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;b8uv5z-OspIE;u2h4a7-V1f9F;l8vlic-STu5Y;6oifw4-lD7Pr;",
   "history_output" : "y6g9jumhjdy;u6bzgtx7y98;hy5qya1ftv9;r288uox51mz;roejvy25vnr;q7e5vckskb5;mn93h8cah4t;ifr081x96un;v3vg3p2o9a5;vxj5quygipi;",
@@ -18,6 +28,16 @@
   "history_process" : "bwmstg2ttkuz78c4jj64",
   "host_id" : "p6wvf2;",
   "indicator" : "Stopped"
+},{
+  "history_id" : "1Qf791nsk9BXsgWnXQ",
+  "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;b8uv5z-OspIE;u2h4a7-V1f9F;l8vlic-STu5Y;6oifw4-lD7Pr;",
+  "history_output" : "zjnydo9lz24;76ck9196x08;f50yg75m6af;w049npmn63k;of419xbamj1;c0ktfkmow7t;uaf4sbot356;m6ykeif663l;gygji4nxsq6;zcneduczmek;",
+  "history_begin_time" : 1654314388320,
+  "history_end_time" : 1654314798230,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "roeaa3;",
+  "indicator" : "Done"
 },{
   "history_id" : "ztBlTx96gVYcUIVte0",
   "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;b8uv5z-OspIE;u2h4a7-V1f9F;l8vlic-STu5Y;6oifw4-lD7Pr;",
@@ -47,6 +67,16 @@
   "history_notes" : null,
   "history_process" : "bwmstg2ttkuz78c4jj64",
   "host_id" : "p6wvf2;",
+  "indicator" : "Done"
+},{
+  "history_id" : "LXop9EOVzj2KxLH3LH",
+  "history_input" : "9xdvh6-Eg0WZ;6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;ex3vh9-GnmSL;b8uv5z-OspIE;6oifw4-98FnL;u2h4a7-V1f9F;l8vlic-STu5Y;",
+  "history_output" : "j4alzt2zbj0;1cqnff2q20h;cmldeqwo9ob;whpe74a67nj;qnocu8u1wab;y78mtjrm28e;etusm6ishr9;r4961ogi5rp;aqb0w8uifx1;jxbl87f97cl;",
+  "history_begin_time" : 1652934708472,
+  "history_end_time" : 1652934721295,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "100001;",
   "indicator" : "Done"
 },{
   "history_id" : "hWdzzyE8hqr9tQFc5B",

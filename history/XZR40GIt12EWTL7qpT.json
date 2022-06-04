@@ -13,9 +13,9 @@
   "history_input" : null,
   "history_output" : null,
   "history_begin_time" : 1650388692856,
-  "history_end_time" : 1650388692856,
+  "history_end_time" : 1654318084737,
   "history_notes" : null,
   "history_process" : "6up921",
   "host_id" : "3wgogh",
-  "indicator" : "Running"
+  "indicator" : "Stopped"
 }]
