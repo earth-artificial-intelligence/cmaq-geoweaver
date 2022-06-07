@@ -4,15 +4,14 @@ import glob, os
 import numpy as np
 from pathlib import Path
 import datetime
+from datetime import timedelta
 # home directory
 home = str(Path.home())
 
-today=datetime.datetime.today().strftime('%Y%m%d')
-pday_= datetime.datetime.today() - datetime.timedelta(days=1)
-pday=pday_.strftime('%Y%m%d')
-fday_= datetime.datetime.today() + datetime.timedelta(days=1)
-fday=fday_.strftime('%Y%m%d')
-days=[today,pday]
+base = datetime.datetime.today()
+date_list = [base - timedelta(days=x) for x in range(7)]
+days = [date.strftime('%Y%m%d') for date in date_list]
+
 aa,bb,cc,dd,ee,ff,gg,hh,ii,jj,kk,ll,mm,nn,oo1,pp,qq,rr,ss=[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]
 #ff=[]
 # k = time dimension - start from 12 to match with data
@@ -206,8 +205,9 @@ print(len(YYMMDDHH))
 
 
 # saving variables
-dat=pd.DataFrame({'Latitude':LAT,'Longitude':LON,'YYYYMMDDHH':YYMMDDHH,'CMAQ12KM_O3(ppb)':cmaq_O3,'CMAQ12KM_NO2(ppb)':cmaq_NO2,'CMAQ12KM_CO(ppm)':cmaq_CO,'CMAQ_OC(ug/m3)':cmaq_PM25_CO,'CO(moles/s)':CO_emi,'PRSFC(Pa)':PRSFC,'PBL(m)':PBL,'TEMP2(K)':TEMP2,'WSPD10(m/s)':WSPD10,'WDIR10(degree)':WDIR10,'RGRND(W/m2)':RGRND,'CFRAC':CFRAC})
+dat=pd.DataFrame({'Latitude':LAT,'Longitude':LON,'YYYYMMDDHH':YYMMDDHH})
 print(dat.head())
 dat.to_csv(home+'/cmaq/test_data.csv',index=False)
+
 
 

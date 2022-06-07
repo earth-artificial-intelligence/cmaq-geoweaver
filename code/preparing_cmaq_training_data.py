@@ -12,7 +12,7 @@ days=[]
 from datetime import date, timedelta
 
 sdate = date(2021, 10, 30)   # start date
-edate = date(2021, 10, 30)   # end date
+edate = date(2021, 10, 31)   # end date
 
 delta = edate - sdate       # as timedelta
 

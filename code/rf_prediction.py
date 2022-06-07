@@ -15,7 +15,7 @@ X = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)
 # processing test data
 
 # load the model from disk
-filename = home+'/cmaq/models/rf.sav'
+filename = '/groups/ESS/aalnaim/cmaq/models/rf.sav'
 #filename = 'D:/Research/CMAQ/local_test/xgboost.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 
@@ -27,4 +27,4 @@ final['prediction'] = pred.tolist()
 
 final = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]
 # saving the dataset into local drive
-final.to_csv(home+'/cmaq/prediction_files/prediction_rf.csv',index=False)
+final.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf.csv',index=False)
