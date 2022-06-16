@@ -3,22 +3,16 @@ import glob
 import pandas as pd
 from pathlib import Path
 import numpy as np
+from datetime import datetime, date, timedelta
 # home directory
 home = str(Path.home())
 
 days=[]
-from datetime import date, timedelta
 
-sdate = date(2021, 10, 30)   # start date
-edate = date(2021, 10, 30)   # end date
+base = datetime.today() - timedelta(days=2)
+date_list = [base - timedelta(days=x) for x in range(3)]
+days = [date.strftime('%Y%m%d') for date in date_list]
 
-delta = edate - sdate       # as timedelta
-
-for i in range(delta.days + 1):
-    day = sdate + timedelta(days=i)
-    list_day=day.strftime('%Y%m%d')
-    days.append(list_day)
-    
     
 data_frame = pd.DataFrame()
 merged=[]
@@ -27,7 +21,7 @@ time = ['12','13','14','15','16','17','18','19','20','21','22','23','00','01','0
 for d in days:
   for t in time:
 
-    files=glob.glob(home+"/cmaq/observation/AQF5X_Hourly_"+d+t+".txt")
+    files=glob.glob("/groups/ESS/aalnaim/cmaq/observation/AQF5X_Hourly_"+d+t+".txt")
     for file in files:
       print(file)
 
@@ -49,7 +43,7 @@ print(dt.shape)
 #print(len(dt))
 dff=df.replace(',','', regex=True)
 dff['YYYYMMDDHH'] = dt.tolist()
-dff.to_csv(home+"/cmaq/observation.csv",index=False)
+dff.to_csv("/groups/ESS/aalnaim/cmaq/observation.csv",index=False)
 
 
 

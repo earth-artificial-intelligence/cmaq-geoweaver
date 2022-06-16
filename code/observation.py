@@ -4,23 +4,16 @@ import pandas as pd
 import glob, os
 import numpy as np
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 # home directory
 home = str(Path.home())
 
 
 days=[]
-from datetime import date, timedelta
 
-sdate = date(2021, 10, 30)   # start date
-edate = date(2021, 10, 30)   # end date
-
-delta = edate - sdate       # as timedelta
-
-for i in range(delta.days + 1):
-    day = sdate + timedelta(days=i)
-    list_day=day.strftime('%Y%m%d')
-    days.append(list_day)
+base = datetime.today() - timedelta(days=2)
+date_list = [base - timedelta(days=x) for x in range(3)]
+days = [date.strftime('%Y%m%d') for date in date_list]
 
 
 time = ['12','13','14','15','16','17','18','19','20','21','22','23','00','01','02','03','04','05','06','07','08','09','10','11']
@@ -31,7 +24,7 @@ for i in days:
       text = file.read()
     new_string = text.replace('"', '')
 
-    outF = open(home + "/cmaq/observation/AQF5X_Hourly_"+i+t+".txt", "w")
+    outF = open("/groups/ESS/aalnaim/cmaq/observation/AQF5X_Hourly_"+i+t+".txt", "w")
     for line in new_string:
       # write line to output file
       outF.write(line)

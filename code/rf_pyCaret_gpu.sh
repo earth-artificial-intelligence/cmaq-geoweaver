@@ -50,12 +50,12 @@ rf = RandomForestRegressor(bootstrap=True, ccp_alpha=0.0, criterion='mse',
                       n_estimators=100, n_jobs=-1, oob_score=False,
                       random_state=3086, verbose=0, warm_start=False)
 
-#rf.fit(X, y)
+rf.fit(X, y)
 
 # save the model to disk
-filename = '/groups/ESS/aalnaim/cmaq/models/rf.sav'
+filename = '/groups/ESS/aalnaim/cmaq/models/rf_Jun14.sav'
 #filename = 'D:/Research/CMAQ/local_test/xgboost.sav'
-#pickle.dump(rf, open(filename, 'wb'))
+pickle.dump(rf, open(filename, 'wb'))
 EOF
 python /groups/ESS/aalnaim/cmaq/rf_pyCaret.py" >> /groups/ESS/aalnaim/cmaq/cmaq_gpu.slurm
 

@@ -3,8 +3,8 @@ from pathlib import Path
 
 # home directory
 home = str(Path.home())
-cmaq=pd.read_csv(home+"/cmaq/training_data.csv")
-obs=pd.read_csv(home+"/cmaq/observation.csv")
+cmaq=pd.read_csv("/groups/ESS/aalnaim/cmaq/training_data.csv")
+obs=pd.read_csv("/groups/ESS/aalnaim/cmaq/observation.csv")
 ref_stations=pd.read_csv("/groups/ESS/mislam25/station_cmaq_location.csv")
 
 new_df = pd.merge(ref_stations, cmaq,  how='left', left_on=['Latitude_y','Longitude_y'], right_on = ['Latitude','Longitude'])
@@ -21,4 +21,4 @@ training_data['hours'] = training_data['YYYYMMDDHH'].str[8:10]
 
 new_df=training_data.drop(['StationID','Latitude_y','Longitude_y','YYYYMMDDHH'],axis=1)
 final_df = new_df[new_df.AirNOW_O3!= -999]
-final_df.to_csv(home+"/cmaq/training.csv",index=False)
+final_df.to_csv("/groups/ESS/aalnaim/cmaq/training.csv",index=False)

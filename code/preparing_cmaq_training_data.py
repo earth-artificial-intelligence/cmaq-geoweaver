@@ -11,8 +11,8 @@ home = str(Path.home())
 days=[]
 from datetime import date, timedelta
 
-sdate = date(2021, 10, 30)   # start date
-edate = date(2021, 10, 31)   # end date
+sdate = date(2022, 3, 1)   # start date
+edate = date(2021, 6, 1)   # end date
 
 delta = edate - sdate       # as timedelta
 
@@ -213,6 +213,6 @@ print(len(YYMMDDHH))
 # saving variables
 dat=pd.DataFrame({'Latitude':LAT,'Longitude':LON,'YYYYMMDDHH':YYMMDDHH,'CMAQ12KM_O3(ppb)':cmaq_O3,'CMAQ12KM_NO2(ppb)':cmaq_NO2,'CMAQ12KM_CO(ppm)':cmaq_CO,'CMAQ_OC(ug/m3)':cmaq_PM25_CO,'CO(moles/s)':CO_emi,'PRSFC(Pa)':PRSFC,'PBL(m)':PBL,'TEMP2(K)':TEMP2,'WSPD10(m/s)':WSPD10,'WDIR10(degree)':WDIR10,'RGRND(W/m2)':RGRND,'CFRAC':CFRAC})
 print(dat.head())
-dat.to_csv(home+'/cmaq/training_data.csv',index=False)
+dat.to_csv('/groups/ESS/aalnaim/cmaq/training_data.csv',index=False)
 
 
