@@ -1,0 +1,221 @@
+[{
+  "history_id" : "z2OTrDQfbKG1",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(\"/groups/ESS/aalnaim/cmaq/testing.csv\",index=False)",
+  "history_output" : "Running",
+  "history_begin_time" : 1655490516867,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "vmsgxwkDgAX9",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(\"/groups/ESS/aalnaim/cmaq/testing.csv\",index=False)",
+  "history_output" : "Running",
+  "history_begin_time" : 1655276958434,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "4UMZNmWINDCi",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "Running",
+  "history_begin_time" : 1655078033924,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "c3xunsstl48",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "Running",
+  "history_begin_time" : 1655073498802,
+  "history_end_time" : 1655073601651,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "87p1pyxeyia",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "Traceback (most recent call last):\n  File \"test_data.py\", line 6, in <module>\n    cmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 686, in read_csv\n    return _read(filepath_or_buffer, kwds)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 452, in _read\n    parser = TextFileReader(fp_or_buf, **kwds)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 946, in __init__\n    self._make_engine(self.engine)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 1178, in _make_engine\n    self._engine = CParserWrapper(self.f, **self.options)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 2008, in __init__\n    self._reader = parsers.TextReader(src, **kwds)\n  File \"pandas/_libs/parsers.pyx\", line 382, in pandas._libs.parsers.TextReader.__cinit__\n  File \"pandas/_libs/parsers.pyx\", line 674, in pandas._libs.parsers.TextReader._setup_parser_source\nFileNotFoundError: [Errno 2] No such file or directory: '/home/zsun/cmaq/test_data.csv'\n",
+  "history_begin_time" : 1654477449165,
+  "history_end_time" : 1654477477629,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "roeaa3",
+  "indicator" : "Failed"
+},{
+  "history_id" : "dr9onztcfzr",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "Traceback (most recent call last):\n  File \"test_data.py\", line 6, in <module>\n    cmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n  File \"C:\\Python37\\lib\\site-packages\\pandas\\io\\parsers.py\", line 676, in parser_f\n    return _read(filepath_or_buffer, kwds)\n  File \"C:\\Python37\\lib\\site-packages\\pandas\\io\\parsers.py\", line 448, in _read\n    parser = TextFileReader(fp_or_buf, **kwds)\n  File \"C:\\Python37\\lib\\site-packages\\pandas\\io\\parsers.py\", line 880, in __init__\n    self._make_engine(self.engine)\n  File \"C:\\Python37\\lib\\site-packages\\pandas\\io\\parsers.py\", line 1114, in _make_engine\n    self._engine = CParserWrapper(self.f, **self.options)\n  File \"C:\\Python37\\lib\\site-packages\\pandas\\io\\parsers.py\", line 1891, in __init__\n    self._reader = parsers.TextReader(src, **kwds)\n  File \"pandas\\_libs\\parsers.pyx\", line 374, in pandas._libs.parsers.TextReader.__cinit__\n  File \"pandas\\_libs\\parsers.pyx\", line 674, in pandas._libs.parsers.TextReader._setup_parser_source\nFileNotFoundError: [Errno 2] File C:\\Users\\JensenSun/cmaq/test_data.csv does not exist: 'C:\\\\Users\\\\JensenSun/cmaq/test_data.csv'\n",
+  "history_begin_time" : 1654465999479,
+  "history_end_time" : 1654466000025,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
+  "history_id" : "kg1t6le7j3s",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "Traceback (most recent call last):\n  File \"test_data.py\", line 6, in <module>\n    cmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 686, in read_csv\n    return _read(filepath_or_buffer, kwds)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 452, in _read\n    parser = TextFileReader(fp_or_buf, **kwds)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 946, in __init__\n    self._make_engine(self.engine)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 1178, in _make_engine\n    self._engine = CParserWrapper(self.f, **self.options)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 2008, in __init__\n    self._reader = parsers.TextReader(src, **kwds)\n  File \"pandas/_libs/parsers.pyx\", line 382, in pandas._libs.parsers.TextReader.__cinit__\n  File \"pandas/_libs/parsers.pyx\", line 674, in pandas._libs.parsers.TextReader._setup_parser_source\nFileNotFoundError: [Errno 2] No such file or directory: '/home/zsun/cmaq/test_data.csv'\n",
+  "history_begin_time" : 1654456069764,
+  "history_end_time" : 1654456095482,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "roeaa3",
+  "indicator" : "Failed"
+},{
+  "history_id" : "79k5igd3lip",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "",
+  "history_begin_time" : 1654319745196,
+  "history_end_time" : 1654319833416,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "43g0l0snuv0",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "Traceback (most recent call last):\n  File \"test_data.py\", line 6, in <module>\n    cmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 686, in read_csv\n    return _read(filepath_or_buffer, kwds)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 452, in _read\n    parser = TextFileReader(fp_or_buf, **kwds)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 946, in __init__\n    self._make_engine(self.engine)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 1178, in _make_engine\n    self._engine = CParserWrapper(self.f, **self.options)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 2008, in __init__\n    self._reader = parsers.TextReader(src, **kwds)\n  File \"pandas/_libs/parsers.pyx\", line 382, in pandas._libs.parsers.TextReader.__cinit__\n  File \"pandas/_libs/parsers.pyx\", line 674, in pandas._libs.parsers.TextReader._setup_parser_source\nFileNotFoundError: [Errno 2] No such file or directory: '/home/zsun/cmaq/test_data.csv'\n",
+  "history_begin_time" : 1654317918359,
+  "history_end_time" : 1654317950935,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "roeaa3",
+  "indicator" : "Done"
+},{
+  "history_id" : "uaf4sbot356",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "Traceback (most recent call last):\n  File \"test_data.py\", line 6, in <module>\n    cmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 686, in read_csv\n    return _read(filepath_or_buffer, kwds)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 452, in _read\n    parser = TextFileReader(fp_or_buf, **kwds)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 946, in __init__\n    self._make_engine(self.engine)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 1178, in _make_engine\n    self._engine = CParserWrapper(self.f, **self.options)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/io/parsers.py\", line 2008, in __init__\n    self._reader = parsers.TextReader(src, **kwds)\n  File \"pandas/_libs/parsers.pyx\", line 382, in pandas._libs.parsers.TextReader.__cinit__\n  File \"pandas/_libs/parsers.pyx\", line 674, in pandas._libs.parsers.TextReader._setup_parser_source\nFileNotFoundError: [Errno 2] No such file or directory: '/home/zsun/cmaq/test_data.csv'\n",
+  "history_begin_time" : 1654314692985,
+  "history_end_time" : 1654314735195,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "roeaa3",
+  "indicator" : "Done"
+},{
+  "history_id" : "vgq2339nmrc",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "",
+  "history_begin_time" : 1653698490119,
+  "history_end_time" : 1653698615352,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "qz78x01107q",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "",
+  "history_begin_time" : 1653698392955,
+  "history_end_time" : 1653698475052,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "etusm6ishr9",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "Traceback (most recent call last):\n  File \"test_data.py\", line 6, in <module>\n    cmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n  File \"C:\\Python37\\lib\\site-packages\\pandas\\io\\parsers.py\", line 676, in parser_f\n    return _read(filepath_or_buffer, kwds)\n  File \"C:\\Python37\\lib\\site-packages\\pandas\\io\\parsers.py\", line 448, in _read\n    parser = TextFileReader(fp_or_buf, **kwds)\n  File \"C:\\Python37\\lib\\site-packages\\pandas\\io\\parsers.py\", line 880, in __init__\n    self._make_engine(self.engine)\n  File \"C:\\Python37\\lib\\site-packages\\pandas\\io\\parsers.py\", line 1114, in _make_engine\n    self._engine = CParserWrapper(self.f, **self.options)\n  File \"C:\\Python37\\lib\\site-packages\\pandas\\io\\parsers.py\", line 1891, in __init__\n    self._reader = parsers.TextReader(src, **kwds)\n  File \"pandas\\_libs\\parsers.pyx\", line 374, in pandas._libs.parsers.TextReader.__cinit__\n  File \"pandas\\_libs\\parsers.pyx\", line 674, in pandas._libs.parsers.TextReader._setup_parser_source\nFileNotFoundError: [Errno 2] File C:\\Users\\JensenSun/cmaq/test_data.csv does not exist: 'C:\\\\Users\\\\JensenSun/cmaq/test_data.csv'\n",
+  "history_begin_time" : 1652934716546,
+  "history_end_time" : 1652934717102,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "pqwcp469fyi",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "",
+  "history_begin_time" : 1652832229164,
+  "history_end_time" : 1652832313323,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "z6ke7lqrm2q",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "",
+  "history_begin_time" : 1652831359623,
+  "history_end_time" : 1652831447653,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "65isind7el0",
+  "history_input" : null,
+  "history_output" : "Remote SCP command had error: scp: 65isind7el0.tar: Disk quota exceeded",
+  "history_begin_time" : 1652786139673,
+  "history_end_time" : 1652786141679,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "p6wvf2",
+  "indicator" : "Failed"
+},{
+  "history_id" : "f8b1qxzw08d",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "",
+  "history_begin_time" : 1652055212953,
+  "history_end_time" : 1652055297109,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "tk97p0j88kq",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "",
+  "history_begin_time" : 1652048118351,
+  "history_end_time" : 1652048197065,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "9jnwki7e9s7",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "",
+  "history_begin_time" : 1650480846339,
+  "history_end_time" : 1650480978174,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "3wgogh",
+  "indicator" : "Done"
+},{
+  "history_id" : "mk7uon7ya8f",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "",
+  "history_begin_time" : 1650473789759,
+  "history_end_time" : 1650473915149,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "3wgogh",
+  "indicator" : "Done"
+},{
+  "history_id" : "z20aw1llntk",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "",
+  "history_begin_time" : 1650252523102,
+  "history_end_time" : 1650252619157,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "3wgogh",
+  "indicator" : "Done"
+},{
+  "history_id" : "aosgbkzntki",
+  "history_input" : "import pandas as pd\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\ncmaq=pd.read_csv(home+\"/cmaq/test_data.csv\")\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(home+\"/cmaq/testing.csv\",index=False)",
+  "history_output" : "",
+  "history_begin_time" : 1650215097103,
+  "history_end_time" : 1650215191122,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "3wgogh",
+  "indicator" : "Done"
+},]

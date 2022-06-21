@@ -1,0 +1,11 @@
+[{
+  "history_id" : "wbvmt7o2mry",
+  "history_input" : "\n## importing necessary libraries\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport plotly.express as px\nfrom pathlib import Path\nimport geopandas as gpd\nimport shapely\nfrom osgeo import gdal\n# home directory\nhome = str(Path.home())\n\n# importing data\ndf=pd.read_csv(home+'/cmaq/prediction_files/prediction_xgboost.csv')\n\ntime_=df['YYYYMMDDHH'].unique()\ndfs = dict(tuple(df.groupby('YYYYMMDDHH'))) # grouping the data by YYMMDDHH\n\nfor t in time_:\n  df=dfs[t]\n  gdf = gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.Longitude, df.Latitude))\n  gdf = gdf.set_crs(\"EPSG:4326\",allow_override=True)\n  #gdf = gdf.set_crs(\"EPSG:4326\")\n  \n\n\n# total area for the grid\n  xmin, ymin, xmax, ymax= gdf.geometry.total_bounds\n  gdf=gdal.OpenEx(gdf.to_json(), gdal.OF_VECTOR)\n# how many cells across and down\n  xsize=422\n  ysize=265\n  gdal.Grid(home+\"/cmaq/prediction_maps/\"+str(t)+\".tif\", gdf, zfield=\"prediction\",outputSRS =\"EPSG:4326\",    algorithm=\"linear\", outputBounds=[xmax,ymax,xmin,ymin], width=xsize, height=ysize)\n\n\n",
+  "history_output" : "",
+  "history_begin_time" : 1650215334347,
+  "history_end_time" : 1650215890590,
+  "history_notes" : null,
+  "history_process" : "h3w49c",
+  "host_id" : "3wgogh",
+  "indicator" : "Done"
+},]

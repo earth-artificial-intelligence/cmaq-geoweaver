@@ -12,7 +12,7 @@ home = str(Path.home())
 days=[]
 
 base = datetime.today() - timedelta(days=2)
-date_list = [base - timedelta(days=x) for x in range(3)]
+date_list = [base - timedelta(days=x) for x in range(2)]
 days = [date.strftime('%Y%m%d') for date in date_list]
 
 

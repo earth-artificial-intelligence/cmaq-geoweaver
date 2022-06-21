@@ -27,4 +27,4 @@ final['prediction'] = pred.tolist()
 
 final = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]
 # saving the dataset into local drive
-final.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf_Jun13.csv',index=False)
+final.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf.csv',index=False)
