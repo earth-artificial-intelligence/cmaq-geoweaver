@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Setting env variables
-export YYYYMMDD_POST=20220613 #This needs to be auto date
+export YYYYMMDD_POST=20220612 #This needs to be auto date
 export wfname="/groups/ESS/aalnaim/cmaq/results/geoweaver_evalution_"$YYYYMMDD_POST"_results.txt"
 
 export obs_dir_NCL="/groups/ESS/share/projects/SWUS3km/data/OBS/AirNow/AQF5X"

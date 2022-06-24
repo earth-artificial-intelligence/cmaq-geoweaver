@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Setting env variables
-export YYYYMMDD_POST=20220613 #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
-export stdate_post=2022-06-13 #This needs to be auto date
-export eddate_post=2022-06-14 #This needs to be auto date
+export YYYYMMDD_POST=20220612 #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
+export stdate_post=2022-06-12 #This needs to be auto date
+export eddate_post=2022-06-13 #This needs to be auto date
 
 export postdata_dir="/groups/ESS/aalnaim/cmaq/prediction_nc_files"
 export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
@@ -157,6 +157,7 @@ EOF
 ncl /groups/ESS/aalnaim/cmaq/geoweaver_plot_daily_O3.ncl
 
 # convert -delay 100 *.png 20220613_20220614.gif
+convert -delay 100 /groups/ESS/aalnaim/cmaq/plots/testPlot*.png /groups/ESS/aalnaim/cmaq/plots/Map_$YYYYMMDD_POST_correct.gif
 
 if [ $? -eq 0 ]; then
     echo "Generating images/gif Completed Successfully"
