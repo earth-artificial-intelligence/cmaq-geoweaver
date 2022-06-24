@@ -11,7 +11,7 @@ export postdata_dir="/groups/ESS/aalnaim/cmaq/prediction_nc_files/"
 
 export mfname="COMBINE3D_ACONC_v531_gcc_AQF5X_20220612_ML_extracted.nc"
 
-export grid_fname="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/GRIDCRO2D_20220613.nc" #This needs to be auto date
+export grid_fname="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/GRIDCRO2D_20220612.nc" #This needs to be auto date
 
 export dx=12000
 
