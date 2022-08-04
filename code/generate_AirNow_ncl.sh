@@ -1,9 +1,13 @@
 #!/bin/bash
 
 # Setting env variables
-export YYYYMMDD_POST=20220612 #This needs to be auto date
-export stdate_post=2022-06-12 #This needs to be auto date
-export eddate_post=2022-06-13 #This needs to be auto date
+export YYYYMMDD_POST=$(date -d '3 day ago' '+%Y%m%d')
+export stdate_post=$(date -d '3 day ago' '+%Y-%m-%d') 
+export eddate_post=$(date -d '2 day ago' '+%Y-%m-%d')
+
+export stdate_file=$(date -d '3 day ago' '+%Y%m%d') 
+export eddate_file=$(date -d '2 day ago' '+%Y%m%d') 
+
 
 export postdata_dir="/groups/ESS/aalnaim/cmaq/prediction_nc_files"
 export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
@@ -28,6 +32,9 @@ date = getenv("YYYYMMDD_POST")
 d1 = getenv("stdate_post") 
 d2 = getenv("eddate_post") 
 
+dFile1 = getenv("stdate_file")
+dFile2 = getenv("eddate_file")
+
 obs_dir = getenv("obs_dir_NCL")
 plot_dir = getenv("graph_dir") 
 
@@ -38,7 +45,7 @@ print(plot_dir)
 aconc_dir = getenv("postdata_dir") 
 grid_dir = getenv("mcip_dir") 
 
-cdf_file1 = addfile(aconc_dir+"/COMBINE3D_ACONC_v531_gcc_AQF5X_20220612_ML_extracted.nc","r")
+cdf_file1 = addfile(aconc_dir+"/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_"+dFile2+"_ML_extracted.nc","r")
 cdf_file= addfile(grid_dir+"/GRIDCRO2D_"+date+".nc","r")
 cdf_file2= addfile(grid_dir+"/METCRO2D_"+date+".nc","r")
 
@@ -309,7 +316,7 @@ EOF
 
 ncl /groups/ESS/aalnaim/cmaq/geoweaver_plot_daily_O3_Airnow.ncl
 
-convert -delay 100 /groups/ESS/aalnaim/cmaq/plots/OBS*.png /groups/ESS/aalnaim/cmaq/plots/Airnow_$YYYYMMDD_POST_correct.gif
+convert -delay 100 /groups/ESS/aalnaim/cmaq/plots/OBS*.png /groups/ESS/aalnaim/cmaq/plots/"Airnow_"$YYYYMMDD_POST.gif
 
 if [ $? -eq 0 ]; then
     echo "Generating AirNow images/gif Completed Successfully"

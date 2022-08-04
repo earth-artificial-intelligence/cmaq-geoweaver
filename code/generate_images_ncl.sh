@@ -1,9 +1,13 @@
 #!/bin/bash
 
 # Setting env variables
-export YYYYMMDD_POST=20220612 #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
-export stdate_post=2022-06-12 #This needs to be auto date
-export eddate_post=2022-06-13 #This needs to be auto date
+export YYYYMMDD_POST=$(date -d '3 day ago' '+%Y%m%d') #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
+export stdate_post=$(date -d '3 day ago' '+%Y-%m-%d') #This needs to be auto date
+export eddate_post=$(date -d '2 day ago' '+%Y-%m-%d') #This needs to be auto date
+
+export stdate_file=$(date -d '3 day ago' '+%Y%m%d') #This needs to be auto date
+export eddate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
+
 
 export postdata_dir="/groups/ESS/aalnaim/cmaq/prediction_nc_files"
 export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
@@ -26,13 +30,16 @@ date = getenv("YYYYMMDD_POST")
 d1 = getenv("stdate_post")
 d2 = getenv("eddate_post")
 
+dFile1 = getenv("stdate_file")
+dFile2 = getenv("eddate_file")
+
 ;print("Passed Date: "+date)
 
 ;aconc_dir = getenv("postdata_dir")
 grid_dir = getenv("mcip_dir")
 plot_dir = getenv("dir_graph")
 
-cdf_file1 = addfile("/groups/ESS/aalnaim/cmaq/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20220612_ML_extracted.nc","r")
+cdf_file1 = addfile("/groups/ESS/aalnaim/cmaq/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_"+dFile2+"_ML_extracted.nc","r")
 cdf_file= addfile(grid_dir+"/GRIDCRO2D_"+date+".nc","r")
 
 ptime = (/"12","13","14","15","16","17","18","19","20","21","22","23","00","01","02","03","04","05","06","07","08","09","10","11"/)
@@ -157,7 +164,7 @@ EOF
 ncl /groups/ESS/aalnaim/cmaq/geoweaver_plot_daily_O3.ncl
 
 # convert -delay 100 *.png 20220613_20220614.gif
-convert -delay 100 /groups/ESS/aalnaim/cmaq/plots/testPlot*.png /groups/ESS/aalnaim/cmaq/plots/Map_$YYYYMMDD_POST_correct.gif
+convert -delay 100 /groups/ESS/aalnaim/cmaq/plots/testPlot*.png /groups/ESS/aalnaim/cmaq/plots/"Map_"$YYYYMMDD_POST.gif
 
 if [ $? -eq 0 ]; then
     echo "Generating images/gif Completed Successfully"

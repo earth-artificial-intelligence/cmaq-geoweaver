@@ -34,7 +34,7 @@ from pathlib import Path
 home = str(Path.home())
 
 # importing data
-final=pd.read_csv('/groups/ESS/mislam25/processed_training/agg_data_2021_03_15_to_22_4_30.csv')
+final=pd.read_csv('/groups/ESS/aalnaim/cmaq/training.csv')
 print(final.head())
 final=final.dropna()
 
@@ -53,7 +53,7 @@ rf = RandomForestRegressor(bootstrap=True, ccp_alpha=0.0, criterion='mse',
 rf.fit(X, y)
 
 # save the model to disk
-filename = '/groups/ESS/aalnaim/cmaq/models/rf_Jun14.sav'
+filename = '/groups/ESS/aalnaim/cmaq/models/rf_from_hourly_aug3.sav'
 #filename = 'D:/Research/CMAQ/local_test/xgboost.sav'
 pickle.dump(rf, open(filename, 'wb'))
 EOF

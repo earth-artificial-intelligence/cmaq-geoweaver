@@ -1,4 +1,264 @@
 [{
+  "history_id" : "9t2g3711280",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob, os\nfrom sklearn.metrics import r2_score, mean_squared_error\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\ny= final['CMAQ12KM_O3(ppb)']\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rf_from_hourly_aug3.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\nprint(r2_score(y, pred))\nprint(mean_squared_error(y, pred))\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf.csv',index=False)",
+  "history_output" : "    Latitude   Longitude  YYYYMMDDHH  ...  month  day  hours\n0  21.829086 -120.620790  20220802 9  ...      8    2      9\n1  21.855751 -120.512500  20220802 9  ...      8    2      9\n2  21.882309 -120.404144  20220802 9  ...      8    2      9\n3  21.908745 -120.295715  20220802 9  ...      8    2      9\n4  21.935051 -120.187225  20220802 9  ...      8    2      9\n\n[5 rows x 18 columns]\n-0.30553276866944734\n113.77135838577559\n",
+  "history_begin_time" : 1659579041641,
+  "history_end_time" : 1659579115905,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "dGZKzzu71fpr",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob, os\nfrom sklearn.metrics import r2_score, mean_squared_error\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\ny= final['CMAQ12KM_O3(ppb)']\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rf_from_hourly.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\nprint(r2_score(y, pred))\nprint(mean_squared_error(y, pred))\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf.csv',index=False)",
+  "history_output" : "    Latitude   Longitude  YYYYMMDDHH  ...  month  day  hours\n0  21.829086 -120.620790   202208011  ...      8    1      1\n1  21.855751 -120.512500   202208011  ...      8    1      1\n2  21.882309 -120.404144   202208011  ...      8    1      1\n3  21.908745 -120.295715   202208011  ...      8    1      1\n4  21.935051 -120.187225   202208011  ...      8    1      1\n\n[5 rows x 18 columns]\n-1.522873696766505\n230.48797708319174\n",
+  "history_begin_time" : 1659570619993,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "Sv4tQWhacEvz",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob, os\nfrom sklearn.metrics import r2_score, mean_squared_error\n\n# home directory\nhome = str(Path.home())\n# importing data\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\nfinal = pd.concat(df_from_each_hourly_file)\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\ny= final['CMAQ12KM_O3(ppb)']\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rf_from_hourly.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\nprint(r2_score(y, pred))\nprint(mean_squared_error(y, pred))\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf.csv',index=False)",
+  "history_output" : "    Latitude   Longitude  YYYYMMDDHH  ...  month  day  hours\n0  21.829086 -120.620790   202207310  ...      7   31      0\n1  21.855751 -120.512500   202207310  ...      7   31      0\n2  21.882309 -120.404144   202207310  ...      7   31      0\n3  21.908745 -120.295715   202207310  ...      7   31      0\n4  21.935051 -120.187225   202207310  ...      7   31      0\n\n[5 rows x 18 columns]\n-1.5228736967665029\n230.48797708319148\n",
+  "history_begin_time" : 1659449703813,
+  "history_end_time" : 1659457744208,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "qItB0uAeFgmL",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob\nfrom sklearn.metrics import r2_score, mean_squared_error\n\n# home directory\nhome = str(Path.home())\n# importing data\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\nfinal = pd.concat(df_from_each_hourly_file)\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\ny= final['CMAQ12KM_O3(ppb)']\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rf_from_hourly.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\nprint(r2_score(y, pred))\nprint(mean_squared_error(y, pred))\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf.csv',index=False)",
+  "history_output" : "Traceback (most recent call last):\n  File \"rf_prediction.py\", line 14, in <module>\n    all_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \nNameError: name 'os' is not defined\n",
+  "history_begin_time" : 1659449605225,
+  "history_end_time" : 1659457743541,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "JKYTDlFpa4Gj",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# importing data\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\nfinal = pd.concat(df_from_each_hourly_file)\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rf_from_hourly.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\n\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf.csv',index=False)",
+  "history_output" : "Traceback (most recent call last):\n  File \"rf_prediction.py\", line 12, in <module>\n    all_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \nNameError: name 'glob' is not defined\n",
+  "history_begin_time" : 1659449357241,
+  "history_end_time" : 1659457743103,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "6abnztnvcc4",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob\nimport os\n\n# home directory\nhome = str(Path.home())\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\nprint(\"Loaded ML model!\")\n# importing data\n# final=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\n# print(final.head())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\nprint(\"Read all hourly input csv's\")\n\nfor file in df_from_each_hourly_file:\n\t\n\tprint(\"Predicting data for: \"+str(file['YYYYMMDDHH'].values[0]))\n    \n\tX = file.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n    # making prediction\n\tpred = loaded_model.predict(X)\n\t# adding prediction values to test dataset\n\tfile['prediction'] = pred.tolist()\n\tfile = file[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n\t# saving the dataset into local drive\n\tprint(\"Prediction done for \"+str(file['YYYYMMDDHH'].values[0]))\n\tfile.to_csv('/groups/ESS/aalnaim/cmaq/output_hourly/prediction_rf_'+str(file['YYYYMMDDHH'].values[0])+'.csv',index=False)\n\n\n\n\n\n",
+  "history_output" : "Running",
+  "history_begin_time" : 1657618923692,
+  "history_end_time" : 1657618956274,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "TOKJV5SyOGtD",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob\nimport os\n\n# home directory\nhome = str(Path.home())\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\nprint(\"Loaded ML model!\")\n# importing data\n# final=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\n# print(final.head())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\nprint(\"Read all hourly input csv's\")\n\nfor file in df_from_each_hourly_file:\n\t\n\tprint(\"Predicting data for: \"+str(file['YYYYMMDDHH'].values[0]))\n    \n\tX = file.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n    # making prediction\n\tpred = loaded_model.predict(X)\n\t# adding prediction values to test dataset\n\tfile['prediction'] = pred.tolist()\n\tfile = file[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n\t# saving the dataset into local drive\n\tprint(\"Prediction done for \"+str(file['YYYYMMDDHH'].values[0]))\n\tfile.to_csv('/groups/ESS/aalnaim/cmaq/output_hourly/prediction_rf_'+str(file['YYYYMMDDHH'].values[0])+'.csv',index=False)\n\n\n\n\n\n",
+  "history_output" : "Loaded ML model!\nRead all hourly input csv's\nPredicting data for: 202207050\nPrediction done for 202207050\nPredicting data for: 202207051\nPrediction done for 202207051\nPredicting data for: 2022070510\nPrediction done for 2022070510\nPredicting data for: 2022070511\nPrediction done for 2022070511\nPredicting data for: 2022070512\nPrediction done for 2022070512\nPredicting data for: 2022070513\nPrediction done for 2022070513\nPredicting data for: 2022070514\nPrediction done for 2022070514\nPredicting data for: 2022070515\nPrediction done for 2022070515\nPredicting data for: 2022070516\nPrediction done for 2022070516\nPredicting data for: 2022070517\nPrediction done for 2022070517\nPredicting data for: 2022070518\nPrediction done for 2022070518\nPredicting data for: 2022070519\nPrediction done for 2022070519\nPredicting data for: 202207052\nPrediction done for 202207052\nPredicting data for: 2022070520\nPrediction done for 2022070520\nPredicting data for: 2022070521\nPrediction done for 2022070521\nPredicting data for: 2022070522\nPrediction done for 2022070522\nPredicting data for: 2022070523\nPrediction done for 2022070523\nPredicting data for: 202207053\nPrediction done for 202207053\nPredicting data for: 202207054\nPrediction done for 202207054\nPredicting data for: 202207055\nPrediction done for 202207055\nPredicting data for: 202207056\nPrediction done for 202207056\nPredicting data for: 202207057\nPrediction done for 202207057\nPredicting data for: 202207058\nPrediction done for 202207058\nPredicting data for: 202207059\nPrediction done for 202207059\nPredicting data for: 202207060\nPrediction done for 202207060\nPredicting data for: 202207061\nPrediction done for 202207061\nPredicting data for: 2022070610\nPrediction done for 2022070610\nPredicting data for: 2022070611\nPrediction done for 2022070611\nPredicting data for: 2022070612\nPrediction done for 2022070612\nPredicting data for: 2022070613\nPrediction done for 2022070613\nPredicting data for: 2022070614\nPrediction done for 2022070614\nPredicting data for: 2022070615\nPrediction done for 2022070615\nPredicting data for: 2022070616\nPrediction done for 2022070616\nPredicting data for: 2022070617\nPrediction done for 2022070617\nPredicting data for: 2022070618\nPrediction done for 2022070618\nPredicting data for: 2022070619\nPrediction done for 2022070619\nPredicting data for: 202207062\nPrediction done for 202207062\nPredicting data for: 2022070620\nPrediction done for 2022070620\nPredicting data for: 2022070621\nPrediction done for 2022070621\nPredicting data for: 2022070622\nPrediction done for 2022070622\nPredicting data for: 2022070623\nPrediction done for 2022070623\nPredicting data for: 202207063\nPrediction done for 202207063\nPredicting data for: 202207064\nPrediction done for 202207064\nPredicting data for: 202207065\nPrediction done for 202207065\nPredicting data for: 202207066\nPrediction done for 202207066\nPredicting data for: 202207067\nPrediction done for 202207067\nPredicting data for: 202207068\nPrediction done for 202207068\nPredicting data for: 202207069\nPrediction done for 202207069\n",
+  "history_begin_time" : 1657245565170,
+  "history_end_time" : 1659448451363,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "Xtmt1GriZaeZ",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob\nimport os\n\n# home directory\nhome = str(Path.home())\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\nprint(\"Loaded ML model!\")\n# importing data\n# final=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\n# print(final.head())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\nprint(\"Read all hourly input csv's\")\n\nfor file in df_from_each_hourly_file:\n\t\n\tprint(\"Predicting data for: \"+str(file['YYYYMMDDHH'].values[0]))\n    \n\tX = file.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n    # making prediction\n\tpred = loaded_model.predict(X)\n\t# adding prediction values to test dataset\n\tfile['prediction'] = pred.tolist()\n\tfile = file[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n\t# saving the dataset into local drive\n\tprint(\"Prediction done for \"+str(file['YYYYMMDDHH'].values[0]))\n\tfile.to_csv('/groups/ESS/aalnaim/cmaq/output_hourly/prediction_rf_'+str(file['YYYYMMDDHH'].values[0])+'.csv',index=False)\n\n\n\n\n\n",
+  "history_output" : "Running",
+  "history_begin_time" : 1657244906842,
+  "history_end_time" : 1657245552361,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "4KYSKUMRwR2K",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob\nimport os\n\n# home directory\nhome = str(Path.home())\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\nprint(\"Loaded ML model!\")\n# importing data\n# final=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\n# print(final.head())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\nprint(\"Read all hourly input csv's\")\n\nfor file in df_from_each_hourly_file:\n\t\n\tprint(\"Predicting data for: \"+str(file['YYYYMMDDHH'].values[0]))\n    \n\tX = file.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n    # making prediction\n\tpred = loaded_model.predict(X)\n\t# adding prediction values to test dataset\n\tfile['prediction'] = pred.tolist()\n\tfile = file[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n\t# saving the dataset into local drive\n\tprint(\"Prediction done for \"+str(file['YYYYMMDDHH'].values[0]))\n\tfile.to_csv('/groups/ESS/aalnaim/cmaq/output_hourly/prediction_rf_'+str(file['YYYYMMDDHH'].values[0])+'.csv',index=False)\n\n\n\n\n\n",
+  "history_output" : "Loaded ML model!\nRead all hourly input csv's\nPredicting data for: 202207040\nPrediction done for 202207040\nPredicting data for: 202207041\nPrediction done for 202207041\nPredicting data for: 2022070410\nPrediction done for 2022070410\nPredicting data for: 2022070411\nPrediction done for 2022070411\nPredicting data for: 2022070412\nPrediction done for 2022070412\nPredicting data for: 2022070413\nPrediction done for 2022070413\nPredicting data for: 2022070414\nPrediction done for 2022070414\nPredicting data for: 2022070415\nPrediction done for 2022070415\nPredicting data for: 2022070416\nPrediction done for 2022070416\nPredicting data for: 2022070417\nPrediction done for 2022070417\nPredicting data for: 2022070418\nPrediction done for 2022070418\nPredicting data for: 2022070419\nPrediction done for 2022070419\nPredicting data for: 202207042\nPrediction done for 202207042\nPredicting data for: 2022070420\nPrediction done for 2022070420\nPredicting data for: 2022070421\nPrediction done for 2022070421\nPredicting data for: 2022070422\nPrediction done for 2022070422\nPredicting data for: 2022070423\nPrediction done for 2022070423\nPredicting data for: 202207043\nPrediction done for 202207043\nPredicting data for: 202207044\nPrediction done for 202207044\nPredicting data for: 202207045\nPrediction done for 202207045\nPredicting data for: 202207046\nPrediction done for 202207046\nPredicting data for: 202207047\nPrediction done for 202207047\nPredicting data for: 202207048\nPrediction done for 202207048\nPredicting data for: 202207049\nPrediction done for 202207049\nPredicting data for: 202207050\nPrediction done for 202207050\nPredicting data for: 202207051\nPrediction done for 202207051\nPredicting data for: 2022070510\nPrediction done for 2022070510\nPredicting data for: 2022070511\nPrediction done for 2022070511\nPredicting data for: 2022070512\nPrediction done for 2022070512\nPredicting data for: 2022070513\nPrediction done for 2022070513\nPredicting data for: 2022070514\nPrediction done for 2022070514\nPredicting data for: 2022070515\nPrediction done for 2022070515\nPredicting data for: 2022070516\nPrediction done for 2022070516\nPredicting data for: 2022070517\nPrediction done for 2022070517\nPredicting data for: 2022070518\nPrediction done for 2022070518\nPredicting data for: 2022070519\nPrediction done for 2022070519\nPredicting data for: 202207052\nPrediction done for 202207052\nPredicting data for: 2022070520\nPrediction done for 2022070520\nPredicting data for: 2022070521\nPrediction done for 2022070521\nPredicting data for: 2022070522\nPrediction done for 2022070522\nPredicting data for: 2022070523\nPrediction done for 2022070523\nPredicting data for: 202207053\nPrediction done for 202207053\nPredicting data for: 202207054\nPrediction done for 202207054\nPredicting data for: 202207055\nPrediction done for 202207055\nPredicting data for: 202207056\nPrediction done for 202207056\nPredicting data for: 202207057\nPrediction done for 202207057\nPredicting data for: 202207058\nPrediction done for 202207058\nPredicting data for: 202207059\nPrediction done for 202207059\n",
+  "history_begin_time" : 1657161553978,
+  "history_end_time" : 1657245551611,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "CoJJ1KsxVr8s",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob\nimport os\n\n# home directory\nhome = str(Path.home())\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\nprint(\"Loaded ML model!\")\n# importing data\n# final=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\n# print(final.head())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\nprint(\"Read all hourly input csv's\")\n\nfor file in df_from_each_hourly_file:\n\t\n\tprint(\"Predicting data for: \"+str(file['YYYYMMDDHH'].values[0]))\n    \n\tX = file.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n    # making prediction\n\tpred = loaded_model.predict(X)\n\t# adding prediction values to test dataset\n\tfile['prediction'] = pred.tolist()\n\tfile = file[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n\t# saving the dataset into local drive\n\tprint(\"Prediction done for \"+str(file['YYYYMMDDHH'].values[0]))\n\tfile.to_csv('/groups/ESS/aalnaim/cmaq/output_hourly\t\t/prediction_rf_'+str(file['YYYYMMDDHH'].values[0])+'.csv',index=False)\n\n\n\n\n\n",
+  "history_output" : "Loaded ML model!\nRead all hourly input csv's\nPredicting data for: 202207040\nPrediction done for 202207040\nTraceback (most recent call last):\n  File \"rf_prediction.py\", line 38, in <module>\n    file.to_csv('/groups/ESS/aalnaim/cmaq/output_hourly\t\t/prediction_rf_'+str(file['YYYYMMDDHH'].values[0])+'.csv',index=False)\n  File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/pandas/core/generic.py\", line 3563, in to_csv\n    return DataFrameRenderer(formatter).to_csv(\n  File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/pandas/io/formats/format.py\", line 1180, in to_csv\n    csv_formatter.save()\n  File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/pandas/io/formats/csvs.py\", line 241, in save\n    with get_handle(\n  File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/pandas/io/common.py\", line 697, in get_handle\n    check_parent_directory(str(handle))\n  File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/pandas/io/common.py\", line 571, in check_parent_directory\n    raise OSError(fr\"Cannot save file into a non-existent directory: '{parent}'\")\nOSError: Cannot save file into a non-existent directory: '/groups/ESS/aalnaim/cmaq/output_hourly\t\t'\n",
+  "history_begin_time" : 1657161113300,
+  "history_end_time" : 1657245551113,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "NFUhJFth2UYS",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob\nimport os\n\n# home directory\nhome = str(Path.home())\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\nprint(\"Loaded ML model!\")\n# importing data\n# final=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\n# print(final.head())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\nprint(\"Read all hourly input csv's\")\n\nfor file in df_from_each_hourly_file:\n\t\n\tprint(\"Predicting data for: \"+str(file['YYYYMMDDHH'].values[0]))\n    \n\tX = file.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n    # making prediction\n\tpred = loaded_model.predict(X)\n\t# adding prediction values to test dataset\n\tfile['prediction'] = pred.tolist()\n\tfile = file[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n\t# saving the dataset into local drive\n\tprint(\"Prediction done for \"+str(file['YYYYMMDDHH'].values[0]))\n\tfinal.to_csv('/groups/ESS/aalnaim/cmaq/output_hourly\t\t/prediction_rf_'+str(file['YYYYMMDDHH'].values[0])+'.csv',index=False)\n\n\n\n\n\n",
+  "history_output" : "Loaded ML model!\nRead all hourly input csv's\nPredicting data for: 202207040\nPrediction done for 202207040\nTraceback (most recent call last):\n  File \"rf_prediction.py\", line 38, in <module>\n    final.to_csv('/groups/ESS/aalnaim/cmaq/output_hourly\t\t/prediction_rf_'+str(file['YYYYMMDDHH'].values[0])+'.csv',index=False)\nNameError: name 'final' is not defined\n",
+  "history_begin_time" : 1657160492834,
+  "history_end_time" : 1657245550578,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "X0LwD6ZA5WBg",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob\nimport os\n\n# home directory\nhome = str(Path.home())\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\nprint(\"Loaded ML model!\")\n# importing data\n# final=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\n# print(final.head())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\nprint(\"Read all hourly input csv's\")\n\nfor file in df_from_each_hourly_file:\n\t\n\tprint(\"Predicting data for: \"+str(file['YYYYMMDDHH'].values[0]))\n    \n\tX = file.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n    # making prediction\n\tpred = loaded_model.predict(X)\n\t# adding prediction values to test dataset\n\tfile['prediction'] = pred.tolist()\n\tfile = file[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n\t# saving the dataset into local drive\n\tprint(\"Prediction done for \"+file['YYYYMMDDHH'].values[0])\n\tfinal.to_csv('/groups/ESS/aalnaim/cmaq/output_hourly\t\t/prediction_rf_'+str(file['YYYYMMDDHH'].values[0])+'.csv',index=False)\n\n\n\n\n\n",
+  "history_output" : "Loaded ML model!\nRead all hourly input csv's\nPredicting data for: 202207040\nTraceback (most recent call last):\n  File \"rf_prediction.py\", line 37, in <module>\n    print(\"Prediction done for \"+file['YYYYMMDDHH'].values[0])\nTypeError: can only concatenate str (not \"numpy.int64\") to str\n",
+  "history_begin_time" : 1657158908730,
+  "history_end_time" : 1657245550096,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "EJIhf0RNUQlx",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob\nimport os\n\n# home directory\nhome = str(Path.home())\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\nprint(\"Loaded ML model!\")\n# importing data\n# final=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\n# print(final.head())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\nprint(\"Read all hourly input csv's\")\n\nfor file in df_from_each_hourly_file:\n\t\n\tprint(\"Predicting data for: \"+file['YYYYMMDDHH'].values[0])\n    \n\tX = file.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n    # making prediction\n\tpred = loaded_model.predict(X)\n\t# adding prediction values to test dataset\n\tfile['prediction'] = pred.tolist()\n\tfile = file[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n\t# saving the dataset into local drive\n\tprint(\"Prediction done for \"+file['YYYYMMDDHH'].values[0])\n\tfinal.to_csv('/groups/ESS/aalnaim/cmaq/output_hourly\t\t/prediction_rf_'+file['YYYYMMDDHH'].values[0]+'.csv',index=False)\n\n\n\n\n\n",
+  "history_output" : "Loaded ML model!\nRead all hourly input csv's\nTraceback (most recent call last):\n  File \"rf_prediction.py\", line 28, in <module>\n    print(\"Predicting data for: \"+file['YYYYMMDDHH'].values[0])\nTypeError: can only concatenate str (not \"numpy.int64\") to str\n",
+  "history_begin_time" : 1657158102466,
+  "history_end_time" : 1657245549418,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "EO34BZr2W4YD",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob\nimport os\n\n# home directory\nhome = str(Path.home())\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# importing data\n# final=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\n# print(final.head())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\n\nfor file in df_from_each_hourly_file:\n\t\n\tprint(\"Predicting data for: \"+file['YYYYMMDDHH'].values[0])\n    \n\tX = file.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n    # making prediction\n\tpred = loaded_model.predict(X)\n\t# adding prediction values to test dataset\n\tfile['prediction'] = pred.tolist()\n\tfile = file[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n\t# saving the dataset into local drive\n\tprint(\"Prediction done for \"+file['YYYYMMDDHH'].values[0])\n\tfinal.to_csv('/groups/ESS/aalnaim/cmaq/output_hourly\t\t/prediction_rf_'+file['YYYYMMDDHH'].values[0]+'.csv',index=False)\n\n\n\n\n\n",
+  "history_output" : null,
+  "history_begin_time" : 1657158004438,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : null
+},{
+  "history_id" : "ZXA1HNbywfXQ",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob\nimport os\n\n# home directory\nhome = str(Path.home())\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# importing data\n# final=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\n# print(final.head())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\n\nfor file in df_from_each_hourly_file:\n\t\n\tprint(\"Predicting data for: \"+file['YYYYMMDDHH'].values[0])\n    \n\tX = file.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n    # making prediction\n\tpred = loaded_model.predict(X)\n\t# adding prediction values to test dataset\n\tfile['prediction'] = pred.tolist()\n\tfile = file[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n\t# saving the dataset into local drive\n\tprint(\"Prediction done for \"+file['YYYYMMDDHH'].values[0])\n\tfinal.to_csv('/groups/ESS/aalnaim/cmaq/output_hourly\t\t/prediction_rf_'+file['YYYYMMDDHH'].values[0]+'.csv',index=False)\n\n\n\n\n\n",
+  "history_output" : "",
+  "history_begin_time" : 1657156710089,
+  "history_end_time" : 1657158034458,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Failed"
+},{
+  "history_id" : "eu0rS0OLvZKE",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob\nimport os\n\n# home directory\nhome = str(Path.home())\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# importing data\n# final=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\n# print(final.head())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\n\nfor file in df_from_each_hourly_file:\n\t\n    print(\"Predicting data for: \"+file['YYYYMMDDHH'].values[0])\n    \n    X = file.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n    # making prediction\n\tpred = loaded_model.predict(X)\n\t# adding prediction values to test dataset\n\tfile['prediction'] = pred.tolist()\n\tfile = file[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n\t# saving the dataset into local drive\n    print(\"Prediction done for \"+file['YYYYMMDDHH'].values[0])\n\tfinal.to_csv('/groups/ESS/aalnaim/cmaq/output_hourly\t\t/prediction_rf_'+file['YYYYMMDDHH'].values[0]+'.csv',index=False)\n\n\n\n\n\n",
+  "history_output" : "  File \"rf_prediction.py\", line 31\n    pred = loaded_model.predict(X)\n                                 ^\nTabError: inconsistent use of tabs and spaces in indentation\n",
+  "history_begin_time" : 1657156685899,
+  "history_end_time" : 1657157993898,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "YFlPezaYTqsb",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\n\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf_latest.csv',index=False)",
+  "history_output" : "    Latitude   Longitude  YYYYMMDDHH  ...  month  day  hours\n0  21.829086 -120.620790   202207051  ...      7    5      1\n1  21.855751 -120.512500   202207051  ...      7    5      1\n2  21.882309 -120.404144   202207051  ...      7    5      1\n3  21.908745 -120.295715   202207051  ...      7    5      1\n4  21.935051 -120.187225   202207051  ...      7    5      1\n\n[5 rows x 18 columns]\n",
+  "history_begin_time" : 1657141363343,
+  "history_end_time" : 1657155717765,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Failed"
+},{
+  "history_id" : "cp8Nzeu4t6J7",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\n\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf_latest.csv',index=False)",
+  "history_output" : null,
+  "history_begin_time" : 1657141353975,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : null
+},{
+  "history_id" : "ULN7R9XU5uqz",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\n\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf_latest.csv',index=False)",
+  "history_output" : "    Latitude   Longitude  YYYYMMDDHH  ...  month  day  hours\n0  21.829086 -120.620790   202207051  ...      7    5      1\n1  21.855751 -120.512500   202207051  ...      7    5      1\n2  21.882309 -120.404144   202207051  ...      7    5      1\n3  21.908745 -120.295715   202207051  ...      7    5      1\n4  21.935051 -120.187225   202207051  ...      7    5      1\n\n[5 rows x 18 columns]\n",
+  "history_begin_time" : 1657139673951,
+  "history_end_time" : 1657141354063,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Failed"
+},{
+  "history_id" : "QGeyNY7ebJ9V",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\n\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf_latest.csv',index=False)",
+  "history_output" : null,
+  "history_begin_time" : 1657137877253,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : null
+},{
+  "history_id" : "mu4XVJdxiNoS",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\n\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf_latest.csv',index=False)",
+  "history_output" : "    Latitude   Longitude  YYYYMMDDHH  ...  month  day  hours\n0  21.829086 -120.620790   202207051  ...      7    5      1\n1  21.855751 -120.512500   202207051  ...      7    5      1\n2  21.882309 -120.404144   202207051  ...      7    5      1\n3  21.908745 -120.295715   202207051  ...      7    5      1\n4  21.935051 -120.187225   202207051  ...      7    5      1\n\n[5 rows x 17 columns]\n/home/aalnaim/CMAQAI/lib/python3.8/site-packages/sklearn/base.py:493: FutureWarning: The feature names should match those that were passed during fit. Starting version 1.2, an error will be raised.\nFeature names seen at fit time, yet now missing:\n- CO(moles/s)\n\n  warnings.warn(message, FutureWarning)\nTraceback (most recent call last):\n  File \"rf_prediction.py\", line 23, in <module>\n    pred = loaded_model.predict(X)\n  File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/sklearn/ensemble/_forest.py\", line 971, in predict\n    X = self._validate_X_predict(X)\n  File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/sklearn/ensemble/_forest.py\", line 579, in _validate_X_predict\n    X = self._validate_data(X, dtype=DTYPE, accept_sparse=\"csr\", reset=False)\n  File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/sklearn/base.py\", line 585, in _validate_data\n    self._check_n_features(X, reset=reset)\n  File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/sklearn/base.py\", line 400, in _check_n_features\n    raise ValueError(\nValueError: X has 14 features, but RandomForestRegressor is expecting 15 features as input.\n",
+  "history_begin_time" : 1657136374351,
+  "history_end_time" : 1657141338942,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "o7bdCV3ZXw2R",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\")\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\n\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf_latest.csv',index=False)",
+  "history_output" : "    Latitude   Longitude  YYYYMMDDHH  ...  month  day  hours\n0  21.829086 -120.620790   202207051  ...      7    5      1\n1  21.855751 -120.512500   202207051  ...      7    5      1\n2  21.882309 -120.404144   202207051  ...      7    5      1\n3  21.908745 -120.295715   202207051  ...      7    5      1\n4  21.935051 -120.187225   202207051  ...      7    5      1\n\n[5 rows x 17 columns]\n",
+  "history_begin_time" : 1657104408241,
+  "history_end_time" : 1657134478005,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "5QrVV4w4VsKQ",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/testing.csv\")\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\n\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf.csv',index=False)",
+  "history_output" : "    Latitude   Longitude  YYYYMMDDHH  ...  month  day  hours\n0  21.829086 -120.620790  2022062612  ...      6   26     12\n1  21.855751 -120.512500  2022062612  ...      6   26     12\n2  21.882309 -120.404144  2022062612  ...      6   26     12\n3  21.908745 -120.295715  2022062612  ...      6   26     12\n4  21.935051 -120.187225  2022062612  ...      6   26     12\n\n[5 rows x 18 columns]\n",
+  "history_begin_time" : 1656452542800,
+  "history_end_time" : 1656454945624,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : null,
+  "indicator" : "Failed"
+},{
+  "history_id" : "gxs47n3fu63",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/testing.csv\")\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\n\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf.csv',index=False)",
+  "history_output" : "    Latitude   Longitude  YYYYMMDDHH  ...  month  day  hours\n0  21.829086 -120.620790  2022062612  ...      6   26     12\n1  21.855751 -120.512500  2022062612  ...      6   26     12\n2  21.882309 -120.404144  2022062612  ...      6   26     12\n3  21.908745 -120.295715  2022062612  ...      6   26     12\n4  21.935051 -120.187225  2022062612  ...      6   26     12\n\n[5 rows x 18 columns]\n",
+  "history_begin_time" : 1656451082067,
+  "history_end_time" : 1656452485876,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "qaas9oll99a",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/testing.csv\")\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\n\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf.csv',index=False)",
+  "history_output" : "    Latitude   Longitude  YYYYMMDDHH  ...  month  day  hours\n0  21.829086 -120.620790  2022062612  ...      6   26     12\n1  21.855751 -120.512500  2022062612  ...      6   26     12\n2  21.882309 -120.404144  2022062612  ...      6   26     12\n3  21.908745 -120.295715  2022062612  ...      6   26     12\n4  21.935051 -120.187225  2022062612  ...      6   26     12\n\n[5 rows x 18 columns]\n",
+  "history_begin_time" : 1656428855032,
+  "history_end_time" : 1656450968023,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "n6lv58mihra",
+  "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/testing.csv\")\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\n\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf.csv',index=False)",
+  "history_output" : "bash: python: command not found\n",
+  "history_begin_time" : 1656428421513,
+  "history_end_time" : 1656428429351,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
   "history_id" : "oqammci4uiB0",
   "history_input" : "\n# Importing necessary libraries\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\n\n# home directory\nhome = str(Path.home())\n# importing data\nfinal=pd.read_csv(\"/groups/ESS/aalnaim/cmaq/testing.csv\")\nprint(final.head())\nX = final.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)\n# defining  testing variables\n# processing test data\n\n# load the model from disk\nfilename = '/groups/ESS/aalnaim/cmaq/models/rfOLD_Jun13.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\n# making prediction\npred = loaded_model.predict(X)\n\n# adding prediction values to test dataset\nfinal['prediction'] = pred.tolist()\n\nfinal = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\nfinal.to_csv('/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf.csv',index=False)",
   "history_output" : "    Latitude   Longitude  YYYYMMDDHH  ...  month  day  hours\n0  21.829086 -120.620790  2022061512  ...      6   15     12\n1  21.855751 -120.512500  2022061512  ...      6   15     12\n2  21.882309 -120.404144  2022061512  ...      6   15     12\n3  21.908745 -120.295715  2022061512  ...      6   15     12\n4  21.935051 -120.187225  2022061512  ...      6   15     12\n\n[5 rows x 18 columns]\n",
