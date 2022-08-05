@@ -1,0 +1,21 @@
+[{
+  "history_id" : "xzyxyrjf2oe",
+  "history_input" : "\n## importing necessary libraries\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport plotly.express as px\nimport glob\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\n\n# importing data\npred=pd.read_csv(home+'/cmaq/prediction_files/prediction_xgboost.csv')\ntime_=pred['YYYYMMDDHH'].unique()\ndfs = dict(tuple(pred.groupby('YYYYMMDDHH'))) # grouping the data by YYMMDDHH\n\nfor t in time_[-2:]:\n  subset=dfs[t]\n  fig = px.density_mapbox(subset, lat='Latitude', lon='Longitude', z='prediction', radius=10,\n                        center=dict(lat=40.453860, lon= -103.037780), zoom=2,\n                        mapbox_style=\"stamen-terrain\")\n  # Set figure title\n  fig.update_layout(title_text=\"Date-time: \"+str(t)+\"(YY:MM:DD:HH)\", title_x=0.5)\n  # saving figures\n  fig.write_image(home+\"/cmaq/prediction_maps/\"+\"pred\"+str(t)+\".png\")\n",
+  "history_output" : "Traceback (most recent call last):\n  File \"/Users/joe/gw-workspace/xzyxyrjf2oe/prediction_visualization.py\", line 6, in <module>\n    import plotly.express as px\nModuleNotFoundError: No module named 'plotly'\n",
+  "history_begin_time" : 1651361424652,
+  "history_end_time" : 1651361425546,
+  "history_notes" : null,
+  "history_process" : "h3w49c",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "wbvmt7o2mry",
+  "history_input" : "\n## importing necessary libraries\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport plotly.express as px\nfrom pathlib import Path\nimport geopandas as gpd\nimport shapely\nfrom osgeo import gdal\n# home directory\nhome = str(Path.home())\n\n# importing data\ndf=pd.read_csv(home+'/cmaq/prediction_files/prediction_xgboost.csv')\n\ntime_=df['YYYYMMDDHH'].unique()\ndfs = dict(tuple(df.groupby('YYYYMMDDHH'))) # grouping the data by YYMMDDHH\n\nfor t in time_:\n  df=dfs[t]\n  gdf = gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.Longitude, df.Latitude))\n  gdf = gdf.set_crs(\"EPSG:4326\",allow_override=True)\n  #gdf = gdf.set_crs(\"EPSG:4326\")\n  \n\n\n# total area for the grid\n  xmin, ymin, xmax, ymax= gdf.geometry.total_bounds\n  gdf=gdal.OpenEx(gdf.to_json(), gdal.OF_VECTOR)\n# how many cells across and down\n  xsize=422\n  ysize=265\n  gdal.Grid(home+\"/cmaq/prediction_maps/\"+str(t)+\".tif\", gdf, zfield=\"prediction\",outputSRS =\"EPSG:4326\",    algorithm=\"linear\", outputBounds=[xmax,ymax,xmin,ymin], width=xsize, height=ysize)\n\n\n",
+  "history_output" : "",
+  "history_begin_time" : 1650215334347,
+  "history_end_time" : 1650215890590,
+  "history_notes" : null,
+  "history_process" : "h3w49c",
+  "host_id" : "3wgogh",
+  "indicator" : "Done"
+},]

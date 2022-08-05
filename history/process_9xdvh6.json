@@ -1,0 +1,411 @@
+[{
+  "history_id" : "k0zpc62rkvm",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\nwith open('requirements.txt','w') as out:\n  out.write('''\nabsl-py==1.0.0\naffine==2.3.1\nasttokens==2.0.5\nastunparse==1.6.3\nattrs==21.4.0\nautokeras==1.0.18\nbackcall==0.2.0\ncachetools==5.0.0\ncertifi==2021.10.8\ncftime==1.6.0\ncharset-normalizer==2.0.12\nclick==8.1.3\nclick-plugins==1.1.1\ncligj==0.7.2\ncmaps==1.0.5\ncycler==0.11.0\ndecorator==5.1.1\nearthpy==0.9.4\nexecuting==0.8.3\nFiona==1.8.21\nflatbuffers==2.0\nfonttools==4.29.1\ngast==0.5.3\ngeopandas==0.10.2\nglob2==0.7\ngoogle-auth==2.6.0\ngoogle-auth-oauthlib==0.4.6\ngoogle-pasta==0.2.0\ngrpcio==1.44.0\nh5py==3.6.0\nidna==3.3\nimageio==2.19.0\nimageio-ffmpeg==0.4.7\nimportlib-metadata==4.11.2\nipython==8.1.1\njedi==0.18.1\njoblib==1.1.0\nkaleido==0.2.1\nkeras==2.8.0\nKeras-Preprocessing==1.1.2\nkeras-tuner==1.1.0\nkiwisolver==1.3.2\nkt-legacy==1.0.4\nlibclang==13.0.0\nMarkdown==3.3.6\nmatplotlib==3.5.1\nmatplotlib-inline==0.1.3\nmunch==2.5.0\nnetCDF4==1.5.8\nnetworkx==2.8\nnumpy==1.22.2\noauthlib==3.2.0\nopencv-python==4.5.5.64\nopt-einsum==3.3.0\npackaging==21.3\npandas==1.4.1\nparso==0.8.3\npathlib==1.0.1\npathlib2==2.3.7.post1\npexpect==4.8.0\npickleshare==0.7.5\nPillow==9.0.1\nplotly==5.7.0\nprompt-toolkit==3.0.28\nprotobuf==3.19.4\nptyprocess==0.7.0\npure-eval==0.2.2\npyasn1==0.4.8\npyasn1-modules==0.2.8\nPygments==2.11.2\npyparsing==3.0.7\npyproj==3.3.1\npython-dateutil==2.8.2\npytz==2021.3\nPyWavelets==1.3.0\nrasterio==1.2.10\nrequests==2.27.1\nrequests-oauthlib==1.3.1\nrsa==4.8\nscikit-image==0.19.2\nscikit-learn==1.0.2\nscipy==1.8.0\nseaborn==0.11.2\nShapely==1.8.2\nsix==1.16.0\nsklearn==0.0\nsnuggs==1.4.7\nstack-data==0.2.0\ntenacity==8.0.1\ntensorboard==2.8.0\ntensorboard-data-server==0.6.1\ntensorboard-plugin-wit==1.8.1\ntensorflow==2.8.0\ntensorflow-gpu==2.8.0\ntensorflow-io-gcs-filesystem==0.24.0\ntermcolor==1.1.0\ntf-estimator-nightly==2.8.0.dev2021122109\nthreadpoolctl==3.1.0\ntifffile==2022.5.4\ntraitlets==5.1.1\ntyping_extensions==4.1.1\nurllib3==1.26.8\nwcwidth==0.2.5\nWerkzeug==2.0.3\nwrapt==1.13.3\nxarray==2022.3.0\nxgboost==1.6.0\nzipp==3.7.0''')\n  \npython = sys.executable\nsubprocess.check_call([python, '-m', 'pip', 'install', '-r', 'requirements.txt'], stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "\u001B[33mWARNING: You are using pip version 22.0.3; however, version 22.2.2 is available.\nYou should consider upgrading via the '/home/aalnaim/CMAQAI/bin/python -m pip install --upgrade pip' command.\u001B[0m\u001B[33m\n",
+  "history_begin_time" : 1659574388259,
+  "history_end_time" : 1659574424363,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "yV37GLqO7FCv",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\nwith open('requirements.txt','w') as out:\n  out.write('''\nabsl-py==1.0.0\naffine==2.3.1\nasttokens==2.0.5\nastunparse==1.6.3\nattrs==21.4.0\nautokeras==1.0.18\nbackcall==0.2.0\ncachetools==5.0.0\ncertifi==2021.10.8\ncftime==1.6.0\ncharset-normalizer==2.0.12\nclick==8.1.3\nclick-plugins==1.1.1\ncligj==0.7.2\ncmaps==1.0.5\ncycler==0.11.0\ndecorator==5.1.1\nearthpy==0.9.4\nexecuting==0.8.3\nFiona==1.8.21\nflatbuffers==2.0\nfonttools==4.29.1\ngast==0.5.3\ngeopandas==0.10.2\nglob2==0.7\ngoogle-auth==2.6.0\ngoogle-auth-oauthlib==0.4.6\ngoogle-pasta==0.2.0\ngrpcio==1.44.0\nh5py==3.6.0\nidna==3.3\nimageio==2.19.0\nimageio-ffmpeg==0.4.7\nimportlib-metadata==4.11.2\nipython==8.1.1\njedi==0.18.1\njoblib==1.1.0\nkaleido==0.2.1\nkeras==2.8.0\nKeras-Preprocessing==1.1.2\nkeras-tuner==1.1.0\nkiwisolver==1.3.2\nkt-legacy==1.0.4\nlibclang==13.0.0\nMarkdown==3.3.6\nmatplotlib==3.5.1\nmatplotlib-inline==0.1.3\nmunch==2.5.0\nnetCDF4==1.5.8\nnetworkx==2.8\nnumpy==1.22.2\noauthlib==3.2.0\nopencv-python==4.5.5.64\nopt-einsum==3.3.0\npackaging==21.3\npandas==1.4.1\nparso==0.8.3\npathlib==1.0.1\npathlib2==2.3.7.post1\npexpect==4.8.0\npickleshare==0.7.5\nPillow==9.0.1\nplotly==5.7.0\nprompt-toolkit==3.0.28\nprotobuf==3.19.4\nptyprocess==0.7.0\npure-eval==0.2.2\npyasn1==0.4.8\npyasn1-modules==0.2.8\nPygments==2.11.2\npyparsing==3.0.7\npyproj==3.3.1\npython-dateutil==2.8.2\npytz==2021.3\nPyWavelets==1.3.0\nrasterio==1.2.10\nrequests==2.27.1\nrequests-oauthlib==1.3.1\nrsa==4.8\nscikit-image==0.19.2\nscikit-learn==1.0.2\nscipy==1.8.0\nseaborn==0.11.2\nShapely==1.8.2\nsix==1.16.0\nsklearn==0.0\nsnuggs==1.4.7\nstack-data==0.2.0\ntenacity==8.0.1\ntensorboard==2.8.0\ntensorboard-data-server==0.6.1\ntensorboard-plugin-wit==1.8.1\ntensorflow==2.8.0\ntensorflow-gpu==2.8.0\ntensorflow-io-gcs-filesystem==0.24.0\ntermcolor==1.1.0\ntf-estimator-nightly==2.8.0.dev2021122109\nthreadpoolctl==3.1.0\ntifffile==2022.5.4\ntraitlets==5.1.1\ntyping_extensions==4.1.1\nurllib3==1.26.8\nwcwidth==0.2.5\nWerkzeug==2.0.3\nwrapt==1.13.3\nxarray==2022.3.0\nxgboost==1.6.0\nzipp==3.7.0''')\n  \npython = sys.executable\nsubprocess.check_call([python, '-m', 'pip', 'install', '-r', 'requirements.txt'], stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "\u001B[33mWARNING: You are using pip version 22.0.3; however, version 22.1.2 is available.\nYou should consider upgrading via the '/home/aalnaim/CMAQAI/bin/python -m pip install --upgrade pip' command.\u001B[0m\u001B[33m\n\u001B[0m\n",
+  "history_begin_time" : 1655407326076,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "FFguTw7DzrFo",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\nwith open('requirements.txt','w') as out:\n  out.write('''\nabsl-py==1.0.0\naffine==2.3.1\nasttokens==2.0.5\nastunparse==1.6.3\nattrs==21.4.0\nautokeras==1.0.18\nbackcall==0.2.0\ncachetools==5.0.0\ncertifi==2021.10.8\ncftime==1.6.0\ncharset-normalizer==2.0.12\nclick==8.1.3\nclick-plugins==1.1.1\ncligj==0.7.2\ncmaps==1.0.5\ncycler==0.11.0\ndecorator==5.1.1\nearthpy==0.9.4\nexecuting==0.8.3\nFiona==1.8.21\nflatbuffers==2.0\nfonttools==4.29.1\ngast==0.5.3\ngeopandas==0.10.2\nglob2==0.7\ngoogle-auth==2.6.0\ngoogle-auth-oauthlib==0.4.6\ngoogle-pasta==0.2.0\ngrpcio==1.44.0\nh5py==3.6.0\nidna==3.3\nimageio==2.19.0\nimageio-ffmpeg==0.4.7\nimportlib-metadata==4.11.2\nipython==8.1.1\njedi==0.18.1\njoblib==1.1.0\nkaleido==0.2.1\nkeras==2.8.0\nKeras-Preprocessing==1.1.2\nkeras-tuner==1.1.0\nkiwisolver==1.3.2\nkt-legacy==1.0.4\nlibclang==13.0.0\nMarkdown==3.3.6\nmatplotlib==3.5.1\nmatplotlib-inline==0.1.3\nmunch==2.5.0\nnetCDF4==1.5.8\nnetworkx==2.8\nnumpy==1.22.2\noauthlib==3.2.0\nopencv-python==4.5.5.64\nopt-einsum==3.3.0\npackaging==21.3\npandas==1.4.1\nparso==0.8.3\npathlib==1.0.1\npathlib2==2.3.7.post1\npexpect==4.8.0\npickleshare==0.7.5\nPillow==9.0.1\nplotly==5.7.0\nprompt-toolkit==3.0.28\nprotobuf==3.19.4\nptyprocess==0.7.0\npure-eval==0.2.2\npyasn1==0.4.8\npyasn1-modules==0.2.8\nPygments==2.11.2\npyparsing==3.0.7\npyproj==3.3.1\npython-dateutil==2.8.2\npytz==2021.3\nPyWavelets==1.3.0\nrasterio==1.2.10\nrequests==2.27.1\nrequests-oauthlib==1.3.1\nrsa==4.8\nscikit-image==0.19.2\nscikit-learn==1.0.2\nscipy==1.8.0\nseaborn==0.11.2\nShapely==1.8.2\nsix==1.16.0\nsklearn==0.0\nsnuggs==1.4.7\nstack-data==0.2.0\ntenacity==8.0.1\ntensorboard==2.8.0\ntensorboard-data-server==0.6.1\ntensorboard-plugin-wit==1.8.1\ntensorflow==2.8.0\ntensorflow-gpu==2.8.0\ntensorflow-io-gcs-filesystem==0.24.0\ntermcolor==1.1.0\ntf-estimator-nightly==2.8.0.dev2021122109\nthreadpoolctl==3.1.0\ntifffile==2022.5.4\ntraitlets==5.1.1\ntyping_extensions==4.1.1\nurllib3==1.26.8\nwcwidth==0.2.5\nWerkzeug==2.0.3\nwrapt==1.13.3\nxarray==2022.3.0\nxgboost==1.6.0\nzipp==3.7.0''')\n  \npython = sys.executable\nsubprocess.check_call([python, '-m', 'pip', 'install', 'r', 'requirements.txt'], stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "\u001B[31mERROR: Could not find a version that satisfies the requirement r (from versions: none)\u001B[0m\u001B[31m\n\u001B[0m\u001B[31mERROR: No matching distribution found for r\u001B[0m\u001B[31m\n\u001B[0m\u001B[33mWARNING: You are using pip version 22.0.3; however, version 22.1.2 is available.\nYou should consider upgrading via the '/home/aalnaim/CMAQAI/bin/python -m pip install --upgrade pip' command.\u001B[0m\u001B[33m\n\u001B[0mTraceback (most recent call last):\n  File \"environment_setting.py\", line 120, in <module>\n    subprocess.check_call([python, '-m', 'pip', 'install', 'r', 'requirements.txt'], stdout=subprocess.DEVNULL)\n  File \"/opt/sw/spack/apps/linux-centos8-x86_64/gcc-9.3.0/python-3.8.6-ff/lib/python3.8/subprocess.py\", line 364, in check_call\n    raise CalledProcessError(retcode, cmd)\nsubprocess.CalledProcessError: Command '['/home/aalnaim/CMAQAI/bin/python', '-m', 'pip', 'install', 'r', 'requirements.txt']' returned non-zero exit status 1.\n",
+  "history_begin_time" : 1655407265712,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "6bq56yuqnah",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow', 'cmaps', 'xgboost'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n  print(\"Packages missing and will be installed: \", missing)\n  python = sys.executable\n  subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "ERROR: Could not find a version that satisfies the requirement tensorflow-gpu (from versions: none)\nERROR: No matching distribution found for tensorflow-gpu\nPackages missing and will be installed:  {'netCDF4', 'Pillow', 'pathlib', 'Shapely', 'autokeras', 'earthpy', 'kaleido', 'opencv-python', 'tensorflow-gpu', 'cmaps'}\nTraceback (most recent call last):\n  File \"/Users/joe/gw-workspace/6bq56yuqnah/environment_setting.py\", line 17, in <module>\n    subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n  File \"/Users/l21-n02609-comm/opt/anaconda3/lib/python3.9/subprocess.py\", line 373, in check_call\n    raise CalledProcessError(retcode, cmd)\nsubprocess.CalledProcessError: Command '['/Users/l21-n02609-comm/opt/anaconda3/bin/python', '-m', 'pip', 'install', 'netCDF4', 'Pillow', 'pathlib', 'Shapely', 'autokeras', 'earthpy', 'kaleido', 'opencv-python', 'tensorflow-gpu', 'cmaps']' returned non-zero exit status 1.\n",
+  "history_begin_time" : 1654726140561,
+  "history_end_time" : 1654726146706,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
+  "history_id" : "hrbj0pmo6pe",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow', 'cmaps', 'xgboost'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n  print(\"Packages missing and will be installed: \", missing)\n  python = sys.executable\n  subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'Pillow', 'netCDF4', 'Shapely'}\n",
+  "history_begin_time" : 1654618028163,
+  "history_end_time" : 1654618099659,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "aqt8fv",
+  "indicator" : "Done"
+},{
+  "history_id" : "fyqh98l6dl5",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing],\n#      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Running",
+  "history_begin_time" : 1654616396437,
+  "history_end_time" : 1654616424301,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "aqt8fv",
+  "indicator" : "Done"
+},{
+  "history_id" : "qdru0xk1p5x",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow', 'cmaps', 'xgboost'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n  print(\"Packages missing and will be installed: \", missing)\n  python = sys.executable\n  subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'Shapely', 'Pillow', 'netCDF4'}\n",
+  "history_begin_time" : 1654476928137,
+  "history_end_time" : 1654477002881,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "roeaa3",
+  "indicator" : "Done"
+},{
+  "history_id" : "oxs5up3ji6e",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow', 'cmaps', 'xgboost'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n  print(\"Packages missing and will be installed: \", missing)\n  python = sys.executable\n  subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "    ERROR: Command errored out with exit status 1:\n     command: 'C:\\Python37\\python.exe' -c 'import sys, setuptools, tokenize; sys.argv[0] = '\"'\"'C:\\\\Users\\\\JENSEN~1\\\\AppData\\\\Local\\\\Temp\\\\pip-install-q8gsy881\\\\fiona\\\\setup.py'\"'\"'; __file__='\"'\"'C:\\\\Users\\\\JENSEN~1\\\\AppData\\\\Local\\\\Temp\\\\pip-install-q8gsy881\\\\fiona\\\\setup.py'\"'\"';f=getattr(tokenize, '\"'\"'open'\"'\"', open)(__file__);code=f.read().replace('\"'\"'\\r\\n'\"'\"', '\"'\"'\\n'\"'\"');f.close();exec(compile(code, __file__, '\"'\"'exec'\"'\"'))' egg_info --egg-base pip-egg-info\n         cwd: C:\\Users\\JENSEN~1\\AppData\\Local\\Temp\\pip-install-q8gsy881\\fiona\\\n    Complete output (1 lines):\n    A GDAL API version must be specified. Provide a path to gdal-config using a GDAL_CONFIG environment variable or use a GDAL_VERSION environment variable.\n    ----------------------------------------\nERROR: Command errored out with exit status 1: python setup.py egg_info Check the logs for full command output.\nWARNING: You are using pip version 19.2.3, however version 22.1.2 is available.\nYou should consider upgrading via the 'python -m pip install --upgrade pip' command.\nPackages missing and will be installed:  {'pathlib', 'glob2', 'Shapely', 'geopandas', 'Pillow', 'kaleido', 'netCDF4', 'autokeras', 'sklearn', 'tensorflow', 'earthpy', 'cmaps'}\nTraceback (most recent call last):\n  File \"environment_setting.py\", line 17, in <module>\n    subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n  File \"C:\\Python37\\lib\\subprocess.py\", line 363, in check_call\n    raise CalledProcessError(retcode, cmd)\nsubprocess.CalledProcessError: Command '['C:\\\\Python37\\\\python.exe', '-m', 'pip', 'install', 'pathlib', 'glob2', 'Shapely', 'geopandas', 'Pillow', 'kaleido', 'netCDF4', 'autokeras', 'sklearn', 'tensorflow', 'earthpy', 'cmaps']' returned non-zero exit status 1.\n",
+  "history_begin_time" : 1654465957621,
+  "history_end_time" : 1654465992990,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
+  "history_id" : "8jt1vn0vp9e",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow', 'cmaps', 'xgboost'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n  print(\"Packages missing and will be installed: \", missing)\n  python = sys.executable\n  subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'Pillow', 'netCDF4', 'Shapely'}\n",
+  "history_begin_time" : 1654465645655,
+  "history_end_time" : 1654465719027,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "roeaa3",
+  "indicator" : "Done"
+},{
+  "history_id" : "4dgyibcac8h",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow', 'cmaps', 'xgboost'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n  print(\"Packages missing and will be installed: \", missing)\n  python = sys.executable\n  subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'Pillow', 'Shapely', 'netCDF4'}\n",
+  "history_begin_time" : 1654455513849,
+  "history_end_time" : 1654455589557,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "roeaa3",
+  "indicator" : "Failed"
+},{
+  "history_id" : "gd1vd9mewor",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow', 'cmaps', 'xgboost'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n  print(\"Packages missing and will be installed: \", missing)\n  python = sys.executable\n  subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Running",
+  "history_begin_time" : 1654453652669,
+  "history_end_time" : 1654453652097,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "100001",
+  "indicator" : "Running"
+},{
+  "history_id" : "fyrdd6a96lp",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n  print(\"Packages missing and will be installed: \", missing)\n  python = sys.executable\n  subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'netCDF4', 'Shapely', 'Pillow'}\n",
+  "history_begin_time" : 1654317498406,
+  "history_end_time" : 1654317575145,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "roeaa3",
+  "indicator" : "Done"
+},{
+  "history_id" : "y6g9jumhjdy",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : 1654315421510,
+  "history_end_time" : 1654317460636,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "c6jxmjsn19q",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : 1654314831974,
+  "history_end_time" : 1654317461163,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "zjnydo9lz24",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing],\n#      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1654314389078,
+  "history_end_time" : 1654314406699,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "roeaa3",
+  "indicator" : "Done"
+},{
+  "history_id" : "7luc6p00qzq",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : 1654224391878,
+  "history_end_time" : 1654317463884,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "bwbdzhzp0t6",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing],\n#      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1653697984397,
+  "history_end_time" : 1653698009310,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "7bbb17fx9ak",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing],\n#      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1653697885041,
+  "history_end_time" : 1653697901072,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "j4alzt2zbj0",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing],\n#      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1652934708501,
+  "history_end_time" : 1652934709175,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "nlyB7Q1FWpK5",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing],\n#      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1652897655161,
+  "history_end_time" : 1652897678338,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "hvlvk04ef07",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing],\n#      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1652897327098,
+  "history_end_time" : 1652897327935,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "tj4jv5v6dmi",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing],\n#      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1652831757425,
+  "history_end_time" : 1652831769148,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "oqcxo3aps1w",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing],\n#      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1652830868045,
+  "history_end_time" : 1652830881097,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "57j8b878vv7",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing],\n#      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1652054779287,
+  "history_end_time" : 1652054791707,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "ht842pehxor",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing],\n#      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1652047430179,
+  "history_end_time" : 1652047443691,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "oyyp5t0ef6f",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy','opencv-python','Pillow'}\n#required = {'xgboost'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n    print(\"Packages missing and will be installed: \", missing)\n    python = sys.executable\n    subprocess.check_call(\n        [python, '-m', 'pip', 'install', *missing],\n      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','xgboost'],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'xarray', 'Pillow', 'pathlib', 'rasterio', 'sklearn', 'opencv-python', 'Shapely', 'geopandas', 'earthpy', 'netCDF4'}\n\u001B[33mWARNING: You are using pip version 22.0.3; however, version 22.0.4 is available.\nYou should consider upgrading via the '/home/aalnaim/CMAQAI/bin/python -m pip install --upgrade pip' command.\u001B[0m\u001B[33m\n\u001B[0m\n",
+  "history_begin_time" : 1652045594653,
+  "history_end_time" : 1652045859213,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "zo3jcmo7vzg",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n    print(\"Packages missing and will be installed: \", missing)\n    python = sys.executable\n    subprocess.check_call(\n        [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "ERROR: Could not find a version that satisfies the requirement tensorflow-gpu\nERROR: No matching distribution found for tensorflow-gpu\nPackages missing and will be installed:  {'kaleido', 'pathlib', 'tensorflow-gpu', 'autokeras', 'netCDF4'}\nTraceback (most recent call last):\n  File \"environment_setting.py\", line 16, in <module>\n    subprocess.check_call(\n  File \"/opt/anaconda3/lib/python3.8/subprocess.py\", line 364, in check_call\n    raise CalledProcessError(retcode, cmd)\nsubprocess.CalledProcessError: Command '['/opt/anaconda3/bin/python', '-m', 'pip', 'install', 'kaleido', 'pathlib', 'tensorflow-gpu', 'autokeras', 'netCDF4']' returned non-zero exit status 1.\n",
+  "history_begin_time" : 1651521834012,
+  "history_end_time" : 1651521841176,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "zrsjoi57dqd",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n    print(\"Packages missing and will be installed: \", missing)\n    python = sys.executable\n    subprocess.check_call(\n        [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "ERROR: Could not find a version that satisfies the requirement tensorflow-gpu (from versions: none)\nERROR: No matching distribution found for tensorflow-gpu\nPackages missing and will be installed:  {'netCDF4', 'autokeras', 'sklearn', 'tensorflow-gpu', 'kaleido', 'pathlib'}\nTraceback (most recent call last):\n  File \"/Users/joe/gw-workspace/zrsjoi57dqd/environment_setting.py\", line 16, in <module>\n    subprocess.check_call(\n  File \"/Users/l21-n02609-comm/opt/anaconda3/lib/python3.9/subprocess.py\", line 373, in check_call\n    raise CalledProcessError(retcode, cmd)\nsubprocess.CalledProcessError: Command '['/Users/l21-n02609-comm/opt/anaconda3/bin/python', '-m', 'pip', 'install', 'netCDF4', 'autokeras', 'sklearn', 'tensorflow-gpu', 'kaleido', 'pathlib']' returned non-zero exit status 1.\n",
+  "history_begin_time" : 1651361398662,
+  "history_end_time" : 1651361401543,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "l1h67bj04ms",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy'}\n#required = {'GDAL'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n    print(\"Packages missing and will be installed: \", missing)\n    python = sys.executable\n    subprocess.check_call(\n        [python, '-m', 'pip', 'install', *missing],\n      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','gdal', *missing],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'netCDF4', 'Shapely'}\n",
+  "history_begin_time" : 1650471363413,
+  "history_end_time" : 1650471585409,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "3wgogh",
+  "indicator" : "Done"
+},{
+  "history_id" : "7b7q5k61ot5",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy'}\n#required = {'GDAL'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n    print(\"Packages missing and will be installed: \", missing)\n    python = sys.executable\n    subprocess.check_call(\n        [python, '-m', 'pip', 'install', *missing],\n      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','gdal', *missing],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'netCDF4', 'Shapely'}\n",
+  "history_begin_time" : 1650459990296,
+  "history_end_time" : 1650460208161,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "3wgogh",
+  "indicator" : "Done"
+},{
+  "history_id" : "d44g231bn8b",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy'}\n#required = {'GDAL'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n    print(\"Packages missing and will be installed: \", missing)\n    python = sys.executable\n    subprocess.check_call(\n        [python, '-m', 'pip', 'install', *missing],\n      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','gdal', *missing],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'netCDF4', 'Shapely'}\n",
+  "history_begin_time" : 1650388787991,
+  "history_end_time" : 1650388968143,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "3wgogh",
+  "indicator" : "Done"
+},{
+  "history_id" : "xd91taowm11",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy'}\n#required = {'GDAL'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n    print(\"Packages missing and will be installed: \", missing)\n    python = sys.executable\n    subprocess.check_call(\n        [python, '-m', 'pip', 'install', *missing],\n      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','gdal', *missing],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'Shapely', 'netCDF4'}\n",
+  "history_begin_time" : 1650388517902,
+  "history_end_time" : 1650388692701,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "3wgogh",
+  "indicator" : "Done"
+},{
+  "history_id" : "6c25agqkanw",
+  "history_input" : "from wordcloud import WordCloud\nfrom wordcloud import STOPWORDS\nimport pandas as pd\ndf=pd.read_csv(\"/home/mislam25/vaccine.csv\")\n# Wordcloud with positive tweets\npositive_tweets = df['clean_text'][df[\"Sentiment\"] == 'POS']\nstop_words = [\"https\", \"co\", \"RT\"] + list(STOPWORDS)\npositive_wordcloud = WordCloud(max_font_size=50, max_words=100, background_color=\"white\", stopwords = stop_words).generate(str(positive_tweets))\nplt.figure()\nplt.title(\"Positive Tweets - Wordcloud\")\nplt.imshow(positive_wordcloud, interpolation=\"bilinear\")\nplt.axis(\"off\")\nplt.savefig('/home/mislam25/pos.png')\n \n# Wordcloud with negative tweets\nnegative_tweets = df['clean_text'][df[\"Sentiment\"] == 'NEG']\nstop_words = [\"https\", \"co\", \"RT\"] + list(STOPWORDS)\nnegative_wordcloud = WordCloud(max_font_size=50, max_words=100, background_color=\"white\", stopwords = stop_words).generate(str(negative_tweets))\nplt.figure()\nplt.title(\"Negative Tweets - Wordcloud\")\nplt.imshow(negative_wordcloud, interpolation=\"bilinear\")\nplt.axis(\"off\")\nplt.savefig('/home/mislam25/neg.png')",
+  "history_output" : "Traceback (most recent call last):\n  File \"/home/mislam25/anaconda3/lib/python3.9/site-packages/pandas/core/indexes/base.py\", line 3361, in get_loc\n    return self._engine.get_loc(casted_key)\n  File \"pandas/_libs/index.pyx\", line 76, in pandas._libs.index.IndexEngine.get_loc\n  File \"pandas/_libs/index.pyx\", line 108, in pandas._libs.index.IndexEngine.get_loc\n  File \"pandas/_libs/hashtable_class_helper.pxi\", line 5198, in pandas._libs.hashtable.PyObjectHashTable.get_item\n  File \"pandas/_libs/hashtable_class_helper.pxi\", line 5206, in pandas._libs.hashtable.PyObjectHashTable.get_item\nKeyError: 'clean_text'\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/mislam25/gw-workspace/6c25agqkanw/environment_setting.py\", line 6, in <module>\n    positive_tweets = df['clean_text'][df[\"Sentiment\"] == 'POS']\n  File \"/home/mislam25/anaconda3/lib/python3.9/site-packages/pandas/core/frame.py\", line 3458, in __getitem__\n    indexer = self.columns.get_loc(key)\n  File \"/home/mislam25/anaconda3/lib/python3.9/site-packages/pandas/core/indexes/base.py\", line 3363, in get_loc\n    raise KeyError(key) from err\nKeyError: 'clean_text'\n",
+  "history_begin_time" : 1650388241629,
+  "history_end_time" : 1650388313124,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "3wgogh",
+  "indicator" : "Done"
+},{
+  "history_id" : "ctdpt9eblx6",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy'}\n#required = {'GDAL'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n    print(\"Packages missing and will be installed: \", missing)\n    python = sys.executable\n    subprocess.check_call(\n        [python, '-m', 'pip', 'install', *missing],\n      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','gdal', *missing],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'Shapely', 'netCDF4'}\n",
+  "history_begin_time" : 1650251338202,
+  "history_end_time" : 1650251408724,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "3wgogh",
+  "indicator" : "Done"
+},{
+  "history_id" : "ob5me7nzu6p",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2','scipy','netCDF4','xarray','geopandas','Shapely','rasterio','earthpy'}\n#required = {'GDAL'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n    print(\"Packages missing and will be installed: \", missing)\n    python = sys.executable\n    subprocess.check_call(\n        [python, '-m', 'pip', 'install', *missing],\n      stdout=subprocess.DEVNULL)\n    #subprocess.check_call(\n        #[python, '-m', 'conda', 'install', '-c','conda-forge','gdal', *missing],\n      #stdout=subprocess.DEVNULL)\n\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models','cmaq/observation']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'netCDF4', 'Shapely'}\n",
+  "history_begin_time" : 1650213908918,
+  "history_end_time" : 1650213978445,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "3wgogh",
+  "indicator" : "Done"
+},{
+  "history_id" : "1ssz971ueep",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\n#required = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2'}\n#installed = {pkg.key for pkg in pkg_resources.working_set}\n#missing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1650049517837,
+  "history_end_time" : 1650049527507,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "8lye3pcmw1k",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\n#required = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2'}\n#installed = {pkg.key for pkg in pkg_resources.working_set}\n#missing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "bash: python: command not found\n",
+  "history_begin_time" : 1650049339606,
+  "history_end_time" : 1650049342628,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "t94nsk7x91x",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\n#required = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2'}\n#installed = {pkg.key for pkg in pkg_resources.working_set}\n#missing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1650048380890,
+  "history_end_time" : 1650048395161,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "mrhnvkfojqs",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\n#required = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2'}\n#installed = {pkg.key for pkg in pkg_resources.working_set}\n#missing = required - installed\n\n#if missing:\n#    print(\"Packages missing and will be installed: \", missing)\n#    python = sys.executable\n#    subprocess.check_call(\n#        [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "",
+  "history_begin_time" : 1646615455117,
+  "history_end_time" : 1646615556706,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "iurjfdaslgl",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n    print(\"Packages missing and will be installed: \", missing)\n    python = sys.executable\n    subprocess.check_call(\n        [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'sklearn', 'pathlib'}\n  \u001B[1;31merror\u001B[0m: \u001B[1msubprocess-exited-with-error\u001B[0m\n  \n  \u001B[31m×\u001B[0m \u001B[32mpython setup.py egg_info\u001B[0m did not run successfully.\n  \u001B[31m│\u001B[0m exit code: \u001B[1;36m1\u001B[0m\n  \u001B[31m╰─>\u001B[0m \u001B[31m[20 lines of output]\u001B[0m\n  \u001B[31m   \u001B[0m Traceback (most recent call last):\n  \u001B[31m   \u001B[0m   File \"<string>\", line 2, in <module>\n  \u001B[31m   \u001B[0m   File \"<pip-setuptools-caller>\", line 34, in <module>\n  \u001B[31m   \u001B[0m   File \"/tmp/pip-install-kf758sef/pathlib_9cca3e8318af444aab4c80c27784d344/setup.py\", line 6, in <module>\n  \u001B[31m   \u001B[0m     setup(\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/_distutils/core.py\", line 109, in setup\n  \u001B[31m   \u001B[0m     _setup_distribution = dist = klass(attrs)\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/dist.py\", line 456, in __init__\n  \u001B[31m   \u001B[0m     for ep in metadata.entry_points(group='distutils.setup_keywords'):\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/_vendor/importlib_metadata/__init__.py\", line 999, in entry_points\n  \u001B[31m   \u001B[0m     return SelectableGroups.load(eps).select(**params)\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/_vendor/importlib_metadata/__init__.py\", line 449, in load\n  \u001B[31m   \u001B[0m     ordered = sorted(eps, key=by_group)\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/_vendor/importlib_metadata/__init__.py\", line 997, in <genexpr>\n  \u001B[31m   \u001B[0m     dist.entry_points for dist in unique(distributions())\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/_vendor/importlib_metadata/__init__.py\", line 609, in entry_points\n  \u001B[31m   \u001B[0m     return EntryPoints._from_text_for(self.read_text('entry_points.txt'), self)\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/_vendor/importlib_metadata/__init__.py\", line 917, in read_text\n  \u001B[31m   \u001B[0m     return self._path.joinpath(filename).read_text(encoding='utf-8')\n  \u001B[31m   \u001B[0m AttributeError: 'PosixPath' object has no attribute 'read_text'\n  \u001B[31m   \u001B[0m \u001B[31m[end of output]\u001B[0m\n  \n  \u001B[1;35mnote\u001B[0m: This error originates from a subprocess, and is likely not a problem with pip.\n\u001B[1;31merror\u001B[0m: \u001B[1mmetadata-generation-failed\u001B[0m\n\n\u001B[31m×\u001B[0m Encountered error while generating package metadata.\n\u001B[31m╰─>\u001B[0m See above for output.\n\n\u001B[1;35mnote\u001B[0m: This is an issue with the package mentioned above, not pip.\n\u001B[1;36mhint\u001B[0m: See above for details.\nTraceback (most recent call last):\n  File \"environment_setting.py\", line 16, in <module>\n    subprocess.check_call(\n  File \"/opt/sw/spack/apps/linux-centos8-x86_64/gcc-9.3.0/python-3.8.6-ff/lib/python3.8/subprocess.py\", line 364, in check_call\n    raise CalledProcessError(retcode, cmd)\nsubprocess.CalledProcessError: Command '['/home/aalnaim/CMAQAI/bin/python', '-m', 'pip', 'install', 'sklearn', 'pathlib']' returned non-zero exit status 1.\n",
+  "history_begin_time" : 1646615004948,
+  "history_end_time" : 1646615056002,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "d5jchobvufs",
+  "history_input" : "# NASA-GEOWEAVER: Environment setting\n\nimport os\nimport sys\nimport subprocess\nimport pkg_resources\n\n# Required packages to run this process.\nrequired = {'pandas','pathlib','sklearn','numpy','keras','tensorflow','tensorflow-gpu','autokeras','kaleido','glob2'}\ninstalled = {pkg.key for pkg in pkg_resources.working_set}\nmissing = required - installed\n\nif missing:\n    print(\"Packages missing and will be installed: \", missing)\n    python = sys.executable\n    subprocess.check_call(\n        [python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)\n\n################################\n#  END OF PACKAGES Installation  #\n\n\n# Creating directoris \nfrom pathlib import Path\nhome = str(Path.home())\nfolders = ['cmaq/exploratory_analysis', 'cmaq/prediction_maps', 'cmaq/prediction_files','cmaq/models']\nfor folder in folders:\n  paths=Path(home+'/'+folder)\n  paths.mkdir(parents=True,exist_ok=True)\n  \n  ###############################\n  # END OF DIRECTORY CREATION #",
+  "history_output" : "Packages missing and will be installed:  {'sklearn', 'autokeras', 'keras', 'pathlib', 'tensorflow', 'glob2', 'tensorflow-gpu', 'kaleido'}\n  \u001B[1;31merror\u001B[0m: \u001B[1msubprocess-exited-with-error\u001B[0m\n  \n  \u001B[31m×\u001B[0m \u001B[32mpython setup.py egg_info\u001B[0m did not run successfully.\n  \u001B[31m│\u001B[0m exit code: \u001B[1;36m1\u001B[0m\n  \u001B[31m╰─>\u001B[0m \u001B[31m[20 lines of output]\u001B[0m\n  \u001B[31m   \u001B[0m Traceback (most recent call last):\n  \u001B[31m   \u001B[0m   File \"<string>\", line 2, in <module>\n  \u001B[31m   \u001B[0m   File \"<pip-setuptools-caller>\", line 34, in <module>\n  \u001B[31m   \u001B[0m   File \"/tmp/pip-install-fuia69cl/pathlib_eae7f9b86513485f9a4fce3077a9a87c/setup.py\", line 6, in <module>\n  \u001B[31m   \u001B[0m     setup(\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/_distutils/core.py\", line 109, in setup\n  \u001B[31m   \u001B[0m     _setup_distribution = dist = klass(attrs)\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/dist.py\", line 456, in __init__\n  \u001B[31m   \u001B[0m     for ep in metadata.entry_points(group='distutils.setup_keywords'):\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/_vendor/importlib_metadata/__init__.py\", line 999, in entry_points\n  \u001B[31m   \u001B[0m     return SelectableGroups.load(eps).select(**params)\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/_vendor/importlib_metadata/__init__.py\", line 449, in load\n  \u001B[31m   \u001B[0m     ordered = sorted(eps, key=by_group)\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/_vendor/importlib_metadata/__init__.py\", line 997, in <genexpr>\n  \u001B[31m   \u001B[0m     dist.entry_points for dist in unique(distributions())\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/_vendor/importlib_metadata/__init__.py\", line 609, in entry_points\n  \u001B[31m   \u001B[0m     return EntryPoints._from_text_for(self.read_text('entry_points.txt'), self)\n  \u001B[31m   \u001B[0m   File \"/home/aalnaim/CMAQAI/lib/python3.8/site-packages/setuptools/_vendor/importlib_metadata/__init__.py\", line 917, in read_text\n  \u001B[31m   \u001B[0m     return self._path.joinpath(filename).read_text(encoding='utf-8')\n  \u001B[31m   \u001B[0m AttributeError: 'PosixPath' object has no attribute 'read_text'\n  \u001B[31m   \u001B[0m \u001B[31m[end of output]\u001B[0m\n  \n  \u001B[1;35mnote\u001B[0m: This error originates from a subprocess, and is likely not a problem with pip.\n\u001B[1;31merror\u001B[0m: \u001B[1mmetadata-generation-failed\u001B[0m\n\n\u001B[31m×\u001B[0m Encountered error while generating package metadata.\n\u001B[31m╰─>\u001B[0m See above for output.\n\n\u001B[1;35mnote\u001B[0m: This is an issue with the package mentioned above, not pip.\n\u001B[1;36mhint\u001B[0m: See above for details.\nTraceback (most recent call last):\n  File \"environment_setting.py\", line 16, in <module>\n    subprocess.check_call(\n  File \"/opt/sw/spack/apps/linux-centos8-x86_64/gcc-9.3.0/python-3.8.6-ff/lib/python3.8/subprocess.py\", line 364, in check_call\n    raise CalledProcessError(retcode, cmd)\nsubprocess.CalledProcessError: Command '['/home/aalnaim/CMAQAI/bin/python', '-m', 'pip', 'install', 'sklearn', 'autokeras', 'keras', 'pathlib', 'tensorflow', 'glob2', 'tensorflow-gpu', 'kaleido']' returned non-zero exit status 1.\n",
+  "history_begin_time" : 1646608258215,
+  "history_end_time" : 1646608323617,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},]
