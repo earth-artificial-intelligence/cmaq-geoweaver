@@ -3,11 +3,11 @@
 
 # Setting env variables
 export YYYYMMDD_POST=$(date -d '3 day ago' '+%Y%m%d')
-export stdate_post=$(date -d '3 day ago' '+%Y-%m-%d') 
+export stdate_post=$(date -d '3 day ago' '+%Y-%m-%d')
 export eddate_post=$(date -d '2 day ago' '+%Y-%m-%d')
 
-export stdate_file=$(date -d '3 day ago' '+%Y%m%d') 
-export eddate_file=$(date -d '2 day ago' '+%Y%m%d') 
+export stdate_file=$(date -d '3 day ago' '+%Y%m%d')
+export eddate_file=$(date -d '2 day ago' '+%Y%m%d')
 
 
 export postdata_dir="/groups/ESS/aalnaim/cmaq/prediction_nc_files"
@@ -29,22 +29,22 @@ end setvalues
 
 begin
 
-date = getenv("YYYYMMDD_POST") 
-d1 = getenv("stdate_post") 
-d2 = getenv("eddate_post") 
+date = getenv("YYYYMMDD_POST")
+d1 = getenv("stdate_post")
+d2 = getenv("eddate_post")
 
 dFile1 = getenv("stdate_file")
 dFile2 = getenv("eddate_file")
 
 obs_dir = getenv("obs_dir_NCL")
-plot_dir = getenv("graph_dir") 
+plot_dir = getenv("graph_dir")
 
 hr=new(24,"string")
 hr=(/"00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"/)
 
 print(plot_dir)
-aconc_dir = getenv("postdata_dir") 
-grid_dir = getenv("mcip_dir") 
+aconc_dir = getenv("postdata_dir")
+grid_dir = getenv("mcip_dir")
 
 cdf_file1 = addfile(aconc_dir+"/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_"+dFile2+"_ML_extracted.nc","r")
 cdf_file= addfile(grid_dir+"/GRIDCRO2D_"+date+".nc","r")
@@ -328,4 +328,3 @@ else
     echo "Removing ncl file: geoweaver_plot_daily_O3_Airnow.ncl..."
 	rm /groups/ESS/aalnaim/cmaq/geoweaver_plot_daily_O3_Airnow.ncl
 fi
-

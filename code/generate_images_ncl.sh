@@ -177,4 +177,3 @@ else
     echo "Removing ncl file: geoweaver_plot_daily_O3.ncl..."
 	rm /groups/ESS/aalnaim/cmaq/geoweaver_plot_daily_O3.ncl
 fi
-
