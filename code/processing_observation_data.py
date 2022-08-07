@@ -12,7 +12,7 @@ days=[]
 
 
 sdate = date(2022, 7, 1)   # start date
-edate = date(2022, 7, 31)   # end date
+edate = date(2022, 7, 2)   # end date
 
 delta = edate - sdate       # as timedelta
 

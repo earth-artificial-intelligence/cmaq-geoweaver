@@ -3,12 +3,12 @@
 
 
 # Setting env variables
-export YYYYMMDD_POST=$(date -d '3 day ago' '+%Y%m%d') #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
-export stdate_post=$(date -d '3 day ago' '+%Y-%m-%d') #This needs to be auto date
-export eddate_post=$(date -d '2 day ago' '+%Y-%m-%d') #This needs to be auto date
+export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
+export stdate_post=$(date -d '2 day ago' '+%Y-%m-%d') #This needs to be auto date
+export eddate_post=$(date -d '1 day ago' '+%Y-%m-%d') #This needs to be auto date
 
-export stdate_file=$(date -d '3 day ago' '+%Y%m%d') #This needs to be auto date
-export eddate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
+export stdate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
+export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
 
 
 export postdata_dir="/groups/ESS/aalnaim/cmaq/prediction_nc_files"
@@ -177,3 +177,4 @@ else
     echo "Removing ncl file: geoweaver_plot_daily_O3.ncl..."
 	rm /groups/ESS/aalnaim/cmaq/geoweaver_plot_daily_O3.ncl
 fi
+

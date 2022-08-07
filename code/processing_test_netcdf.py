@@ -15,7 +15,7 @@ date_list = [base + timedelta(days=x) for x in range(2)]
 days = [date.strftime('%Y%m%d') for date in date_list]
 
 # nc file need to correspond to the same prediction date in "/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf_Jun13.csv"
-df_cdf = xr.open_dataset("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_"+days[1]+"_extracted.nc")
+df_cdf = xr.open_dataset("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_"+days[0]+"_extracted.nc")
 
 df_csv = pd.read_csv("/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf.csv")
 

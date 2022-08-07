@@ -9,7 +9,7 @@ from pathlib import Path
 # home = str(Path.home())
 
 path = '/groups/ESS/aalnaim/cmaq/input_hourly'
-all_hourly_files = glob.glob(os.path.join(path, "*.csv"))     # advisable to use os.path.join as this makes concatenation OS independent
+all_hourly_files = glob.glob(os.path.join(path, "test_data_*.csv"))     # advisable to use os.path.join as this makes concatenation OS independent
 
 df_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)
 cmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)

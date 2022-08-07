@@ -56,7 +56,7 @@ rf = RandomForestRegressor(bootstrap=True, ccp_alpha=0.0, criterion='mse',
 rf.fit(X, y)
 
 # save the model to disk
-filename = '/groups/ESS/aalnaim/cmaq/models/rf_from_hourly_aug3.sav'
+filename = '/groups/ESS/aalnaim/cmaq/models/rf_from_hourly_fixed.sav'
 #filename = 'D:/Research/CMAQ/local_test/xgboost.sav'
 pickle.dump(rf, open(filename, 'wb'))
 EOF

@@ -18,14 +18,13 @@ y= final['CMAQ12KM_O3(ppb)']
 # processing test data
 
 # load the model from disk
-filename = '/groups/ESS/aalnaim/cmaq/models/rf_from_hourly_aug3.sav'
+filename = '/groups/ESS/aalnaim/cmaq/models/rf_from_hourly_fixed.sav'
 #filename = 'D:/Research/CMAQ/local_test/xgboost.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 
 # making prediction
 pred = loaded_model.predict(X)
-print(r2_score(y, pred))
-print(mean_squared_error(y, pred))
+
 # adding prediction values to test dataset
 final['prediction'] = pred.tolist()
 

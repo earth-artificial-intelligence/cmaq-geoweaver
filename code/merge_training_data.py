@@ -8,7 +8,7 @@ import glob, os
 
 # cmaq=pd.read_csv(home+"/cmaq/training_data.csv")
 path = '/groups/ESS/aalnaim/cmaq/training_input_hourly'
-all_hourly_files = sorted(glob.glob(os.path.join(path, "*.csv")))
+all_hourly_files = sorted(glob.glob(os.path.join(path, "*.csv"))) 
 df_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)
 cmaq = pd.concat(df_from_each_hourly_file)
 
@@ -30,3 +30,6 @@ training_data['hours'] = training_data['YYYYMMDDHH'].str[8:10]
 new_df=training_data.drop(['StationID','Latitude_y','Longitude_y','YYYYMMDDHH'],axis=1)
 final_df = new_df[new_df.AirNOW_O3!= -999]
 final_df.to_csv("/groups/ESS/aalnaim/cmaq/training.csv",index=False)
+
+
+
