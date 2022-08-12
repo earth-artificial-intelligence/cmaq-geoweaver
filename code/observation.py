@@ -21,7 +21,7 @@ for i in range(len(days)-1):
       i = current_day
     t = time[x]
     files = "/groups/ESS/share/projects/SWUS3km/data/OBS/AirNow/AQF5X/"+"AQF5X_Hourly_"+i+t+".dat"
-
+    
     with open(files, 'r') as file:
       text = file.read()
       new_string = text.replace('"', '')
@@ -30,5 +30,5 @@ for i in range(len(days)-1):
       outF = open(out_file, "w")
       for line in new_string:
         outF.write(line)
-
+      
       outF.close()

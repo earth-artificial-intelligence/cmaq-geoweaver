@@ -1,17 +1,19 @@
 # load the prediction_rf.csv into a NetCDF file for visualization
 from cmaq_ai_utils import *
 
-end_date = datetime.today()
-base = end_date - timedelta(days=2)
-days = get_days_list(base, end_date)
+# end_date = datetime.today()
+# base = end_date - timedelta(days=2)
+sdate = date(2022, 7, 1)   # start date
+edate = date(2022, 7, 2)   # end date
+days = get_days_list(sdate, edate)
 
-# nc file need to correspond to the same prediction date in "/groups/ESS/aalnaim/cmaq/prediction_files/prediction_rf_Jun13.csv"
 df_cdf = xr.open_dataset("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_"+days[0]+"_extracted.nc")
 
 df_csv = pd.read_csv(f"{cmaq_folder}/prediction_files/prediction_rf.csv")
 
 df_csv['YYYYMMDDHH'] = df_csv['YYYYMMDDHH'].astype(str)
-df_filt = df_csv[df_csv['YYYYMMDDHH'].str.contains(days[1]+"|"+days[0], case = False, regex=True)]
+df_filt = df_csv[df_csv['YYYYMMDDHH'].str.contains(days[1]+"|"+days[0]+"|"+days[2], case = False, regex=True)]
+print(df_filt['YYYYMMDDHH'].unique())
 df_filt = df_filt[(df_filt['YYYYMMDDHH'] > days[0]+'11') & (df_filt['YYYYMMDDHH'] < days[1]+'12')]
 
 

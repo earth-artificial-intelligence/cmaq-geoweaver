@@ -9,7 +9,7 @@ from cmaq_ai_utils import *
 sdate = date(2022, 7, 1)   # start date
 edate = date(2022, 7, 2)   # end date
 days = get_days_list(sdate, edate)
-
+    
 data_frame = pd.DataFrame()
 merged=[]
 date_time=[]
@@ -34,11 +34,11 @@ for x in range(len(days)-1):
       dt=np.tile(dt,len(data)) # constructs an array for each hour of each day with length of data from total stations available
       date_time.append(dt)
       merged.append(data)
-
+            
 data_frame = np.concatenate(merged)
 
 # This gets the first 4 columns in the observation file (AQSID, Latitude, Longitude, OZONE(ppb))
-data_frame = np.delete(data_frame, np.s_[4:9], axis=1)
+data_frame = np.delete(data_frame, np.s_[4:9], axis=1) 
 
 df = pd.DataFrame(data_frame, columns = ['StationID','Latitude','Longitude','AirNOW_O3'])
 dff=df.replace(',','', regex=True)
