@@ -4,12 +4,11 @@ import pandas as pd
 import glob
 import os
 from pathlib import Path
+from cmaq_ai_utils import *
 
-# home directory
-# home = str(Path.home())
-
-path = '/groups/ESS/aalnaim/cmaq/input_hourly'
-all_hourly_files = glob.glob(os.path.join(path, "*.csv"))     # advisable to use os.path.join as this makes concatenation OS independent
+testing_path = f'{cmaq_folder}/testing_input_hourly'
+all_hourly_files = glob.glob(os.path.join(testing_path, "test_data_*.csv"))   
+# advisable to use os.path.join as this makes concatenation OS independent
 
 df_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)
 cmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)
@@ -20,7 +19,6 @@ cmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]
 cmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]
 cmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]
 
-#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)
-cmaq.to_csv("/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv",index=False)
+cmaq.to_csv(f"{cmaq_folder}/testing_input_hourly/testing.csv",index=False)
 
-print('Done!')
+print('Done with generating testing.csv!')

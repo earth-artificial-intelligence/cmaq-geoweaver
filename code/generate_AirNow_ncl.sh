@@ -1,24 +1,27 @@
 #!/bin/bash
 # generate images and gif from the prediction NetCDF files and overlay the AirNow station observation on the top
 
+cmaq_folder="/groups/ESS/zsun/cmaq"
+mkdir $cmaq_folder"/plots"
 # Setting env variables
-export YYYYMMDD_POST=$(date -d '3 day ago' '+%Y%m%d')
-export stdate_post=$(date -d '3 day ago' '+%Y-%m-%d')
-export eddate_post=$(date -d '2 day ago' '+%Y-%m-%d')
+export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d')
+export stdate_post=$(date -d '2 day ago' '+%Y-%m-%d') 
+export eddate_post=$(date -d '1 day ago' '+%Y-%m-%d')
 
-export stdate_file=$(date -d '3 day ago' '+%Y%m%d')
-export eddate_file=$(date -d '2 day ago' '+%Y%m%d')
+export stdate_file=$(date -d '2 day ago' '+%Y%m%d') 
+export eddate_file=$(date -d '1 day ago' '+%Y%m%d') 
 
 
-export postdata_dir="/groups/ESS/aalnaim/cmaq/prediction_nc_files"
+export postdata_dir=$cmaq_folder"/prediction_nc_files"
 export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
-export graph_dir="/groups/ESS/aalnaim/cmaq/plots"
+export graph_dir="/groups/ESS/zsun/cmaq/plots"
 
 export obs_dir_NCL="/groups/ESS/share/projects/SWUS3km/data/OBS/AirNow/AQF5X"
 
 module load ncl
 
-cat <<EOF >>/groups/ESS/aalnaim/cmaq/geoweaver_plot_daily_O3_Airnow.ncl
+rm $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
+cat <<EOF >>$cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/contributed.ncl"
@@ -29,22 +32,24 @@ end setvalues
 
 begin
 
-date = getenv("YYYYMMDD_POST")
-d1 = getenv("stdate_post")
-d2 = getenv("eddate_post")
+date = getenv("YYYYMMDD_POST") 
+d1 = getenv("stdate_post") 
+d2 = getenv("eddate_post") 
 
 dFile1 = getenv("stdate_file")
 dFile2 = getenv("eddate_file")
 
 obs_dir = getenv("obs_dir_NCL")
-plot_dir = getenv("graph_dir")
+plot_dir = getenv("graph_dir") 
 
 hr=new(24,"string")
 hr=(/"00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"/)
 
 print(plot_dir)
-aconc_dir = getenv("postdata_dir")
+aconc_dir = getenv("postdata_dir") 
 grid_dir = getenv("mcip_dir")
+
+print(aconc_dir+"/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_"+dFile2+"_ML_extracted.nc")
 
 cdf_file1 = addfile(aconc_dir+"/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_"+dFile2+"_ML_extracted.nc","r")
 cdf_file= addfile(grid_dir+"/GRIDCRO2D_"+date+".nc","r")
@@ -291,7 +296,7 @@ do it = 0, nt-1
   delete(wks)
   delete(pmid_O3)
   delete(hollow_O3)
-  system("composite -geometry 100x70+900+900 /groups/ESS/aalnaim/cmaq/mason-logo-green.png "+pname+".png "+pname+".png")
+  system("composite -geometry 100x70+900+900 /groups/ESS/zsun/cmaq/mason-logo-green.png "+pname+".png "+pname+".png")
 
 
   delete(pmid)
@@ -315,16 +320,17 @@ end
 EOF
 
 
-ncl /groups/ESS/aalnaim/cmaq/geoweaver_plot_daily_O3_Airnow.ncl
+ncl $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
 
-convert -delay 100 /groups/ESS/aalnaim/cmaq/plots/OBS*.png /groups/ESS/aalnaim/cmaq/plots/"Airnow_"$YYYYMMDD_POST.gif
+convert -delay 100 $cmaq_folder/plots/OBS*.png $cmaq_folder/plots/"Airnow_"$YYYYMMDD_POST.gif
 
 if [ $? -eq 0 ]; then
     echo "Generating AirNow images/gif Completed Successfully"
 	echo "Removing ncl file: geoweaver_plot_daily_O3_Airnow.ncl..."
-	rm /groups/ESS/aalnaim/cmaq/geoweaver_plot_daily_O3_Airnow.ncl
+	#rm $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
 else
     echo "Generating AirNow images/gif Failed!"
     echo "Removing ncl file: geoweaver_plot_daily_O3_Airnow.ncl..."
-	rm /groups/ESS/aalnaim/cmaq/geoweaver_plot_daily_O3_Airnow.ncl
+	#rm $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
 fi
+

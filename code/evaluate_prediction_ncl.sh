@@ -1,18 +1,19 @@
 #!/bin/bash
 # evaluate the prediction accuracy
 
+cmaq_folder="/groups/ESS/zsun/cmaq"
 # Setting env variables
-export YYYYMMDD_POST=$(date -d '3 day ago' '+%Y%m%d')
-export stdate_file=$(date -d '3 day ago' '+%Y%m%d') #This needs to be auto date
-export eddate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
+export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d')
+export stdate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
+export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
 
 
-export wfname="/groups/ESS/aalnaim/cmaq/results/geoweaver_evalution_"$YYYYMMDD_POST"_results.txt"
+export wfname=$cmaq_folder"/results/geoweaver_evalution_"$YYYYMMDD_POST"_results.txt"
 
 export obs_dir_NCL="/groups/ESS/share/projects/SWUS3km/data/OBS/AirNow/AQF5X"
 export ofname="/AQF5X_Hourly_"
 
-export postdata_dir="/groups/ESS/aalnaim/cmaq/prediction_nc_files/"
+export postdata_dir=$cmaq_folder"/prediction_nc_files/"
 
 export mfname="COMBINE3D_ACONC_v531_gcc_AQF5X_"$stdate_file"_"$eddate_file"_ML_extracted.nc"
 
@@ -22,7 +23,9 @@ export dx=12000
 
 module load ncl
 
-cat <<EOF >>/groups/ESS/aalnaim/cmaq/geoweaver_eva_daily_O3.ncl
+rm $cmaq_folder/geoweaver_eva_daily_O3.ncl
+
+cat <<EOF >> $cmaq_folder/geoweaver_eva_daily_O3.ncl
 
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
@@ -253,12 +256,11 @@ end
 EOF
 
 
-ncl /groups/ESS/aalnaim/cmaq/geoweaver_eva_daily_O3.ncl
+ncl $cmaq_folder/geoweaver_eva_daily_O3.ncl
 
 if [ $? -eq 0 ]; then
     echo "Evaluation Completed Successfully"
-	echo "Removing ncl file: geoweaver_eva_daily_O3.ncl..."
-	rm /groups/ESS/aalnaim/cmaq/geoweaver_eva_daily_O3.ncl
 else
     echo "Evaluation Failed!"
 fi
+

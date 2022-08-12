@@ -1,4 +1,84 @@
 [{
+  "history_id" : "1qDhgq5b0agH",
+  "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))     # advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(f\"{cmaq_folder}/testing_input_hourly/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
+  "history_output" : "Done with generating testing.csv!\n",
+  "history_begin_time" : 1660275063289,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "DRXccA02Rcfv",
+  "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\n\n# home directory\n# home = str(Path.home())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = glob.glob(os.path.join(path, \"test_data_*.csv\"))     # advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\",index=False)\n\nprint('Done!')",
+  "history_output" : "Done!\n",
+  "history_begin_time" : 1659742206802,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "BbFVf1hthJGp",
+  "history_input" : "import pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\n\n# home directory\n# home = str(Path.home())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = glob.glob(os.path.join(path, \"test_data_*.csv\"))     # advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\",index=False)\n\nprint('Done!')",
+  "history_output" : "Done!\n",
+  "history_begin_time" : 1659731017787,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "CZzuoNc8rM2E",
+  "history_input" : "import pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\n\n# home directory\n# home = str(Path.home())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = glob.glob(os.path.join(path, \"test_data_*.csv\"))     # advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\",index=False)\n\nprint('Done!')",
+  "history_output" : null,
+  "history_begin_time" : 1659730939724,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : null,
+  "indicator" : null
+},{
+  "history_id" : "6TcXF6w8pObc",
+  "history_input" : "import pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\n\n# home directory\n# home = str(Path.home())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = glob.glob(os.path.join(path, \"*.csv\"))     # advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\",index=False)\n\nprint('Done!')",
+  "history_output" : "Done!\n",
+  "history_begin_time" : 1659721363240,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "QJ0DeTuJ6y9B",
+  "history_input" : "import pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\n\n# home directory\n# home = str(Path.home())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = glob.glob(os.path.join(path, \"*.csv\"))     # advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\",index=False)\n\nprint('Done!')",
+  "history_output" : "Done!\n",
+  "history_begin_time" : 1659664966980,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "BwubXYzPf1Qh",
+  "history_input" : "import pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\n\n# home directory\n# home = str(Path.home())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = glob.glob(os.path.join(path, \"*.csv\"))     # advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\",index=False)\n\nprint('Done!')",
+  "history_output" : "test_data.py:12: DtypeWarning: Columns (2) have mixed types. Specify dtype option on import or set low_memory=False.\n  df_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\nDone!\n",
+  "history_begin_time" : 1659661767460,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "FXbTYGE8n0Eu",
+  "history_input" : "import pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\n\n# home directory\n# home = str(Path.home())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = glob.glob(os.path.join(path, \"*.csv\"))     # advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\",index=False)\n\nprint('Done!')",
+  "history_output" : "Done!\n",
+  "history_begin_time" : 1659582254360,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
   "history_id" : "e7nkl9r1j85",
   "history_input" : "import pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\n\n# home directory\n# home = str(Path.home())\n\npath = '/groups/ESS/aalnaim/cmaq/input_hourly'\nall_hourly_files = glob.glob(os.path.join(path, \"*.csv\"))     # advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\n#new_df=cmaq.drop(['YYYYMMDDHH'],axis=1)\ncmaq.to_csv(\"/groups/ESS/aalnaim/cmaq/input_hourly/testing.csv\",index=False)\n\nprint('Done!')",
   "history_output" : "Done!\n",

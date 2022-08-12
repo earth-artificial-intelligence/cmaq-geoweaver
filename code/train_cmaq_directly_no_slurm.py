@@ -7,15 +7,14 @@ import sklearn
 from sklearn.ensemble import RandomForestRegressor
 from xgboost.sklearn import XGBRegressor
 import pickle
-from pathlib import Path
-
-# home directory
-home = str(Path.home())
+from cmaq_ai_utils import *
 
 # importing data
-final=pd.read_csv('/groups/ESS/zsu/cmaq/training.csv')
+final=pd.read_csv(f'{cmaq_folder}/training.csv')
 print(final.head())
 final=final.dropna()
+
+create_and_clean_folder(f"{cmaq_folder}/models/")
 
 # Processing training  data
 X = final.drop(['AirNOW_O3','Latitude_x','Longitude_x'],axis=1)
@@ -32,6 +31,6 @@ rf = RandomForestRegressor(bootstrap=True, ccp_alpha=0.0, criterion='mse',
 rf.fit(X, y)
 
 # save the model to disk
-filename = '/groups/ESS/zsun/cmaq/models/rf_from_hourly_fixed.sav'
+filename = f'{cmaq_folder}/models/rf_pycaret.sav'
 #filename = 'D:/Research/CMAQ/local_test/xgboost.sav'
 pickle.dump(rf, open(filename, 'wb'))
