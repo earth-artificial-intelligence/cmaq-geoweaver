@@ -1,0 +1,41 @@
+[{
+  "history_id" : "x0EYm3pYr6TH",
+  "history_input" : "# Write first python in Geoweaver# NASA GEOWEAVER\n# CMAQ-AI Model: Training Voting-XGBoost model\n\n# Importing necessary libraries\nimport pandas as pd\nimport sklearn\nfrom sklearn.ensemble import RandomForestRegressor\nfrom xgboost.sklearn import XGBRegressor\nimport pickle\nfrom cmaq_ai_utils import *\n\n# importing data\nfinal=pd.read_csv(f'{cmaq_folder}/training.csv')\nprint(final.head())\nfinal=final.dropna()\n\ncreate_and_clean_folder(f\"{cmaq_folder}/models/\")\n\n# Processing training  data\nX = final.drop(['AirNOW_O3','Latitude_x','Longitude_x'],axis=1)\ny = final['AirNOW_O3']\n\nrf = RandomForestRegressor(bootstrap=True, ccp_alpha=0.0, criterion='mse',\n                      max_depth=None, max_features='auto', max_leaf_nodes=None,\n                      max_samples=None, min_impurity_decrease=0.0,\n                      min_samples_leaf=1,\n                      min_samples_split=2, min_weight_fraction_leaf=0.0,\n                      n_estimators=100, n_jobs=-1, oob_score=False,\n                      random_state=3086, verbose=0, warm_start=False)\n\nrf.fit(X, y)\n\n# save the model to disk\nfilename = f'{cmaq_folder}/models/rf_pycaret.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\npickle.dump(rf, open(filename, 'wb'))",
+  "history_output" : "   Latitude_x  Longitude_x  AirNOW_O3  ...  month  day  hours\n0   44.232498   -79.781403       43.0  ...      7    1     12\n1   32.205002  -110.877197       35.0  ...      7    1     12\n2   35.438557   -81.276749       21.0  ...      7    1     12\n3   41.644066   -83.546249       50.0  ...      7    1     12\n4   46.205601   -93.758904       25.0  ...      7    1     12\n\n[5 rows x 18 columns]\n/home/aalnaim/CMAQAI/lib/python3.8/site-packages/sklearn/ensemble/_forest.py:396: FutureWarning: Criterion 'mse' was deprecated in v1.0 and will be removed in version 1.2. Use `criterion='squared_error'` which is equivalent.\n  warn(\n",
+  "history_begin_time" : 1660302314216,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "s6hbic",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "olxlwzs7tcu",
+  "history_input" : "# Write first python in Geoweaver# NASA GEOWEAVER\n# CMAQ-AI Model: Training Voting-XGBoost model\n\n# Importing necessary libraries\nimport pandas as pd\nimport sklearn\nfrom sklearn.ensemble import RandomForestRegressor\nfrom xgboost.sklearn import XGBRegressor\nimport pickle\nfrom cmaq_ai_utils import *\n\n# importing data\nfinal=pd.read_csv(f'{cmaq_folder}/training.csv')\nprint(final.head())\nfinal=final.dropna()\n\ncreate_and_clean_folder(f\"{cmaq_folder}/models/\")\n\n# Processing training  data\nX = final.drop(['AirNOW_O3','Latitude_x','Longitude_x'],axis=1)\ny = final['AirNOW_O3']\n\nrf = RandomForestRegressor(bootstrap=True, ccp_alpha=0.0, criterion='mse',\n                      max_depth=None, max_features='auto', max_leaf_nodes=None,\n                      max_samples=None, min_impurity_decrease=0.0,\n                      min_samples_leaf=1,\n                      min_samples_split=2, min_weight_fraction_leaf=0.0,\n                      n_estimators=100, n_jobs=-1, oob_score=False,\n                      random_state=3086, verbose=0, warm_start=False)\n\nrf.fit(X, y)\n\n# save the model to disk\nfilename = f'{cmaq_folder}/models/rf_pycaret.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\npickle.dump(rf, open(filename, 'wb'))",
+  "history_output" : "   Latitude_x  Longitude_x  AirNOW_O3  ...  month  day  hours\n0   44.232498   -79.781403       43.0  ...      7    1     12\n1   32.205002  -110.877197       35.0  ...      7    1     12\n2   35.438557   -81.276749       21.0  ...      7    1     12\n3   41.644066   -83.546249       50.0  ...      7    1     12\n4   46.205601   -93.758904       25.0  ...      7    1     12\n\n[5 rows x 18 columns]\n/home/aalnaim/CMAQAI/lib/python3.8/site-packages/sklearn/ensemble/_forest.py:396: FutureWarning: Criterion 'mse' was deprecated in v1.0 and will be removed in version 1.2. Use `criterion='squared_error'` which is equivalent.\n  warn(\n",
+  "history_begin_time" : 1660299895013,
+  "history_end_time" : 1660301768674,
+  "history_notes" : null,
+  "history_process" : "s6hbic",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "xda188e7smm",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660294477721,
+  "history_notes" : null,
+  "history_process" : "s6hbic",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "gg16kzj1430",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660295756150,
+  "history_notes" : null,
+  "history_process" : "s6hbic",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},]

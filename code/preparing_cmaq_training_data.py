@@ -2,7 +2,7 @@
 from cmaq_ai_utils import *
 
 sdate = date(2022, 7, 1)   # start date
-edate = date(2022, 7, 2)   # end date
+edate = date(2022, 7, 31)   # end date
 
 days = get_days_list(sdate, edate)
 
@@ -119,7 +119,7 @@ for x in range(len(days)-1):
     df_hourly['day'] = df_hourly['YYYYMMDDHH'].str[6:8]
     df_hourly['hours'] = df_hourly['YYYYMMDDHH'].str[8:10]
     
-    filename = f'/groups/ESS/zsun/cmaq/training_input_hourly/train_data_{day}_{str(real_hour_value)}.csv'
+    filename = f'{cmaq_folder}/training_input_hourly/train_data_{day}_{str(real_hour_value)}.csv'
     print(f'Saving file: train_data_{day}_{str(real_hour_value)}.csv')
     df_hourly.to_csv(filename,index=False)
 
