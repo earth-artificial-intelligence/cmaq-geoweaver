@@ -3,7 +3,7 @@ from cmaq_ai_utils import *
 
 # cmaq=pd.read_csv(home+"/cmaq/training_data.csv")
 path = f'{cmaq_folder}/training_input_hourly'
-all_hourly_files = sorted(glob.glob(os.path.join(path, "*.csv"))) 
+all_hourly_files = sorted(glob.glob(os.path.join(path, "*.csv")))
 df_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)
 cmaq = pd.concat(df_from_each_hourly_file)
 
@@ -26,6 +26,3 @@ new_df=training_data.drop(['StationID','Latitude_y','Longitude_y','YYYYMMDDHH'],
 final_df = new_df[new_df.AirNOW_O3!= -999]
 final_df.to_csv(f"{cmaq_folder}/training.csv",index=False)
 print("All records should be incorporated into :", f"{cmaq_folder}/training.csv")
-
-
-

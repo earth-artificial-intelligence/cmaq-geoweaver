@@ -31,5 +31,3 @@ final = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]
 # saving the dataset into local drive
 create_and_clean_folder(f"{cmaq_folder}/prediction_files/")
 final.to_csv(f'{cmaq_folder}/prediction_files/prediction_rf.csv',index=False)
-
-
