@@ -101,7 +101,7 @@ for x in range(len(days)-1):
     
     df_hourly['Latitude'] = LAT
     df_hourly['Longitude'] = LON
-    df_hourly['YYYYMMDDHH'] = day+str(real_hour_value)
+    df_hourly['YYYYMMDDHH'] = day+turn_2_digits(real_hour_value)
     df_hourly['CMAQ12KM_O3(ppb)'] = cmaq_O3
     df_hourly['CMAQ12KM_NO2(ppb)'] = cmaq_NO2
     df_hourly['CMAQ12KM_CO(ppm)'] = cmaq_CO
@@ -117,7 +117,7 @@ for x in range(len(days)-1):
     df_hourly['month'] = df_hourly['YYYYMMDDHH'].str[4:6]
     df_hourly['day'] = df_hourly['YYYYMMDDHH'].str[6:8]
     df_hourly['hours'] = df_hourly['YYYYMMDDHH'].str[8:10]
-    print(f'Saving file: test_data_{day}_{str(real_hour_value)}.csv')
-    df_hourly.to_csv(f'{test_folder}/test_data_{day}_{str(real_hour_value)}.csv',index=False)
+    print(f'Saving file: test_data_{day}_{turn_2_digits(real_hour_value)}.csv')
+    df_hourly.to_csv(f'{test_folder}/test_data_{day}_{turn_2_digits(real_hour_value)}.csv',index=False)
 
 print('Done with preparing testing data!')

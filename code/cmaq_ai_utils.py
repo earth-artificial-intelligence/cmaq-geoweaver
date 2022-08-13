@@ -40,3 +40,6 @@ def remove_file(file_path):
   print(f'remove old files{file_path}')
   if os.path.exists(file_path):
     os.remove(file_path)
+    
+def turn_2_digits(a):
+  return f"{a:02}"

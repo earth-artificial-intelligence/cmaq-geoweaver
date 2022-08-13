@@ -17,7 +17,8 @@ final=final.dropna()
 create_and_clean_folder(f"{cmaq_folder}/models/")
 
 # Processing training  data
-X = final.drop(['AirNOW_O3','Latitude_x','Longitude_x'],axis=1)
+X = final.drop(['AirNOW_O3','Latitude_x','Longitude_x','CMAQ12KM_NO2(ppb)', 'CMAQ12KM_CO(ppm)', 'CMAQ_OC(ug/m3)', 'CO(moles/s)', 'PRSFC(Pa)', 'PBL(m)', 'TEMP2(K)','WSPD10(m/s)', 'WDIR10(degree)', 'RGRND(W/m2)', 'CFRAC', 'month', 'day', 'hours'],axis=1)
+print("input shape:", X.shape)
 y = final['AirNOW_O3']
 
 rf = RandomForestRegressor(bootstrap=True, ccp_alpha=0.0, criterion='mse',
@@ -31,6 +32,6 @@ rf = RandomForestRegressor(bootstrap=True, ccp_alpha=0.0, criterion='mse',
 rf.fit(X, y)
 
 # save the model to disk
-filename = f'{cmaq_folder}/models/rf_pycaret.sav'
+filename = f'{cmaq_folder}/models/rf_pycaret_o3_only.sav'
 #filename = 'D:/Research/CMAQ/local_test/xgboost.sav'
 pickle.dump(rf, open(filename, 'wb'))

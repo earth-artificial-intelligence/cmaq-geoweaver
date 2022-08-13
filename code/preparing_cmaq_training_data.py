@@ -102,7 +102,7 @@ for x in range(len(days)-1):
     
     df_hourly['Latitude'] = LAT
     df_hourly['Longitude'] = LON
-    df_hourly['YYYYMMDDHH'] = day+str(real_hour_value)
+    df_hourly['YYYYMMDDHH'] = day+turn_2_digits(real_hour_value)
     df_hourly['CMAQ12KM_O3(ppb)'] = cmaq_O3
     df_hourly['CMAQ12KM_NO2(ppb)'] = cmaq_NO2
     df_hourly['CMAQ12KM_CO(ppm)'] = cmaq_CO
@@ -119,8 +119,8 @@ for x in range(len(days)-1):
     df_hourly['day'] = df_hourly['YYYYMMDDHH'].str[6:8]
     df_hourly['hours'] = df_hourly['YYYYMMDDHH'].str[8:10]
     
-    filename = f'/groups/ESS/zsun/cmaq/training_input_hourly/train_data_{day}_{str(real_hour_value)}.csv'
-    print(f'Saving file: train_data_{day}_{str(real_hour_value)}.csv')
+    filename = f'/groups/ESS/zsun/cmaq/training_input_hourly/train_data_{day}_{turn_2_digits(real_hour_value)}.csv'
+    print(f'Saving file: train_data_{day}_{turn_2_digits(real_hour_value)}.csv')
     df_hourly.to_csv(filename,index=False)
 
 print('Done!')

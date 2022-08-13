@@ -3,13 +3,21 @@
 
 cmaq_folder="/groups/ESS/zsun/cmaq"
 mkdir $cmaq_folder"/plots"
-# Setting env variables
-export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
-export stdate_post=$(date -d '2 day ago' '+%Y-%m-%d') #This needs to be auto date
-export eddate_post=$(date -d '1 day ago' '+%Y-%m-%d') #This needs to be auto date
+rm $cmaq_folder"/plots/*" # clean everything first
 
-export stdate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
-export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
+echo $(date -d '2 day ago' '+%Y%m%d')
+# Setting env variables
+#export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
+export YYYYMMDD_POST='20220701'
+#export stdate_post=$(date -d '2 day ago' '+%Y-%m-%d') #This needs to be auto date
+export stdate_post='2022-07-01'
+#export eddate_post=$(date -d '1 day ago' '+%Y-%m-%d') #This needs to be auto date
+export eddate_post='2022-07-02'
+
+#export stdate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
+export stdate_file='20220701'
+#export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
+export eddate_file='20220702'
 
 
 export postdata_dir=$cmaq_folder"/prediction_nc_files"

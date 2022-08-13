@@ -19,6 +19,7 @@ cmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]
 cmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]
 cmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]
 
+remove_file(f"{testing_path}/testing.csv")
 cmaq.to_csv(f"{testing_path}/testing.csv",index=False)
 
 print('Done with generating testing.csv!')

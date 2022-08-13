@@ -12,10 +12,10 @@ df_cdf = xr.open_dataset("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMo
 df_csv = pd.read_csv(f"{cmaq_folder}/prediction_files/prediction_rf.csv")
 
 df_csv['YYYYMMDDHH'] = df_csv['YYYYMMDDHH'].astype(str)
-df_filt = df_csv[df_csv['YYYYMMDDHH'].str.contains(days[1]+"|"+days[0]+"|"+days[2], case = False, regex=True)]
-print(df_filt['YYYYMMDDHH'].unique())
+print(df_csv['YYYYMMDDHH'].unique())
+df_filt = df_csv[df_csv['YYYYMMDDHH'].str.contains(days[1]+"|"+days[0]+"|"+days[2], case = False, regex=True)] #this line seems unnecessary
 df_filt = df_filt[(df_filt['YYYYMMDDHH'] > days[0]+'11') & (df_filt['YYYYMMDDHH'] < days[1]+'12')]
-
+print(df_filt['YYYYMMDDHH'].unique())
 
 # Reshape "prediction/Latitude/Longitude" columns to (TSTEP, ROW, COL), these lines will reshape data into (24, 265, 442)
 reshaped_prediction = np.atleast_3d(df_filt['prediction']).reshape(-1, 265, 442)
