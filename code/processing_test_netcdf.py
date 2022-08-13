@@ -3,8 +3,8 @@ from cmaq_ai_utils import *
 
 # end_date = datetime.today()
 # base = end_date - timedelta(days=2)
-sdate = date(2022, 7, 1)   # start date
-edate = date(2022, 7, 2)   # end date
+sdate = date(2022, 7, 21)   # start date
+edate = date(2022, 7, 22)   # end date
 days = get_days_list(sdate, edate)
 
 df_cdf = xr.open_dataset("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_"+days[0]+"_extracted.nc")
@@ -28,9 +28,7 @@ reduced_dim.values = reshaped_prediction
 # Apply changes to data variable in nc file
 df_cdf['O3'] = (['TSTEP', 'ROW', 'COL'], reshaped_prediction)
 
-create_and_clean_folder(f"{cmaq_folder}/prediction_nc_files")
+# create_and_clean_folder(f"{cmaq_folder}/prediction_nc_files")
 df_cdf.to_netcdf(f'{cmaq_folder}/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_'+days[0]+'_'+days[1]+'_ML_extracted.nc')
 
 print(f'Saved updated netCDF file: {cmaq_folder}/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_'+days[0]+'_'+days[1]+'_ML_extracted.nc')
-
-

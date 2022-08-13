@@ -12,7 +12,7 @@ from datetime import date, datetime, timedelta
 
 # home directory
 home = str(Path.home())
-cmaq_folder = "/groups/ESS/zsun/cmaq/" # change if you want to use your own folder
+cmaq_folder = "/groups/ESS/aalnaim/cmaq" # change if you want to use your own folder
 
 def get_days_list(sdate, edate):
   days=[]
