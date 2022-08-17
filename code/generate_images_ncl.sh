@@ -1,23 +1,23 @@
 #!/bin/bash
 # generate images and gif from the NetCDF files
 
-cmaq_folder="/groups/ESS/aalnaim/cmaq"
+cmaq_folder="/groups/ESS/zsun/cmaq"
 mkdir $cmaq_folder"/plots"
-rm $cmaq_folder"/plots/*" # clean everything first
+rm $cmaq_folder/plots/* # clean everything first
 
 echo $(date -d '2 day ago' '+%Y%m%d')
 # Setting env variables
 #export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
-export YYYYMMDD_POST='20220701'
+export YYYYMMDD_POST='20220801'
 #export stdate_post=$(date -d '2 day ago' '+%Y-%m-%d') #This needs to be auto date
-export stdate_post='2022-07-01'
+export stdate_post='2022-08-01'
 #export eddate_post=$(date -d '1 day ago' '+%Y-%m-%d') #This needs to be auto date
-export eddate_post='2022-07-02'
+export eddate_post='2022-08-02'
 
 #export stdate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
-export stdate_file='20220701'
+export stdate_file='20220801'
 #export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
-export eddate_file='20220702'
+export eddate_file='20220802'
 
 
 export postdata_dir=$cmaq_folder"/prediction_nc_files"
@@ -47,12 +47,12 @@ dFile2 = getenv("eddate_file")
 
 ;print("Passed Date: "+date)
 
-aconc_dir = getenv("postdata_dir")
+;aconc_dir = getenv("postdata_dir")
 grid_dir = getenv("mcip_dir")
 plot_dir = getenv("dir_graph")
 
-print(aconc_dir+"/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_"+dFile2+"_ML_extracted.nc")
-cdf_file1 = addfile(aconc_dir+"/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_"+dFile2+"_ML_extracted.nc","r")
+print("/groups/ESS/zsun/cmaq/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_"+dFile2+"_ML_extracted.nc")
+cdf_file1 = addfile("/groups/ESS/zsun/cmaq/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_"+dFile2+"_ML_extracted.nc","r")
 cdf_file= addfile(grid_dir+"/GRIDCRO2D_"+date+".nc","r")
 
 ptime = (/"12","13","14","15","16","17","18","19","20","21","22","23","00","01","02","03","04","05","06","07","08","09","10","11"/)
@@ -166,7 +166,7 @@ do it = 0, nt-1
   draw(plot)
   frame(wks)
   delete(wks)
-  system("composite -geometry 100x70+900+900 /groups/ESS/aalnaim/cmaq/mason-logo-green.png "+pname+".png "+pname+".png")
+  system("composite -geometry 100x70+900+900 /groups/ESS/zsun/cmaq/mason-logo-green.png "+pname+".png "+pname+".png")
 end do
 delete(res)
 
@@ -184,3 +184,4 @@ if [ $? -eq 0 ]; then
 else
     echo "Generating images/gif Failed!"
 fi
+

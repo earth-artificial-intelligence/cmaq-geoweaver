@@ -1,10 +1,10 @@
-# get all the airnow station data
+# get all the airnow station data and save to csvs as well
 import glob, os
 import numpy as np
 from cmaq_ai_utils import *
 
-sdate = date(2022, 7, 1)   # start date
-edate = date(2022, 7, 31)   # end date
+sdate = date(2022, 8, 1)   # start date
+edate = date(2022, 8, 2)   # end date
 days = get_days_list(sdate, edate)
 
 observation_folder = f"{cmaq_folder}/observation/"

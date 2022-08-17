@@ -5,8 +5,8 @@ from cmaq_ai_utils import *
 # end_date = datetime.today()
 # base = end_date - timedelta(days=2)
 
-sdate = date(2022, 7, 20)   # start date
-edate = date(2022, 7, 21)   # end date
+sdate = date(2022, 8, 1)   # start date
+edate = date(2022, 8, 2)   # end date
 days = get_days_list(sdate, edate)
 
 real_hour_list = [12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11]
@@ -38,66 +38,73 @@ for x in range(len(days)-1):
       day = current_day
     
     df_hourly = pd.DataFrame()
+    
+    print("df_cmaq.variables['O3'] shape: ", df_cmaq.variables['O3'].shape)
+    print("df_cmaq.variables['O3'][:] shape: ", df_cmaq.variables['O3'][:].shape)
+    print("df_cmaq.variables['O3'][:].values[k, 0].shape", df_cmaq.variables['O3'][:].values[k, 0].shape)
     # CMAQ data
     # O3 variable
-    o3=df_cmaq.variables['O3'][:].values[k,0]
-    cmaq_O3=list(np.ravel(o3).transpose().round())  
+    o3=df_cmaq.variables['O3'][:].values[k, 0]
+    cmaq_O3=list(np.ravel(o3).transpose().round())
+    print("o3 shape: ", o3.shape)
+    print("cmaq_O3 shape: ", np.ravel(o3).transpose().shape)
     
     # NO2
-    no2=df_cmaq.variables['NO2'][:].values[k,0]
+    no2=df_cmaq.variables['NO2'][:].values[k, 0]
     cmaq_NO2=list(np.ravel(no2).transpose().round())
     
     # CO
-    co=df_cmaq.variables['CO'][:].values[k,0]
+    co=df_cmaq.variables['CO'][:].values[k, 0]
     cmaq_CO=list(np.ravel(co).transpose().round())
     
     # PM25_CO
-    pm25=df_cmaq.variables['PM25_OC'][:].values[k,0]
+    pm25=df_cmaq.variables['PM25_OC'][:].values[k, 0]
     cmaq_PM25_CO=list(np.ravel(pm25).transpose().round())
     
     # EMIS data
-    co_emis=df_emis.variables['CO'][:].values[k,0]
+    co_emis=df_emis.variables['CO'][:].values[k, 0]
     CO_emi=list(np.ravel(co_emis).transpose().round())    
     
     # MCIP data
     # CO variable
-    prsfc=df_mcip.variables['PRSFC'][:].values[k,0]
+    prsfc=df_mcip.variables['PRSFC'][:].values[k, 0]
     PRSFC=list(np.ravel(prsfc).transpose().round())
     
     # NO2
-    pbl=df_mcip.variables['PBL'][:].values[k,0]
+    pbl=df_mcip.variables['PBL'][:].values[k, 0]
     PBL=list(np.ravel(pbl).transpose().round())
     
     # TEMP2
-    temp2=df_mcip.variables['TEMP2'][:].values[k,0]
+    temp2=df_mcip.variables['TEMP2'][:].values[k, 0]
     TEMP2=list(np.ravel(temp2).transpose().round())
     
     # WSPD10
-    wspd10=df_mcip.variables['WSPD10'][:].values[k,0]
+    wspd10=df_mcip.variables['WSPD10'][:].values[k, 0]
     WSPD10=list(np.ravel(wspd10).transpose().round())
     
     # WDIR10
-    wdir10=df_mcip.variables['WDIR10'][:].values[k,0]
+    wdir10=df_mcip.variables['WDIR10'][:].values[k, 0]
     WDIR10=list(np.ravel(wdir10).transpose().round())
     
     # RGRND
-    rgrnd=df_mcip.variables['RGRND'][:].values[k,0]
+    rgrnd=df_mcip.variables['RGRND'][:].values[k, 0]
     RGRND=list(np.ravel(rgrnd).transpose().round())
     
     # CFRAC
-    cfrac=df_mcip.variables['CFRAC'][:].values[k,0]
+    cfrac=df_mcip.variables['CFRAC'][:].values[k, 0]
     CFRAC=list(np.ravel(cfrac).transpose().round())
     
     ## LAT/LON data
     df_coords = xr.open_dataset('/home/yli74/scripts/plots/2020fire/GRIDCRO2D')
     
     lat = df_coords.variables['LAT'][:].values[0,0]
+    print("lat shape", lat.shape)
     lat_flt=np.ravel(lat)
-    LAT=np.tile(lat_flt,1)
+    LAT=lat_flt #np.tile(lat_flt,1)
     
     lon = df_coords.variables['LON'][:].values[0,0]
     lon_flt=np.ravel(lon)
-    LON=np.tile(lon_flt,1)
+    LON=lon_flt #np.tile(lon_flt,1)
     
     df_hourly['Latitude'] = LAT
     df_hourly['Longitude'] = LON

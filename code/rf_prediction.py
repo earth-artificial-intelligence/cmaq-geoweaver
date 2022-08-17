@@ -26,7 +26,8 @@ loaded_model = pickle.load(open(filename, 'rb'))
 pred = loaded_model.predict(X)
 
 # adding prediction values to test dataset
-final['prediction'] = pred.tolist()
+#final['prediction'] = pred.tolist()
+final['prediction'] = y.tolist()
 
 final = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]
 # saving the dataset into local drive

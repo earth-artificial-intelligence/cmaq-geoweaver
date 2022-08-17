@@ -1,4 +1,4 @@
-# take all the airnow observations and merge into one observation.csv
+# take all the airnow observation csvs and merge into one observation.csv
 
 import glob
 import pandas as pd
@@ -6,8 +6,8 @@ from pathlib import Path
 import numpy as np
 from cmaq_ai_utils import *
 
-sdate = date(2022, 7, 1)   # start date
-edate = date(2022, 7, 31)   # end date
+sdate = date(2022, 8, 1)   # start date
+edate = date(2022, 8, 2)   # end date
 days = get_days_list(sdate, edate)
     
 data_frame = pd.DataFrame()

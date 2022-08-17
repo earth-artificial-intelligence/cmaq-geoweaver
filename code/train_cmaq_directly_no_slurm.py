@@ -13,6 +13,12 @@ from cmaq_ai_utils import *
 final=pd.read_csv(f'{cmaq_folder}/training.csv')
 print(final.head())
 final=final.dropna()
+print("shape before: ", final.shape)
+final = final.loc[(final['CMAQ12KM_O3(ppb)']-final['AirNOW_O3'])/final['AirNOW_O3']<0.05]
+print("shape 1 after: ", final.shape)
+final = final.loc[(final['CMAQ12KM_O3(ppb)']-final['AirNOW_O3'])/final['AirNOW_O3']>-0.05]
+print("shape 2 after: ", final.shape)
+
 
 create_and_clean_folder(f"{cmaq_folder}/models/")
 
