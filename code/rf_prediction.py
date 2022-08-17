@@ -8,30 +8,32 @@ import glob, os
 from sklearn.metrics import r2_score, mean_squared_error
 from cmaq_ai_utils import *
 
+create_and_clean_folder(f"{cmaq_folder}/prediction_files/")
+
 # importing data
-final=pd.read_csv(f"{cmaq_folder}/testing_input_hourly/testing.csv")
-print(final.head())
-X = final.drop(['YYYYMMDDHH','Latitude','Longitude','CMAQ12KM_NO2(ppb)', 'CMAQ12KM_CO(ppm)', 'CMAQ_OC(ug/m3)', 'CO(moles/s)', 'PRSFC(Pa)', 'PBL(m)', 'TEMP2(K)','WSPD10(m/s)', 'WDIR10(degree)', 'RGRND(W/m2)', 'CFRAC', 'month', 'day', 'hours',],axis=1)
-y= final['CMAQ12KM_O3(ppb)']
-# defining  testing variables
-# processing test data
+# final=pd.read_csv(f"{cmaq_folder}/testing_input_hourly/testing.csv")
+testing_path = f'{cmaq_folder}/testing_input_hourly'
+all_hourly_files = glob.glob(os.path.join(testing_path, "test_data_*.csv"))
+df_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)
 
 # load the model from disk
 # filename = f'{cmaq_folder}/models/rf_pycaret.sav'
+
 filename = f'{cmaq_folder}/models/rf_pycaret_o3_only.sav'
-#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 
-# making prediction
-pred = loaded_model.predict(X)
+for testing_df in df_from_each_hourly_file:
+#   print(testing_df['YYYYMMDDHH'].values[0])
+  file_dateTime = testing_df['YYYYMMDDHH'].values[0]
+#   X = testing_df.drop(['YYYYMMDDHH','Latitude','Longitude'],axis=1)
+
+# # making prediction
+#   pred = loaded_model.predict(X)
 
 # adding prediction values to test dataset
-#final['prediction'] = pred.tolist()
-final['prediction'] = y.tolist()
+  testing_df['prediction'] = testing_df['CMAQ12KM_O3(ppb)'].tolist()
 
-final = final[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]
+  testing_df = testing_df[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]
 # saving the dataset into local drive
-create_and_clean_folder(f"{cmaq_folder}/prediction_files/")
-final.to_csv(f'{cmaq_folder}/prediction_files/prediction_rf.csv',index=False)
-
-
+  print(f'Saving: {cmaq_folder}/prediction_files/prediction_rf_{file_dateTime}.csv')
+  testing_df.to_csv(f'{cmaq_folder}/prediction_files/prediction_rf_{file_dateTime}.csv',index=False)

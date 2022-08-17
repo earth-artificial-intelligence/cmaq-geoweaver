@@ -5,8 +5,8 @@ from cmaq_ai_utils import *
 # end_date = datetime.today()
 # base = end_date - timedelta(days=2)
 
-sdate = date(2022, 8, 1)   # start date
-edate = date(2022, 8, 2)   # end date
+sdate = date(2022, 8, 5)   # start date
+edate = date(2022, 8, 6)   # end date
 days = get_days_list(sdate, edate)
 
 real_hour_list = [12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11]
@@ -45,54 +45,54 @@ for x in range(len(days)-1):
     # CMAQ data
     # O3 variable
     o3=df_cmaq.variables['O3'][:].values[k, 0]
-    cmaq_O3=list(np.ravel(o3).transpose().round())
+    cmaq_O3=list(np.ravel(o3).transpose())
     print("o3 shape: ", o3.shape)
     print("cmaq_O3 shape: ", np.ravel(o3).transpose().shape)
     
     # NO2
     no2=df_cmaq.variables['NO2'][:].values[k, 0]
-    cmaq_NO2=list(np.ravel(no2).transpose().round())
+    cmaq_NO2=list(np.ravel(no2).transpose())
     
     # CO
     co=df_cmaq.variables['CO'][:].values[k, 0]
-    cmaq_CO=list(np.ravel(co).transpose().round())
+    cmaq_CO=list(np.ravel(co).transpose())
     
     # PM25_CO
     pm25=df_cmaq.variables['PM25_OC'][:].values[k, 0]
-    cmaq_PM25_CO=list(np.ravel(pm25).transpose().round())
+    cmaq_PM25_CO=list(np.ravel(pm25).transpose())
     
     # EMIS data
     co_emis=df_emis.variables['CO'][:].values[k, 0]
-    CO_emi=list(np.ravel(co_emis).transpose().round())    
+    CO_emi=list(np.ravel(co_emis).transpose())    
     
     # MCIP data
     # CO variable
     prsfc=df_mcip.variables['PRSFC'][:].values[k, 0]
-    PRSFC=list(np.ravel(prsfc).transpose().round())
+    PRSFC=list(np.ravel(prsfc).transpose())
     
     # NO2
     pbl=df_mcip.variables['PBL'][:].values[k, 0]
-    PBL=list(np.ravel(pbl).transpose().round())
+    PBL=list(np.ravel(pbl).transpose())
     
     # TEMP2
     temp2=df_mcip.variables['TEMP2'][:].values[k, 0]
-    TEMP2=list(np.ravel(temp2).transpose().round())
+    TEMP2=list(np.ravel(temp2).transpose())
     
     # WSPD10
     wspd10=df_mcip.variables['WSPD10'][:].values[k, 0]
-    WSPD10=list(np.ravel(wspd10).transpose().round())
+    WSPD10=list(np.ravel(wspd10).transpose())
     
     # WDIR10
     wdir10=df_mcip.variables['WDIR10'][:].values[k, 0]
-    WDIR10=list(np.ravel(wdir10).transpose().round())
+    WDIR10=list(np.ravel(wdir10).transpose())
     
     # RGRND
     rgrnd=df_mcip.variables['RGRND'][:].values[k, 0]
-    RGRND=list(np.ravel(rgrnd).transpose().round())
+    RGRND=list(np.ravel(rgrnd).transpose())
     
     # CFRAC
     cfrac=df_mcip.variables['CFRAC'][:].values[k, 0]
-    CFRAC=list(np.ravel(cfrac).transpose().round())
+    CFRAC=list(np.ravel(cfrac).transpose())
     
     ## LAT/LON data
     df_coords = xr.open_dataset('/home/yli74/scripts/plots/2020fire/GRIDCRO2D')

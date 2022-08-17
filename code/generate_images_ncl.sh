@@ -8,16 +8,16 @@ rm $cmaq_folder/plots/* # clean everything first
 echo $(date -d '2 day ago' '+%Y%m%d')
 # Setting env variables
 #export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
-export YYYYMMDD_POST='20220801'
+export YYYYMMDD_POST='20220805'
 #export stdate_post=$(date -d '2 day ago' '+%Y-%m-%d') #This needs to be auto date
-export stdate_post='2022-08-01'
+export stdate_post='2022-08-05'
 #export eddate_post=$(date -d '1 day ago' '+%Y-%m-%d') #This needs to be auto date
-export eddate_post='2022-08-02'
+export eddate_post='2022-08-06'
 
 #export stdate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
-export stdate_file='20220801'
+export stdate_file='20220805'
 #export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
-export eddate_file='20220802'
+export eddate_file='20220806'
 
 
 export postdata_dir=$cmaq_folder"/prediction_nc_files"
@@ -51,8 +51,8 @@ dFile2 = getenv("eddate_file")
 grid_dir = getenv("mcip_dir")
 plot_dir = getenv("dir_graph")
 
-print("/groups/ESS/zsun/cmaq/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_"+dFile2+"_ML_extracted.nc")
-cdf_file1 = addfile("/groups/ESS/zsun/cmaq/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_"+dFile2+"_ML_extracted.nc","r")
+print("/groups/ESS/zsun/cmaq/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc")
+cdf_file1 = addfile("/groups/ESS/zsun/cmaq/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc","r")
 cdf_file= addfile(grid_dir+"/GRIDCRO2D_"+date+".nc","r")
 
 ptime = (/"12","13","14","15","16","17","18","19","20","21","22","23","00","01","02","03","04","05","06","07","08","09","10","11"/)
