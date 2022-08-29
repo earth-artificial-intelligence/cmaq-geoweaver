@@ -1,0 +1,71 @@
+[{
+  "history_id" : "y93ak7krsw1",
+  "history_input" : "# Write first python in Geoweaver# NASA GEOWEAVER\n# CMAQ-AI Model: Training Voting-XGBoost model\n\n# Importing necessary libraries\nimport pandas as pd\nimport sklearn\nfrom sklearn.ensemble import RandomForestRegressor\nfrom xgboost.sklearn import XGBRegressor\nimport pickle\nfrom cmaq_ai_utils import *\n\nfrom sklearn.preprocessing import MinMaxScaler\n\n# importing data\nfinal = pd.read_csv(f'{cmaq_folder}/training.csv')\nprint(final.head())\nfinal = final.dropna()\n\n# Initialize a normalizer\n# scaler = MinMaxScaler(feature_range=(0, 1))\n# final[final.columns] = scaler.fit_transform(final)\n\n# Make coords coarse by removing decimals\nfinal['Latitude'] = round(final['Latitude'])\nfinal['Longitude'] = round(final['Longitude'])\n\n# Make coords even more coarse by rounding to closest multiple of 5 \n# (e.g., 40, 45, 85, 55)\n# final['Latitude'] = 5 * round(final['Latitude']/5)\n# final['Longitude'] = 5 * round(final['Longitude']/5)\n\ncreate_and_clean_folder(f\"{cmaq_folder}/models/\")\n\n# Processing training  data\nX = final.drop(['AirNOW_O3', 'CMAQ12KM_NO2(ppb)', 'CMAQ12KM_CO(ppm)', 'CMAQ_OC(ug/m3)', 'CO(moles/s)',\n               'PRSFC(Pa)', 'PBL(m)', 'TEMP2(K)', 'WSPD10(m/s)', 'WDIR10(degree)', 'RGRND(W/m2)', 'CFRAC', 'month', 'day', 'hours'], axis=1)\nprint(\"input shape:\", X.shape)\ny = final['AirNOW_O3']\nprint(\"used as inputs: \", X.columns)\nrf = RandomForestRegressor(bootstrap=False, ccp_alpha=0.0, criterion='mse',\n                           max_depth=None, max_features='auto', max_leaf_nodes=None,\n                           max_samples=None, min_impurity_decrease=0.0,\n                           min_samples_leaf=1,\n                           min_samples_split=2, min_weight_fraction_leaf=0.0,\n                           n_estimators=100, n_jobs=-1, oob_score=False,\n                           random_state=3086, verbose=0, warm_start=False)\n\nrf.fit(X, y)\n\n# save the model to disk\nfilename = f'{cmaq_folder}/models/rf_pycaret_o3_only.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\npickle.dump(rf, open(filename, 'wb'))\n",
+  "history_output" : "Running",
+  "history_begin_time" : 1660873962629,
+  "history_end_time" : 1660874120827,
+  "history_notes" : null,
+  "history_process" : "1mq84p",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "47k8s2onsa9",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660874120828,
+  "history_notes" : null,
+  "history_process" : "eq05y9",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "nb0pxhrfwu6",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660874120831,
+  "history_notes" : null,
+  "history_process" : "iicy7w",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "qwp6u7xzfyk",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660874120835,
+  "history_notes" : null,
+  "history_process" : "is1w3m",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "b7w949ajpq9",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660874120836,
+  "history_notes" : null,
+  "history_process" : "fsk7f2",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "zzsasey5vs6",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660873962516,
+  "history_end_time" : 1660874120838,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "wby9ocw87y6",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660874120839,
+  "history_notes" : null,
+  "history_process" : "zbw9k8",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+}]
