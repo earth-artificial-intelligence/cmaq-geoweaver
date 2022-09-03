@@ -2,11 +2,16 @@
 # evaluate the prediction accuracy
 
 cmaq_folder="/groups/ESS/zsun/cmaq"
+mkdir -p $cmaq_folder/results/
+chmod +x $cmaq_folder/results/ -R
+rm $cmaq_folder/results/* # clean everything first
 # Setting env variables
-export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d')
-export stdate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
-export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
-
+# export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d')
+# export stdate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
+# export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
+export YYYYMMDD_POST='20220805'
+export stdate_file='20220805'
+export eddate_file='20220806'
 
 export wfname=$cmaq_folder"/results/geoweaver_evalution_"$YYYYMMDD_POST"_results.txt"
 
@@ -15,7 +20,7 @@ export ofname="/AQF5X_Hourly_"
 
 export postdata_dir=$cmaq_folder"/prediction_nc_files/"
 
-export mfname="COMBINE3D_ACONC_v531_gcc_AQF5X_"$stdate_file"_"$eddate_file"_ML_extracted.nc"
+export mfname="COMBINE3D_ACONC_v531_gcc_AQF5X_"$stdate_file"_ML_extracted.nc"
 
 export grid_fname="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/GRIDCRO2D_"$YYYYMMDD_POST".nc" #This needs to be auto date
 
@@ -260,6 +265,7 @@ ncl $cmaq_folder/geoweaver_eva_daily_O3.ncl
 
 if [ $? -eq 0 ]; then
     echo "Evaluation Completed Successfully"
+    cat $wfname
 else
     echo "Evaluation Failed!"
 fi

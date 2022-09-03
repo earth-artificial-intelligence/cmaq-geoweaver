@@ -1,4 +1,174 @@
 [{
+  "history_id" : "8g6ns28kelu",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\nimport matplotlib.pyplot as plt\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1661047434978,
+  "history_end_time" : 1661047453547,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "sdzpviknowh",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\nimport matplotlib.pyplot as plt\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660969362501,
+  "history_end_time" : 1660973594879,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "ck8ws5v1oux",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660878747300,
+  "history_end_time" : 1660881959500,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "qyby9v648ym",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660874572793,
+  "history_end_time" : 1660874838838,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "y436k4ppy3s",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660874223790,
+  "history_end_time" : 1660874422116,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "zzsasey5vs6",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660873962516,
+  "history_end_time" : 1660874120838,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "f10xrk2muyf",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660873646679,
+  "history_end_time" : 1660873854549,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "7ixsp294b9k",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660869014055,
+  "history_end_time" : 1660869028064,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "mcc449fyi2o",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660868696962,
+  "history_end_time" : 1660868966611,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "w504ic2j2ak",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660868032358,
+  "history_end_time" : 1660868045620,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Done"
+},{
+  "history_id" : "p7ms296cxym",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660866058869,
+  "history_end_time" : 1660867735007,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "7wtypscpd3p",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660854012576,
+  "history_end_time" : 1660854222336,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "43wbkhp92gu",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660853985896,
+  "history_end_time" : 1660853992792,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "c7cemp4wvis",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660786929915,
+  "history_end_time" : 1660786975153,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "ilxf27r7me8",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660786750601,
+  "history_end_time" : 1660786903462,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "6qmmjzdi530",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660777336896,
+  "history_end_time" : 1660778171079,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "9j9f7ygas2a",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq/\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "Running",
+  "history_begin_time" : 1660777185339,
+  "history_end_time" : 1660777307136,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
   "history_id" : "eorm5vifwq0",
   "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\n\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/aalnaim/cmaq\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)",
   "history_output" : "Running",

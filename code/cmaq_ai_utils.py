@@ -8,11 +8,12 @@ import glob, os
 import numpy as np
 from pathlib import Path
 from datetime import date, datetime, timedelta
-
+import matplotlib.pyplot as plt
 
 # home directory
 home = str(Path.home())
-cmaq_folder = "/groups/ESS/zsun/cmaq/" # change if you want to use your own folder
+cmaq_folder = "/groups/ESS3/aalnaim/cmaq/" # change if you want to use your own folder
+# cmaq_folder = "/Users/uhhmed/localCMAQ" # change if you want to use your own folder
 
 def get_days_list(sdate, edate):
   days=[]

@@ -13,11 +13,19 @@ from cmaq_ai_utils import *
 final=pd.read_csv(f'{cmaq_folder}/training.csv')
 print(final.head())
 final=final.dropna()
-print("shape before: ", final.shape)
-final = final.loc[(final['CMAQ12KM_O3(ppb)']-final['AirNOW_O3'])/final['AirNOW_O3']<0.05]
-print("shape 1 after: ", final.shape)
-final = final.loc[(final['CMAQ12KM_O3(ppb)']-final['AirNOW_O3'])/final['AirNOW_O3']>-0.05]
-print("shape 2 after: ", final.shape)
+#print("shape before: ", final.shape)
+#final = final.loc[(final['CMAQ12KM_O3(ppb)']-final['AirNOW_O3'])/final['AirNOW_O3']<0.05]
+#print("shape 1 after: ", final.shape)
+#final = final.loc[(final['CMAQ12KM_O3(ppb)']-final['AirNOW_O3'])/final['AirNOW_O3']>-0.05]
+#print("shape 2 after: ", final.shape)
+
+final['time_of_day'] = (final['hours'] % 24 + 4) // 4
+
+# Make coords even more coarse by rounding to closest multiple of 5 
+# (e.g., 40, 45, 85, 55)
+final['Latitude_ExtraCoarse'] = 0.1 * round(final['Latitude_x']/0.1)
+final['Longitude_ExtraCoarse'] = 0.1 * round(final['Longitude_x']/0.1)
+
 
 
 create_and_clean_folder(f"{cmaq_folder}/models/")
@@ -38,6 +46,6 @@ rf = RandomForestRegressor(bootstrap=True, ccp_alpha=0.0, criterion='mse',
 rf.fit(X, y)
 
 # save the model to disk
-filename = f'{cmaq_folder}/models/rf_pycaret_o3_only.sav'
+filename = f'{cmaq_folder}/models/rf_pycaret_o3_coarse_loc.sav'
 #filename = 'D:/Research/CMAQ/local_test/xgboost.sav'
 pickle.dump(rf, open(filename, 'wb'))
