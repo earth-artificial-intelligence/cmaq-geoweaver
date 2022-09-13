@@ -9,19 +9,10 @@ days = get_days_list(sdate, edate)
 
 prediction_path = f"{cmaq_folder}/prediction_files/"
 
-# df_csv['YYYYMMDDHH'] = df_csv['YYYYMMDDHH'].astype(str)
-# print(df_csv['YYYYMMDDHH'].unique())
-# df_filt = df_csv[df_csv['YYYYMMDDHH'].str.contains(days[1]+"|"+days[0]+"|"+days[2], case = False, regex=True)] #this line seems unnecessary
-# df_filt = df_filt[(df_filt['YYYYMMDDHH'] > days[0]+'11') & (df_filt['YYYYMMDDHH'] < days[1]+'12')]
-# print(df_filt['YYYYMMDDHH'].unique())
-
-# Reshape "prediction/Latitude/Longitude" columns to (TSTEP, ROW, COL), these lines will reshape data into (24, 265, 442)
-#reshaped_prediction = np.atleast_3d(df_filt['prediction']).reshape(-1, 265, 442)
-
 all_hourly_files = sorted(glob.glob(os.path.join(prediction_path, "*.csv")))
-print("overall hourly files: ", all_hourly_files)
+# print("overall hourly files: ", all_hourly_files)
 
-for i in range(1):
+for i in range(len(days)-1):
   print(days[i])
   
   df_cdf = xr.open_dataset("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_"+days[i+1]+"_extracted.nc")

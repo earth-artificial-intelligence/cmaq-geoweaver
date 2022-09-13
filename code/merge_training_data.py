@@ -22,9 +22,9 @@ training_data['month'] = training_data['YYYYMMDDHH'].str[4:6]
 training_data['day'] = training_data['YYYYMMDDHH'].str[6:8]
 training_data['hours'] = training_data['YYYYMMDDHH'].str[8:10]
 
-new_df=training_data.drop(['StationID','Latitude_y','Longitude_y','YYYYMMDDHH'],axis=1)
+new_df=training_data.drop(['YYYYMMDDHH'],axis=1)
 final_df = new_df[new_df.AirNOW_O3!= -999]
-final_df.to_csv(f"{cmaq_folder}/training.csv",index=False)
+final_df.to_csv(f"{cmaq_folder}/trainingNew.csv",index=False)
 print("All records should be incorporated into :", f"{cmaq_folder}/training.csv")
 
 
