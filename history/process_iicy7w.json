@@ -1799,6 +1799,26 @@
   "host_id" : "p6wvf2",
   "indicator" : "Stopped"
 },{
+  "history_id" : "nb0pxhrfwu6",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660874120831,
+  "history_notes" : null,
+  "history_process" : "iicy7w",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "3hf79lcsc99",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660874838813,
+  "history_notes" : null,
+  "history_process" : "iicy7w",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
   "history_id" : "6hndwlw7i65",
   "history_input" : null,
   "history_output" : null,
