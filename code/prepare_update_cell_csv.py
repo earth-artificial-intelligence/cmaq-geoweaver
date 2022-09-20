@@ -6,58 +6,64 @@ from pathlib import Path
 from time import sleep
 import glob, os
 from sklearn.metrics import r2_score, mean_squared_error
-from cmaq_ai_utils import cmaq_folder
+from cmaq_ai_utils import *
+import math
 
-# from geopy import distance
-from math import radians, cos, sin, asin, sqrt
-import time
 
-print(pd.__version__)
-print(np.__version__)
-def match_closest_airnow_with_gridCell():
+
+def calculate_distance(airnow_station, grid_location):
+
+    dist = math.sqrt( (grid_location[0] - airnow_station[0])**2 + (grid_location[1] - airnow_station[1])**2 )
+    return dist
+  
+  
+def match_closest_airnow_with_gridCell(station_distance=0.2):
   """
   Match all airnow stations to closest grid cell.
   """
   print("Starting!")
   testing_path = f'{cmaq_folder}/testing_input_hourly'
   all_hourly_files = sorted(glob.glob(os.path.join(testing_path, "test_data_*.csv")))
-  print("reading stations csv")
-#   stations = pd.read_csv(f'{cmaq_folder}/station_cmaq_location.csv')
+
   stations = pd.read_csv('/groups/ESS/share/projects/SWUS3km/data/OBS/AirNow/AQF5X/AQF5X_Hourly_2022091304.dat', delimiter=r"\s+", engine='python', skiprows=1, names=['AQSID', 'Latitude', 'Longitude', 'OZONE(ppb)', 'NO2(ppb)', 'CO(ppm)',
        'PM25(ug/m3)', 'SO2(ppb)', 'PM10(ug/m3)'])
   
   stations = stations.replace(',','', regex=True)
-  print(stations.columns)
-  station_locations = stations[['Latitude', 'Longitude']].astype(float).values
+  station_locations = stations[['Latitude', 'Longitude']]
   print("reading testing data csv")
 
   testing_df = pd.read_csv(all_hourly_files[0])
   print(testing_df['YYYYMMDDHH'].values[0])
-
-  closest_stations = []
   
-  cmaq_station_array = np.array([[testing_df['Latitude'][0],testing_df['Longitude'][0]]]*2920)
+  final_mapping_array = []
   
   for j, cmaq in testing_df.iterrows():
     if j % 1000 == 0:
-  	  print("Looping through: ", j)
-    if j >= 100:
-      break
+      print("Looping through: ", j)
+      print("Length of final_mapping_array: ", len(final_mapping_array) )
       
-    cmaq_location = [cmaq['Latitude'], cmaq['Longitude']]
-#     cmaq_station_array = np.array([[cmaq_location[0],cmaq_location[1]]]*2920)
+    nearest_distance = 9999
+    closest_station = []
+    
+    grid_location = [cmaq['Latitude'], cmaq['Longitude']]
 
-    distances = np.linalg.norm(station_locations-cmaq_station_array, axis=1)
-    min_index = np.argmin(distances)
+    for i, station in station_locations.iterrows():
+      airnow_station = [float(station['Latitude']), float(station['Longitude'])]
 
-    print(distances)
-    closest_stations.append(station_locations[min_index])
-       
-  closest = pd.DataFrame(closest_stations, columns=['Latitude', 'Longitude'])
-  closest.drop_duplicates().reset_index(drop=True)
-  print("Saving fixed_station_cmaq_location.csv...")
-#   closest.to_csv(f'{cmaq_folder}/fixed_station_cmaq_location.csv',index=False)
+      current_dist = calculate_distance(airnow_station, grid_location)
 
+      if nearest_distance > current_dist:
+        closest_station = airnow_station
+        nearest_distance = current_dist
+
+    print(closest_station, grid_location)
+    final_mapping_array.append([closest_station[0], closest_station[1], grid_location[0], grid_location[1]])
+  
+  closest = pd.DataFrame(final_mapping_array, columns=["Lat_airnow", "Lon_airnow", "Lat_cmaq", "Lon_cmaq"])
+  
+  
+  
+  
 def prepare_update_grid_cells(station_distance=0.2):
   """
   Get all grid cells within the specified distance around airnow stations
