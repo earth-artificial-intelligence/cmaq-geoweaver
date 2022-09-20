@@ -1279,31 +1279,21 @@
   "host_id" : "3wgogh",
   "indicator" : "Done"
 },{
+  "history_id" : "ufba03m0aa4",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660189690459,
+  "history_notes" : null,
+  "history_process" : "ex3vh9",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
   "history_id" : "wvvzf43644r",
   "history_input" : null,
   "history_output" : null,
   "history_begin_time" : null,
   "history_end_time" : 1660294477707,
-  "history_notes" : null,
-  "history_process" : "ex3vh9",
-  "host_id" : "p6wvf2",
-  "indicator" : "Stopped"
-},{
-  "history_id" : "xd7siv54q02",
-  "history_input" : null,
-  "history_output" : null,
-  "history_begin_time" : null,
-  "history_end_time" : 1660854222326,
-  "history_notes" : null,
-  "history_process" : "ex3vh9",
-  "host_id" : "p6wvf2",
-  "indicator" : "Stopped"
-},{
-  "history_id" : "2eoaury9olq",
-  "history_input" : null,
-  "history_output" : null,
-  "history_begin_time" : null,
-  "history_end_time" : 1660786975144,
   "history_notes" : null,
   "history_process" : "ex3vh9",
   "host_id" : "p6wvf2",
@@ -1329,11 +1319,11 @@
   "host_id" : "p6wvf2",
   "indicator" : "Stopped"
 },{
-  "history_id" : "ufba03m0aa4",
+  "history_id" : "2eoaury9olq",
   "history_input" : null,
   "history_output" : null,
   "history_begin_time" : null,
-  "history_end_time" : 1660189690459,
+  "history_end_time" : 1660786975144,
   "history_notes" : null,
   "history_process" : "ex3vh9",
   "host_id" : "p6wvf2",
@@ -1344,6 +1334,16 @@
   "history_output" : null,
   "history_begin_time" : null,
   "history_end_time" : 1660853992779,
+  "history_notes" : null,
+  "history_process" : "ex3vh9",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "xd7siv54q02",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660854222326,
   "history_notes" : null,
   "history_process" : "ex3vh9",
   "host_id" : "p6wvf2",

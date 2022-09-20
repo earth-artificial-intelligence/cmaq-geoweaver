@@ -187,3 +187,4 @@ if [ $? -eq 0 ]; then
 else
     echo "Generating images/gif Failed!"
 fi
+

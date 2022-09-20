@@ -1589,26 +1589,6 @@
   "host_id" : "3wgogh",
   "indicator" : "Done"
 },{
-  "history_id" : "vd22yw3ey76",
-  "history_input" : null,
-  "history_output" : null,
-  "history_begin_time" : null,
-  "history_end_time" : 1660294477700,
-  "history_notes" : null,
-  "history_process" : "l8vlic",
-  "host_id" : "p6wvf2",
-  "indicator" : "Stopped"
-},{
-  "history_id" : "54m8ewtuc6w",
-  "history_input" : null,
-  "history_output" : null,
-  "history_begin_time" : null,
-  "history_end_time" : 1660854222322,
-  "history_notes" : null,
-  "history_process" : "l8vlic",
-  "host_id" : "p6wvf2",
-  "indicator" : "Stopped"
-},{
   "history_id" : "9kaw4qahcfq",
   "history_input" : null,
   "history_output" : null,
@@ -1624,6 +1604,16 @@
   "history_output" : null,
   "history_begin_time" : null,
   "history_end_time" : 1660189690446,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "vd22yw3ey76",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660294477700,
   "history_notes" : null,
   "history_process" : "l8vlic",
   "host_id" : "p6wvf2",

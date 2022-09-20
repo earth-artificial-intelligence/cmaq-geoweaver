@@ -12,12 +12,12 @@ import matplotlib.pyplot as plt
 
 # home directory
 home = str(Path.home())
-cmaq_folder = "/groups/ESS/zsun/cmaq/" # change if you want to use your own folder
+cmaq_folder = "/groups/ESS3/aalnaim/cmaq/" # change if you want to use your own folder
 # cmaq_folder = "/Users/uhhmed/localCMAQ" # change if you want to use your own folder
 
 def get_days_list(sdate, edate):
   days=[]
-
+  
   delta = edate - sdate       # as timedelta
 
   for i in range(delta.days + 1):
@@ -28,7 +28,7 @@ def get_days_list(sdate, edate):
   one_more_day = sdate + timedelta(days=delta.days + 1)
   list_day=one_more_day.strftime('%Y%m%d')
   days.append(list_day)
-
+  
   return days
 
 def create_and_clean_folder(folder_path):
@@ -41,6 +41,6 @@ def remove_file(file_path):
   print(f'remove old files{file_path}')
   if os.path.exists(file_path):
     os.remove(file_path)
-
+    
 def turn_2_digits(a):
   return f"{a:02}"

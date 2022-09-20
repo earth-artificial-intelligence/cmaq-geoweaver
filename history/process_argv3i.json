@@ -1,4 +1,44 @@
 [{
+  "history_id" : "uP1etDKPQoEI",
+  "history_input" : "# combine cmaq and airnow into training.csv\nfrom cmaq_ai_utils import *\n\n# cmaq=pd.read_csv(home+\"/cmaq/training_data.csv\")\npath = f'{cmaq_folder}/training_input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"train_data_202207*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\n# cmaq = pd.concat([df for df in df_from_each_hourly_file])\n\ncmaq = pd.concat(df_from_each_hourly_file)\n\nobs=pd.read_csv(f\"{cmaq_folder}/observation/observation.csv\")\nref_stations=pd.read_csv(f\"{cmaq_folder}/fixed_station_cmaq_location_GRIDCRO2D.csv\")\n\nnew_df = pd.merge(ref_stations, cmaq,  how='left', left_on=['Lat_cmaq','Lon_cmaq'], right_on = ['Latitude','Longitude'])\nnew_df.to_csv(f\"{cmaq_folder}/subset.csv\")\nfinal = pd.merge(obs, new_df,  how='left', left_on=['Latitude','Longitude','YYYYMMDDHH'], right_on = ['Lat_airnow','Lon_airnow','YYYYMMDDHH'])\n\nfinal=final.drop_duplicates(keep=False)\ntraining_data = final.loc[:,~final.columns.duplicated()]\n\ntraining_data['YYYYMMDDHH'] = training_data['YYYYMMDDHH'].map(str)\ntraining_data['month'] = training_data['YYYYMMDDHH'].str[4:6]\ntraining_data['day'] = training_data['YYYYMMDDHH'].str[6:8]\ntraining_data['hours'] = training_data['YYYYMMDDHH'].str[8:10]\n\nnew_df=training_data.drop(['YYYYMMDDHH'],axis=1)\nfinal_df = new_df[new_df.AirNOW_O3!= -999]\nfinal_df.to_csv(f\"{cmaq_folder}/training_Jul_New.csv\",index=False)\nprint(\"All records should be incorporated into :\", f\"{cmaq_folder}/training.csv\")\n\n\n",
+  "history_output" : "",
+  "history_begin_time" : 1663682615360,
+  "history_end_time" : 1663683289727,
+  "history_notes" : null,
+  "history_process" : "argv3i",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "XFgEjj9U3tdu",
+  "history_input" : "# combine cmaq and airnow into training.csv\nfrom cmaq_ai_utils import *\n\n# cmaq=pd.read_csv(home+\"/cmaq/training_data.csv\")\npath = f'{cmaq_folder}/training_input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"train_data_202207*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\n# cmaq = pd.concat([df for df in df_from_each_hourly_file])\n\ncmaq = pd.concat(df_from_each_hourly_file)\n\nobs=pd.read_csv(f\"{cmaq_folder}/observation/observation.csv\")\nref_stations=pd.read_csv(f\"{cmaq_folder}/fixed_station_cmaq_location_GRIDCRO2D.csv\")\n\nnew_df = pd.merge(ref_stations, cmaq,  how='left', left_on=['Lat_cmaq','Lon_cmaq'], right_on = ['Latitude','Longitude'])\nnew_df.to_csv(f\"{cmaq_folder}/subset.csv\")\nfinal = pd.merge(obs, new_df,  how='left', left_on=['Latitude','Longitude','YYYYMMDDHH'], right_on = ['Lat_airnow','Lon_airnow','YYYYMMDDHH'])\n\nfinal=final.drop_duplicates(keep=False)\ntraining_data = final.loc[:,~final.columns.duplicated()]\n\ntraining_data['YYYYMMDDHH'] = training_data['YYYYMMDDHH'].map(str)\ntraining_data['month'] = training_data['YYYYMMDDHH'].str[4:6]\ntraining_data['day'] = training_data['YYYYMMDDHH'].str[6:8]\ntraining_data['hours'] = training_data['YYYYMMDDHH'].str[8:10]\n\nnew_df=training_data.drop(['YYYYMMDDHH'],axis=1)\nfinal_df = new_df[new_df.AirNOW_O3!= -999]\nfinal_df.to_csv(f\"{cmaq_folder}/training_Jul_New.csv\",index=False)\nprint(\"All records should be incorporated into :\", f\"{cmaq_folder}/training.csv\")\n\n\n",
+  "history_output" : "Running",
+  "history_begin_time" : 1663682148838,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "argv3i",
+  "host_id" : null,
+  "indicator" : "Running"
+},{
+  "history_id" : "PQ092OIX5yP8",
+  "history_input" : "# combine cmaq and airnow into training.csv\nfrom cmaq_ai_utils import *\n\n# cmaq=pd.read_csv(home+\"/cmaq/training_data.csv\")\npath = f'{cmaq_folder}/training_input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file)\n\nobs=pd.read_csv(f\"{cmaq_folder}/observation/observation_20210801_20220801.csv\")\nref_stations=pd.read_csv(f\"{cmaq_folder}/station_cmaq_location.csv\")\n\nnew_df = pd.merge(ref_stations, cmaq,  how='left', left_on=['Latitude_y','Longitude_y'], right_on = ['Latitude','Longitude'])\nnew_df.to_csv(f\"{cmaq_folder}/subset.csv\")\nfinal = pd.merge(obs, new_df,  how='left', left_on=['Latitude','Longitude','YYYYMMDDHH'], right_on = ['Latitude_x','Longitude_x','YYYYMMDDHH'])\n\nfinal=final.drop_duplicates(keep=False)\ntraining_data = final.loc[:,~final.columns.duplicated()]\n\ntraining_data['YYYYMMDDHH'] = training_data['YYYYMMDDHH'].map(str)\ntraining_data['month'] = training_data['YYYYMMDDHH'].str[4:6]\ntraining_data['day'] = training_data['YYYYMMDDHH'].str[6:8]\ntraining_data['hours'] = training_data['YYYYMMDDHH'].str[8:10]\n\nnew_df=training_data.drop(['YYYYMMDDHH'],axis=1)\nfinal_df = new_df[new_df.AirNOW_O3!= -999]\nfinal_df.to_csv(f\"{cmaq_folder}/training_20210801_20220801.csv\",index=False)\nprint(\"All records should be incorporated into :\", f\"{cmaq_folder}/training_20210801_20220801.csv\")\n\n\n",
+  "history_output" : "Running",
+  "history_begin_time" : 1662845287469,
+  "history_end_time" : 1663029943648,
+  "history_notes" : null,
+  "history_process" : "argv3i",
+  "host_id" : null,
+  "indicator" : "Stopped"
+},{
+  "history_id" : "LJrEIz8QbFS0",
+  "history_input" : "# combine cmaq and airnow into training.csv\nfrom cmaq_ai_utils import *\n\n# cmaq=pd.read_csv(home+\"/cmaq/training_data.csv\")\npath = f'{cmaq_folder}/training_input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file)\n\nobs=pd.read_csv(f\"{cmaq_folder}/observation/observation_20210801_20220801.csv\")\nref_stations=pd.read_csv(f\"{cmaq_folder}/station_cmaq_location.csv\")\n\nnew_df = pd.merge(ref_stations, cmaq,  how='left', left_on=['Latitude_y','Longitude_y'], right_on = ['Latitude','Longitude'])\nnew_df.to_csv(f\"{cmaq_folder}/subset.csv\")\nfinal = pd.merge(obs, new_df,  how='left', left_on=['Latitude','Longitude','YYYYMMDDHH'], right_on = ['Latitude_x','Longitude_x','YYYYMMDDHH'])\n\nfinal=final.drop_duplicates(keep=False)\ntraining_data = final.loc[:,~final.columns.duplicated()]\n\ntraining_data['YYYYMMDDHH'] = training_data['YYYYMMDDHH'].map(str)\ntraining_data['month'] = training_data['YYYYMMDDHH'].str[4:6]\ntraining_data['day'] = training_data['YYYYMMDDHH'].str[6:8]\ntraining_data['hours'] = training_data['YYYYMMDDHH'].str[8:10]\n\nnew_df=training_data.drop(['YYYYMMDDHH'],axis=1)\nfinal_df = new_df[new_df.AirNOW_O3!= -999]\nfinal_df.to_csv(f\"{cmaq_folder}/training_20210801_20220801.csv\",index=False)\nprint(\"All records should be incorporated into :\", f\"{cmaq_folder}/training_20210801_20220801.csv\")\n\n\n",
+  "history_output" : "",
+  "history_begin_time" : 1662821513946,
+  "history_end_time" : 1662842098988,
+  "history_notes" : null,
+  "history_process" : "argv3i",
+  "host_id" : null,
+  "indicator" : "Failed"
+},{
   "history_id" : "nEeLn8dViyq7",
   "history_input" : "# combine cmaq and airnow into training.csv\nfrom cmaq_ai_utils import *\n\n# cmaq=pd.read_csv(home+\"/cmaq/training_data.csv\")\npath = f'{cmaq_folder}/training_input_hourly'\nall_hourly_files = sorted(glob.glob(os.path.join(path, \"*.csv\"))) \ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file)\n\nobs=pd.read_csv(f\"{cmaq_folder}/observation/observation.csv\")\nref_stations=pd.read_csv(f\"{cmaq_folder}/station_cmaq_location.csv\")\n\nnew_df = pd.merge(ref_stations, cmaq,  how='left', left_on=['Latitude_y','Longitude_y'], right_on = ['Latitude','Longitude'])\nnew_df.to_csv(f\"{cmaq_folder}/subset.csv\")\nfinal = pd.merge(obs, new_df,  how='left', left_on=['Latitude','Longitude','YYYYMMDDHH'], right_on = ['Latitude_x','Longitude_x','YYYYMMDDHH'])\n\nfinal=final.drop_duplicates(keep=False)\ntraining_data = final.loc[:,~final.columns.duplicated()]\n\ntraining_data['YYYYMMDDHH'] = training_data['YYYYMMDDHH'].map(str)\ntraining_data['month'] = training_data['YYYYMMDDHH'].str[4:6]\ntraining_data['day'] = training_data['YYYYMMDDHH'].str[6:8]\ntraining_data['hours'] = training_data['YYYYMMDDHH'].str[8:10]\n\nnew_df=training_data.drop(['YYYYMMDDHH'],axis=1)\nfinal_df = new_df[new_df.AirNOW_O3!= -999]\nfinal_df.to_csv(f\"{cmaq_folder}/trainingNew.csv\",index=False)\nprint(\"All records should be incorporated into :\", f\"{cmaq_folder}/training.csv\")\n\n\n",
   "history_output" : "merge_training_data.py:15: FutureWarning: Passing 'suffixes' which cause duplicate columns {'Latitude_y', 'Longitude_y'} in the result is deprecated and will raise a MergeError in a future version.\n  final = pd.merge(obs, new_df,  how='left', left_on=['Latitude','Longitude','YYYYMMDDHH'], right_on = ['Latitude_x','Longitude_x','YYYYMMDDHH'])\nmerge_training_data.py:20: SettingWithCopyWarning: \nA value is trying to be set on a copy of a slice from a DataFrame.\nTry using .loc[row_indexer,col_indexer] = value instead\n\nSee the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy\n  training_data['YYYYMMDDHH'] = training_data['YYYYMMDDHH'].map(str)\nmerge_training_data.py:21: SettingWithCopyWarning: \nA value is trying to be set on a copy of a slice from a DataFrame.\nTry using .loc[row_indexer,col_indexer] = value instead\n\nSee the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy\n  training_data['month'] = training_data['YYYYMMDDHH'].str[4:6]\nmerge_training_data.py:22: SettingWithCopyWarning: \nA value is trying to be set on a copy of a slice from a DataFrame.\nTry using .loc[row_indexer,col_indexer] = value instead\n\nSee the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy\n  training_data['day'] = training_data['YYYYMMDDHH'].str[6:8]\nmerge_training_data.py:23: SettingWithCopyWarning: \nA value is trying to be set on a copy of a slice from a DataFrame.\nTry using .loc[row_indexer,col_indexer] = value instead\n\nSee the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy\n  training_data['hours'] = training_data['YYYYMMDDHH'].str[8:10]\nAll records should be incorporated into : /groups/ESS3/aalnaim/cmaq//training.csv\n",
@@ -599,26 +639,6 @@
   "host_id" : "p6wvf2",
   "indicator" : "Stopped"
 },{
-  "history_id" : "7gemau61re7",
-  "history_input" : null,
-  "history_output" : null,
-  "history_begin_time" : null,
-  "history_end_time" : 1660854222320,
-  "history_notes" : null,
-  "history_process" : "argv3i",
-  "host_id" : "p6wvf2",
-  "indicator" : "Stopped"
-},{
-  "history_id" : "588j1rmlbv5",
-  "history_input" : null,
-  "history_output" : null,
-  "history_begin_time" : null,
-  "history_end_time" : 1660786975139,
-  "history_notes" : null,
-  "history_process" : "argv3i",
-  "host_id" : "p6wvf2",
-  "indicator" : "Stopped"
-},{
   "history_id" : "e3tndwc8isj",
   "history_input" : null,
   "history_output" : null,
@@ -639,11 +659,31 @@
   "host_id" : "p6wvf2",
   "indicator" : "Stopped"
 },{
+  "history_id" : "588j1rmlbv5",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660786975139,
+  "history_notes" : null,
+  "history_process" : "argv3i",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
   "history_id" : "ofbmzkhalw2",
   "history_input" : null,
   "history_output" : null,
   "history_begin_time" : null,
   "history_end_time" : 1660853992767,
+  "history_notes" : null,
+  "history_process" : "argv3i",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "7gemau61re7",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660854222320,
   "history_notes" : null,
   "history_process" : "argv3i",
   "host_id" : "p6wvf2",
