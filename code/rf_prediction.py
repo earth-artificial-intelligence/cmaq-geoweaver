@@ -19,7 +19,7 @@ df_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)
 # load the model from disk
 # filename = f'{cmaq_folder}/models/rf_pycaret.sav'
 
-filename = f'{cmaq_folder}/models/rf_pycaret_o3_coarse_loc.sav'
+filename = f'{cmaq_folder}/models/rf_pycaret_o3_new_matched.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 
 for testing_df in df_from_each_hourly_file:
@@ -30,9 +30,9 @@ for testing_df in df_from_each_hourly_file:
 
   # Make coords even more coarse by rounding to closest multiple of 5 
   # (e.g., 40, 45, 85, 55)
-  testing_df['Latitude_ExtraCoarse'] = 0.1 * round(testing_df['Latitude']/0.1)
-  testing_df['Longitude_ExtraCoarse'] = 0.1 * round(testing_df['Longitude']/0.1)
-  X = testing_df.drop(['YYYYMMDDHH','Latitude','Longitude','CMAQ12KM_NO2(ppb)', 'CMAQ12KM_CO(ppm)', 'CMAQ_OC(ug/m3)', 'CO(moles/s)', 'PRSFC(Pa)', 'PBL(m)', 'TEMP2(K)','WSPD10(m/s)', 'WDIR10(degree)', 'RGRND(W/m2)', 'CFRAC', 'month', 'day', 'hours',],axis=1)
+  #testing_df['Latitude_ExtraCoarse'] = 0.1 * round(testing_df['Latitude']/0.1)
+  #testing_df['Longitude_ExtraCoarse'] = 0.1 * round(testing_df['Longitude']/0.1)
+  X = testing_df.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)
 
 # # making prediction
   pred = loaded_model.predict(X)
