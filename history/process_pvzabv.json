@@ -1,4 +1,14 @@
 [{
+  "history_id" : "y2k5onu51bb",
+  "history_input" : "{\"operation\":\"ShowResultMap\",\"params\":[{\"name\":\"FilePath\",\"value\":\"/groups/ESS/zsun/cmaq/plots/Map_20220810.gif\"}]}",
+  "history_output" : "{\"ret\": \"failure\", \"reason\": \"/groups/ESS/zsun/cmaq/plots/Map_20220810.gif (No such file or directory)\"}",
+  "history_begin_time" : 1663783505566,
+  "history_end_time" : 1663783505588,
+  "history_notes" : null,
+  "history_process" : "pvzabv",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
   "history_id" : "m6w7iv9ndlh",
   "history_input" : "{\"operation\":\"ShowResultMap\",\"params\":[{\"name\":\"FilePath\",\"value\":\"/groups/ESS/zsun/cmaq/plots/Map_20220810.gif\"}]}",
   "history_output" : null,

@@ -10,7 +10,7 @@ import pickle
 from cmaq_ai_utils import *
 
 # importing data
-final=pd.read_csv(f'{cmaq_folder}/trainingNew.csv')
+final=pd.read_csv(f'{cmaq_folder}/training_one_year.csv')
 print(final.head())
 final=final.dropna()
 #print("shape before: ", final.shape)
@@ -46,6 +46,7 @@ rf = RandomForestRegressor(bootstrap=True, ccp_alpha=0.0, criterion='mse',
 rf.fit(X, y)
 
 # save the model to disk
-filename = f'{cmaq_folder}/models/rf_pycaret_o3_new_matched.sav'
+filename = f'{cmaq_folder}/models/rf_pycaret_o3_one_year.sav'
 #filename = 'D:/Research/CMAQ/local_test/xgboost.sav'
 pickle.dump(rf, open(filename, 'wb'))
+

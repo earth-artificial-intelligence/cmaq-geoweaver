@@ -19,7 +19,7 @@ df_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)
 # load the model from disk
 # filename = f'{cmaq_folder}/models/rf_pycaret.sav'
 
-filename = f'{cmaq_folder}/models/rf_pycaret_o3_new_matched.sav'
+filename = f'{cmaq_folder}/models/rf_pycaret_o3_one_year.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 
 for testing_df in df_from_each_hourly_file:
@@ -32,7 +32,7 @@ for testing_df in df_from_each_hourly_file:
   # (e.g., 40, 45, 85, 55)
   #testing_df['Latitude_ExtraCoarse'] = 0.1 * round(testing_df['Latitude']/0.1)
   #testing_df['Longitude_ExtraCoarse'] = 0.1 * round(testing_df['Longitude']/0.1)
-  X = testing_df.drop(['YYYYMMDDHH','Latitude','Longitude',],axis=1)
+  X = testing_df.drop(['YYYYMMDDHH','Latitude','Longitude', 'CO(moles/s)'],axis=1)
 
 # # making prediction
   pred = loaded_model.predict(X)
@@ -45,3 +45,4 @@ for testing_df in df_from_each_hourly_file:
 # saving the dataset into local drive
   print(f'Saving: {cmaq_folder}/prediction_files/prediction_rf_{file_dateTime}.csv')
   testing_df.to_csv(f'{cmaq_folder}/prediction_files/prediction_rf_{file_dateTime}.csv',index=False)
+

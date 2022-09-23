@@ -1,12 +1,11 @@
 #!/bin/bash
 # generate images and gif from the NetCDF files
 
-cmaq_folder="/groups/ESS/zsun/cmaq"
-#cmaq_folder="/Users/uhhmed/localCMAQ"
+export cmaq_folder="/groups/ESS3/aalnaim/cmaq"
 mkdir $cmaq_folder"/plots"
 rm $cmaq_folder/plots/* # clean everything first
 
-# echo $(date -d '2 day ago' '+%Y%m%d')
+echo $(date -d '2 day ago' '+%Y%m%d')
 # Setting env variables
 #export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
 export YYYYMMDD_POST='20220805'
@@ -20,25 +19,25 @@ export stdate_file='20220805'
 #export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
 export eddate_file='20220806'
 
-
 export postdata_dir=$cmaq_folder"/prediction_nc_files"
-# export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
-export mcip_dir=$cmaq_folder"/GRIDCRO2D"
+export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
 export dir_graph=$cmaq_folder"/plots"
 
-# module load ncl
+module load ncl
 
 rm $cmaq_folder/geoweaver_plot_daily_O3.ncl
 cat <<EOF >> $cmaq_folder/geoweaver_plot_daily_O3.ncl
-load "/opt/anaconda3/envs/ncl_stable/lib/ncarg/nclscripts/csm/gsn_code.ncl"
-load "/opt/anaconda3/envs/ncl_stable/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
-load "/opt/anaconda3/envs/ncl_stable/lib/ncarg/nclscripts/csm/contributed.ncl"
+load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_code.ncl"
+load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
+load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/contributed.ncl"
 
 setvalues NhlGetWorkspaceObjectId()
 "wsMaximumSize": 600000000
 end setvalues
 
 begin
+
+cmaq_dir = getenv("cmaq_folder")
 
 date = getenv("YYYYMMDD_POST")
 d1 = getenv("stdate_post")
@@ -53,8 +52,8 @@ dFile2 = getenv("eddate_file")
 grid_dir = getenv("mcip_dir")
 plot_dir = getenv("dir_graph")
 
-print("/groups/ESS/aalnaim/cmaq/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20220805_ML_extracted.nc")
-cdf_file1 = addfile("/Users/uhhmed/localCMAQ/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20220805_ML_extracted.nc","r")
+print(cmaq_dir+"/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc")
+cdf_file1 = addfile(cmaq_dir+"/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc","r")
 cdf_file= addfile(grid_dir+"/GRIDCRO2D_"+date+".nc","r")
 
 ptime = (/"12","13","14","15","16","17","18","19","20","21","22","23","00","01","02","03","04","05","06","07","08","09","10","11"/)
@@ -168,8 +167,7 @@ do it = 0, nt-1
   draw(plot)
   frame(wks)
   delete(wks)
-  system("composite -geometry 100x70+900+900 /Users/uhhmed/localCMAQ/mason-logo-green.png "+pname+".png "+pname+".png")
-  print("Saved: "+pname+".png")
+  system("composite -geometry 100x70+900+900 /groups/ESS/aalnaim/cmaq/mason-logo-green.png "+pname+".png "+pname+".png")
 end do
 delete(res)
 
@@ -177,7 +175,7 @@ end
 EOF
 
 
-source activate ncl_stable && ncl $cmaq_folder/geoweaver_plot_daily_O3.ncl
+ncl $cmaq_folder/geoweaver_plot_daily_O3.ncl
 
 # convert -delay 100 *.png 20220613_20220614.gif
 convert -delay 100 $cmaq_folder/plots/testPlot*.png $cmaq_folder/plots/"Map_"$YYYYMMDD_POST.gif
@@ -187,4 +185,5 @@ if [ $? -eq 0 ]; then
 else
     echo "Generating images/gif Failed!"
 fi
+
 

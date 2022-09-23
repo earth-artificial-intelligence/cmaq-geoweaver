@@ -12,7 +12,7 @@ prediction_path = f"{cmaq_folder}/prediction_files/"
 all_hourly_files = sorted(glob.glob(os.path.join(prediction_path, "*.csv")))
 # print("overall hourly files: ", all_hourly_files)
 
-for i in range(len(days)-1):
+for i in range(1):
   print(days[i])
   
   df_cdf = xr.open_dataset("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_"+days[i+1]+"_extracted.nc")
