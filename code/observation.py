@@ -3,7 +3,7 @@ import glob, os
 import numpy as np
 from cmaq_ai_utils import *
 
-sdate = date(2022, 8, 1)   # start date
+sdate = date(2021, 8, 1)   # start date
 edate = date(2022, 8, 2)   # end date
 days = get_days_list(sdate, edate)
 

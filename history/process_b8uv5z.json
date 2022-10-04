@@ -1,4 +1,54 @@
 [{
+  "history_id" : "omsccgtffhq",
+  "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
+  "history_output" : "remove old files/groups/ESS/zsun/cmaq//testing_input_hourly/testing.csv\nDone with generating testing.csv!\n",
+  "history_begin_time" : 1664506163909,
+  "history_end_time" : 1664506281019,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "aqt8fv",
+  "indicator" : "Done"
+},{
+  "history_id" : "f24zth2lug1",
+  "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
+  "history_output" : "remove old files/groups/ESS/zsun/cmaq//testing_input_hourly/testing.csv\nDone with generating testing.csv!\n",
+  "history_begin_time" : 1664428571199,
+  "history_end_time" : 1664428692417,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "aqt8fv",
+  "indicator" : "Done"
+},{
+  "history_id" : "hzj7jgz2x1j",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1664427014349,
+  "history_end_time" : 1664427014349,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "aqt8fv",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "bdge7ypv9qs",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1664426709383,
+  "history_end_time" : 1664426992854,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "o8jub3ujz1d",
+  "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
+  "history_output" : "Traceback (most recent call last):\n  File \"/Users/joe/gw-workspace/o8jub3ujz1d/test_data.py\", line 14, in <module>\n    cmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n  File \"/Users/l21-n02609-comm/opt/anaconda3/lib/python3.9/site-packages/pandas/util/_decorators.py\", line 311, in wrapper\n    return func(*args, **kwargs)\n  File \"/Users/l21-n02609-comm/opt/anaconda3/lib/python3.9/site-packages/pandas/core/reshape/concat.py\", line 294, in concat\n    op = _Concatenator(\n  File \"/Users/l21-n02609-comm/opt/anaconda3/lib/python3.9/site-packages/pandas/core/reshape/concat.py\", line 351, in __init__\n    raise ValueError(\"No objects to concatenate\")\nValueError: No objects to concatenate\n",
+  "history_begin_time" : 1663783489634,
+  "history_end_time" : 1663783491101,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
   "history_id" : "IUQwHeJIOsfY",
   "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
   "history_output" : "remove old files/groups/ESS/aalnaim/cmaq//testing_input_hourly/testing.csv\nDone with generating testing.csv!\n",
@@ -113,51 +163,51 @@
   "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
   "history_output" : "remove old files/groups/ESS/aalnaim/cmaq//testing_input_hourly/testing.csv\nDone with generating testing.csv!\n",
   "history_begin_time" : 1660707359745,
-  "history_end_time" : null,
+  "history_end_time" : 1662171350347,
   "history_notes" : null,
   "history_process" : "b8uv5z",
   "host_id" : null,
-  "indicator" : "Running"
+  "indicator" : "Stopped"
 },{
   "history_id" : "rGzunfOxGcfW",
   "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
   "history_output" : "remove old files/groups/ESS/aalnaim/cmaq//testing_input_hourly/testing.csv\nDone with generating testing.csv!\n",
   "history_begin_time" : 1660680650167,
-  "history_end_time" : null,
+  "history_end_time" : 1662171350965,
   "history_notes" : null,
   "history_process" : "b8uv5z",
   "host_id" : null,
-  "indicator" : "Running"
+  "indicator" : "Stopped"
 },{
   "history_id" : "YtelgumauTn5",
   "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
   "history_output" : "remove old files/groups/ESS/aalnaim/cmaq//testing_input_hourly/testing.csv\nDone with generating testing.csv!\n",
   "history_begin_time" : 1660673770066,
-  "history_end_time" : null,
+  "history_end_time" : 1662171351581,
   "history_notes" : null,
   "history_process" : "b8uv5z",
   "host_id" : null,
-  "indicator" : "Running"
+  "indicator" : "Stopped"
 },{
   "history_id" : "Fk6xKTjoLuUn",
   "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
   "history_output" : "remove old files/groups/ESS/aalnaim/cmaq//testing_input_hourly/testing.csv\nDone with generating testing.csv!\n",
   "history_begin_time" : 1660567212078,
-  "history_end_time" : null,
+  "history_end_time" : 1662171352244,
   "history_notes" : null,
   "history_process" : "b8uv5z",
   "host_id" : null,
-  "indicator" : "Running"
+  "indicator" : "Stopped"
 },{
   "history_id" : "mybVZmxthMqr",
   "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
   "history_output" : "remove old files/groups/ESS/aalnaim/cmaq//testing_input_hourly/testing.csv\nDone with generating testing.csv!\n",
   "history_begin_time" : 1660565468012,
-  "history_end_time" : null,
+  "history_end_time" : 1662171353099,
   "history_notes" : null,
   "history_process" : "b8uv5z",
   "host_id" : null,
-  "indicator" : "Running"
+  "indicator" : "Stopped"
 },{
   "history_id" : "TR2BsYIKnuqa",
   "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
@@ -173,11 +223,11 @@
   "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
   "history_output" : "remove old files/groups/ESS/aalnaim/cmaq//testing_input_hourly/testing.csv\nDone with generating testing.csv!\n",
   "history_begin_time" : 1660371712556,
-  "history_end_time" : null,
+  "history_end_time" : 1662171355394,
   "history_notes" : null,
   "history_process" : "b8uv5z",
   "host_id" : null,
-  "indicator" : "Running"
+  "indicator" : "Stopped"
 },{
   "history_id" : "alcMaLRncL60",
   "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
@@ -659,26 +709,6 @@
   "host_id" : "3wgogh",
   "indicator" : "Done"
 },{
-  "history_id" : "01xvs5vv6tv",
-  "history_input" : null,
-  "history_output" : null,
-  "history_begin_time" : null,
-  "history_end_time" : 1660166319945,
-  "history_notes" : null,
-  "history_process" : "b8uv5z",
-  "host_id" : "p6wvf2",
-  "indicator" : "Stopped"
-},{
-  "history_id" : "ex3kdzpfxhs",
-  "history_input" : null,
-  "history_output" : null,
-  "history_begin_time" : null,
-  "history_end_time" : 1660189690461,
-  "history_notes" : null,
-  "history_process" : "b8uv5z",
-  "host_id" : "p6wvf2",
-  "indicator" : "Stopped"
-},{
   "history_id" : "j4vyewex40p",
   "history_input" : null,
   "history_output" : null,
@@ -689,21 +719,11 @@
   "host_id" : "p6wvf2",
   "indicator" : "Stopped"
 },{
-  "history_id" : "7bohn572a2o",
+  "history_id" : "xtfgdwn3ncp",
   "history_input" : null,
   "history_output" : null,
   "history_begin_time" : null,
-  "history_end_time" : 1660295756111,
-  "history_notes" : null,
-  "history_process" : "b8uv5z",
-  "host_id" : "p6wvf2",
-  "indicator" : "Stopped"
-},{
-  "history_id" : "3dihkxjne9j",
-  "history_input" : null,
-  "history_output" : null,
-  "history_begin_time" : null,
-  "history_end_time" : 1660777307078,
+  "history_end_time" : 1660854222329,
   "history_notes" : null,
   "history_process" : "b8uv5z",
   "host_id" : "p6wvf2",
@@ -729,6 +749,46 @@
   "host_id" : "p6wvf2",
   "indicator" : "Stopped"
 },{
+  "history_id" : "7bohn572a2o",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660295756111,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "01xvs5vv6tv",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660166319945,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "3dihkxjne9j",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660777307078,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "ex3kdzpfxhs",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660189690461,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
   "history_id" : "rwec5q2n2ab",
   "history_input" : null,
   "history_output" : null,
@@ -739,13 +799,23 @@
   "host_id" : "p6wvf2",
   "indicator" : "Stopped"
 },{
-  "history_id" : "xtfgdwn3ncp",
+  "history_id" : "v1z8t5i8d44",
   "history_input" : null,
   "history_output" : null,
   "history_begin_time" : null,
-  "history_end_time" : 1660854222329,
+  "history_end_time" : 1664422603476,
   "history_notes" : null,
   "history_process" : "b8uv5z",
-  "host_id" : "p6wvf2",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "01kn0iblloz",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1664422878608,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "aqt8fv",
   "indicator" : "Stopped"
 },]

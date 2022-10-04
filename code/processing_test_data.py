@@ -5,8 +5,8 @@ from cmaq_ai_utils import *
 # end_date = datetime.today()
 # base = end_date - timedelta(days=2)
 
-sdate = date(2022, 8, 5)   # start date
-edate = date(2022, 8, 6)   # end date
+sdate = date(2022, 8, 6)   # start date
+edate = date(2022, 8, 7)   # end date
 days = get_days_list(sdate, edate)
 
 real_hour_list = [12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11]

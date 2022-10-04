@@ -3,8 +3,8 @@ from cmaq_ai_utils import *
 
 # end_date = datetime.today()
 # base = end_date - timedelta(days=2)
-sdate = date(2022, 8, 5)   # start date
-edate = date(2022, 8, 6)   # end date
+sdate = date(2022, 8, 6)   # start date
+edate = date(2022, 8, 7)   # end date
 days = get_days_list(sdate, edate)
 
 prediction_path = f"{cmaq_folder}/prediction_files/"

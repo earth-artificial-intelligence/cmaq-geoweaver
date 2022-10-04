@@ -1,4 +1,44 @@
 [{
+  "history_id" : "jowbo6ssxj9",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1664505829213,
+  "history_end_time" : 1664505829213,
+  "history_notes" : null,
+  "history_process" : "wny2dz",
+  "host_id" : "aqt8fv",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "9ohrr4kqj2o",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1664428239233,
+  "history_end_time" : 1664428239233,
+  "history_notes" : null,
+  "history_process" : "wny2dz",
+  "host_id" : "aqt8fv",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "v33buytvy0d",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1664427014335,
+  "history_end_time" : 1664427014335,
+  "history_notes" : null,
+  "history_process" : "wny2dz",
+  "host_id" : "aqt8fv",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "9uipdp63fr0",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1664426709330,
+  "history_end_time" : 1664426992849,
+  "history_notes" : null,
+  "history_process" : "wny2dz",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
   "history_id" : "tw6bgxcu6kq",
   "history_input" : "# Write first python in Geoweaver# NASA GEOWEAVER\n# CMAQ-AI Model: Training Voting-XGBoost model\n\n# Importing necessary libraries\nimport pandas as pd\nimport sklearn\nfrom sklearn.ensemble import RandomForestRegressor\nfrom xgboost.sklearn import XGBRegressor\nimport pickle\nfrom pathlib import Path\n\n# home directory\nhome = str(Path.home())\n\n# importing data\nfinal=pd.read_csv('/groups/ESS/zsu/cmaq/training.csv')\nprint(final.head())\nfinal=final.dropna()\n\n# Processing training  data\nX = final.drop(['AirNOW_O3','Latitude_x','Longitude_x'],axis=1)\ny = final['AirNOW_O3']\n\nrf = RandomForestRegressor(bootstrap=True, ccp_alpha=0.0, criterion='mse',\n                      max_depth=None, max_features='auto', max_leaf_nodes=None,\n                      max_samples=None, min_impurity_decrease=0.0,\n                      min_samples_leaf=1,\n                      min_samples_split=2, min_weight_fraction_leaf=0.0,\n                      n_estimators=100, n_jobs=-1, oob_score=False,\n                      random_state=3086, verbose=0, warm_start=False)\n\nrf.fit(X, y)\n\n# save the model to disk\nfilename = '/groups/ESS/zsun/cmaq/models/rf_from_hourly_fixed.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\npickle.dump(rf, open(filename, 'wb'))",
   "history_output" : "/Users/joe/gw-workspace/tw6bgxcu6kq/gw-wB3v9thLphSxeLgJX96b3YsH4i-tw6bgxcu6kq.sh: line 5: import: command not found\n/Users/joe/gw-workspace/tw6bgxcu6kq/gw-wB3v9thLphSxeLgJX96b3YsH4i-tw6bgxcu6kq.sh: line 6: import: command not found\nfrom: can't read /var/mail/sklearn.ensemble\nfrom: can't read /var/mail/xgboost.sklearn\n/Users/joe/gw-workspace/tw6bgxcu6kq/gw-wB3v9thLphSxeLgJX96b3YsH4i-tw6bgxcu6kq.sh: line 9: import: command not found\nfrom: can't read /var/mail/pathlib\n/Users/joe/gw-workspace/tw6bgxcu6kq/gw-wB3v9thLphSxeLgJX96b3YsH4i-tw6bgxcu6kq.sh: line 13: syntax error near unexpected token `('\n/Users/joe/gw-workspace/tw6bgxcu6kq/gw-wB3v9thLphSxeLgJX96b3YsH4i-tw6bgxcu6kq.sh: line 13: `home = str(Path.home())'\n",
@@ -767,5 +807,25 @@
   "history_notes" : null,
   "history_process" : "wny2dz",
   "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "1vv9vtc7v2t",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1664422603430,
+  "history_notes" : null,
+  "history_process" : "wny2dz",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "z7x9epogdpb",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1664422878598,
+  "history_notes" : null,
+  "history_process" : "wny2dz",
+  "host_id" : "aqt8fv",
   "indicator" : "Stopped"
 },]

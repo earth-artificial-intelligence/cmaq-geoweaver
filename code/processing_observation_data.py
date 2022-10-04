@@ -6,8 +6,8 @@ from pathlib import Path
 import numpy as np
 from cmaq_ai_utils import *
 
-sdate = date(2022, 7, 1)   # start date
-edate = date(2022, 7, 31)   # end date
+sdate = date(2021, 8, 1)   # start date
+edate = date(2022, 8, 2)   # end date
 days = get_days_list(sdate, edate)
     
 data_frame = pd.DataFrame()
@@ -45,4 +45,4 @@ dff=df.replace(',','', regex=True)
 
 dt = np.concatenate(date_time)
 dff['YYYYMMDDHH'] = dt.tolist()
-dff.to_csv(f"{cmaq_folder}/observation/observation.csv",index=False)
+dff.to_csv(f"{cmaq_folder}/observation_one_year.csv",index=False)

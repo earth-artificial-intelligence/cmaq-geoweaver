@@ -10,16 +10,16 @@ mkdir $cmaq_folder"/plots"
 
 # export stdate_file=$(date -d '2 day ago' '+%Y%m%d') 
 # export eddate_file=$(date -d '1 day ago' '+%Y%m%d') 
-export YYYYMMDD_POST='20220805'
-export stdate_post='2022-08-05'
-export eddate_post='2022-08-06'
-export stdate_file='20220805'
-export eddate_file='20220806'
+export YYYYMMDD_POST='20220806'
+export stdate_post='2022-08-06'
+export eddate_post='2022-08-07'
+export stdate_file='20220806'
+export eddate_file='20220807'
 
 
 export postdata_dir=$cmaq_folder"/prediction_nc_files"
 export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
-export graph_dir="/groups/ESS/aalnaim/cmaq/plots"
+export graph_dir="/groups/ESS/zsun/cmaq/plots"
 
 export obs_dir_NCL="/groups/ESS/share/projects/SWUS3km/data/OBS/AirNow/AQF5X"
 
@@ -27,9 +27,9 @@ module load ncl
 
 rm $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
 cat <<EOF >>$cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
-load "/opt/anaconda3/envs/ncl_stable/lib/ncarg/nclscripts/csm/gsn_code.ncl"
-load "/opt/anaconda3/envs/ncl_stable/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
-load "/opt/anaconda3/envs/ncl_stable/lib/ncarg/nclscripts/csm/contributed.ncl"
+load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_code.ncl"
+load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
+load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/contributed.ncl"
 
 setvalues NhlGetWorkspaceObjectId()
 "wsMaximumSize": 600000000
@@ -301,7 +301,7 @@ do it = 0, nt-1
   delete(wks)
   delete(pmid_O3)
   delete(hollow_O3)
-  system("composite -geometry 100x70+900+900 mason-logo-green.png "+pname+".png "+pname+".png")
+  system("composite -geometry 100x70+900+900 /groups/ESS/zsun/cmaq/mason-logo-green.png "+pname+".png "+pname+".png")
 
 
   delete(pmid)

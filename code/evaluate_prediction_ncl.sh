@@ -9,9 +9,9 @@ rm $cmaq_folder/results/* # clean everything first
 # export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d')
 # export stdate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
 # export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
-export YYYYMMDD_POST='20220805'
-export stdate_file='20220805'
-export eddate_file='20220806'
+export YYYYMMDD_POST='20220806'
+export stdate_file='20220806'
+export eddate_file='20220807'
 
 export wfname=$cmaq_folder"/results/geoweaver_evalution_"$YYYYMMDD_POST"_results.txt"
 
@@ -51,8 +51,11 @@ dkm=tofloat(getenv("dx"))
 grid_fname=(getenv("grid_fname"))
 
 maxdist=dkm/90000.0*1.414
+;maxarea=0.25
+;thd=70
+;maxdist=0.13*1.414
 maxarea=0.25
-thd=70
+thd=35.0
 
 ;-----read model lat lon------
 ;read lat lon
@@ -174,20 +177,23 @@ nobs=dimsizes(aa)
 olat24=olat(aa)
 olon24=olon(aa)
 oO324=oO3(aa)
-print("TYPE of oO324: "+typeof(oO324))
+;print("oO324: "+oO324)
 delete([/aa,olat,olon,oO3/])
 mO324=oO324*0-999.0
-print("TYPE of mO324: "+typeof(mO324))
-print("TYPE of mO31d: "+typeof(mO31d))
+;print("mO324: "+mO324)
+;print("mO31d: "+mO31d)
 areaa=oO324*0-999.0
 areab=areaa
 aread=areaa
+;print("areaa: "+areaa)
+;print("areab: "+areab)
+;print("aread: "+aread)
 
 ;-----find model point-----
 do in=0,nobs-1
   dis=sqrt((mlat1d-olat24(in))^2+(mlon1d-olon24(in))^2)
   aa=minind(dis)
- ;print(in+" "+aa)
+  ;print(in+" "+aa)
   if (dis(aa).lt.maxdist) then
     mO324(in)=mO31d(aa)
     cc=ind((mlat1d.ge.(olat24(in)-maxarea)).and.(mlat1d.le.(olat24(in)+maxarea)).and.\
@@ -239,8 +245,12 @@ else
   mb=avg((mO324(tt)-oO324(tt)))
 end if
 ;-----cal ah afar-----
+;print("areaa: "+areaa)
+;print("areab: "+areab)
 aa=ind((areaa+areab).gt.0)
 bb=ind((aread+areab).gt.0)
+;print("aa: "+aa)
+;print("bb: "+bb)
 if (any(ismissing(aa))) then
   afar=0.
 else
