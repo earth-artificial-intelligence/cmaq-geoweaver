@@ -1,7 +1,7 @@
 #!/bin/bash
 # evaluate the prediction accuracy
 
-cmaq_folder="/groups/ESS/zsun/cmaq"
+cmaq_folder="/groups/ESS3/aalnaim/cmaq"
 mkdir -p $cmaq_folder/results/
 chmod +x $cmaq_folder/results/ -R
 rm $cmaq_folder/results/* # clean everything first
@@ -279,4 +279,5 @@ if [ $? -eq 0 ]; then
 else
     echo "Evaluation Failed!"
 fi
+
 

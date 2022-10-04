@@ -10,7 +10,7 @@ import pickle
 from cmaq_ai_utils import *
 
 # importing data
-colnames=["Latitude_x","Longitude_x","CMAQ12KM_O3(ppb)","CMAQ12KM_NO2(ppb)","CMAQ12KM_CO(ppm)","CMAQ_OC(ug/m3)","PRSFC(Pa)","PBL(m)","TEMP2(K)","WSPD10(m/s)","WDIR10(degree)","RGRND(W/m2)","CFRAC","month","day","hours","Lat_airnow","Lon_airnow","Lat_cmaq","Lon_cmaq","StationID","Latitude_y","Longitude_y","AirNOW_O3"] 
+colnames=["Latitude_x","Longitude_x","CMAQ12KM_O3(ppb)","CMAQ12KM_NO2(ppb)","CMAQ12KM_CO(ppm)","CMAQ_OC(ug/m3)","PRSFC(Pa)","PBL(m)","TEMP2(K)","WSPD10(m/s)","WDIR10(degree)","RGRND(W/m2)","CFRAC","month","day","hours","Lat_airnow","Lon_airnow","Lat_cmaq","Lon_cmaq","StationID","Latitude_y","Longitude_y","AirNOW_O3"]
 final=pd.read_csv(f'{cmaq_folder}/training_one_year.csv', names=colnames, header=None)
 print(final.head())
 final=final.dropna()
@@ -22,7 +22,7 @@ final=final.dropna()
 
 final['time_of_day'] = (final['hours'] % 24 + 4) // 4
 
-# Make coords even more coarse by rounding to closest multiple of 5 
+# Make coords even more coarse by rounding to closest multiple of 5
 # (e.g., 40, 45, 85, 55)
 #final['Latitude_ExtraCoarse'] = 0.1 * round(final['Latitude_x']/0.1)
 #final['Longitude_ExtraCoarse'] = 0.1 * round(final['Longitude_x']/0.1)

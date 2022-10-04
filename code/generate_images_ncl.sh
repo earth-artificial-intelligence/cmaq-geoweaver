@@ -19,7 +19,6 @@ export stdate_file='20220806'
 #export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
 export eddate_file='20220807'
 
-
 export postdata_dir=$cmaq_folder"/prediction_nc_files"
 export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
 export dir_graph=$cmaq_folder"/plots"
@@ -37,6 +36,8 @@ setvalues NhlGetWorkspaceObjectId()
 end setvalues
 
 begin
+
+cmaq_dir = getenv("cmaq_folder")
 
 date = getenv("YYYYMMDD_POST")
 d1 = getenv("stdate_post")
@@ -184,4 +185,3 @@ if [ $? -eq 0 ]; then
 else
     echo "Generating images/gif Failed!"
 fi
-
