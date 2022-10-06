@@ -1,23 +1,25 @@
 #!/bin/bash
 # generate images and gif from the NetCDF files
 
-cmaq_folder="/groups/ESS/zsun/cmaq"
+export cmaq_folder="/groups/ESS3/aalnaim/cmaq"
 mkdir $cmaq_folder"/plots"
 rm $cmaq_folder/plots/* # clean everything first
 
-echo $(date -d '2 day ago' '+%Y%m%d')
+echo $(date -d '3 day ago' '+%Y%m%d')
 # Setting env variables
-#export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
-export YYYYMMDD_POST='20220806'
-#export stdate_post=$(date -d '2 day ago' '+%Y-%m-%d') #This needs to be auto date
-export stdate_post='2022-08-06'
-#export eddate_post=$(date -d '1 day ago' '+%Y-%m-%d') #This needs to be auto date
-export eddate_post='2022-08-07'
+export YYYYMMDD_POST=$(date -d '3 day ago' '+%Y%m%d')
 
-#export stdate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
-export stdate_file='20220806'
-#export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
-export eddate_file='20220807'
+export stdate_post=$(date -d '3 day ago' '+%Y-%m-%d')
+export eddate_post=$(date -d '2 day ago' '+%Y-%m-%d')
+
+export stdate_file=$(date -d '3 day ago' '+%Y%m%d')
+export eddate_file=$(date -d '2 day ago' '+%Y%m%d')
+
+# export YYYYMMDD_POST='20221002'
+# export stdate_post='2022-10-02'
+# export eddate_post='2022-10-03'
+# export stdate_file='20221002'
+# export eddate_file='20221003'
 
 export postdata_dir=$cmaq_folder"/prediction_nc_files"
 export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
@@ -37,8 +39,6 @@ end setvalues
 
 begin
 
-cmaq_dir = getenv("cmaq_folder")
-
 date = getenv("YYYYMMDD_POST")
 d1 = getenv("stdate_post")
 d2 = getenv("eddate_post")
@@ -46,14 +46,16 @@ d2 = getenv("eddate_post")
 dFile1 = getenv("stdate_file")
 dFile2 = getenv("eddate_file")
 
+cmaq_dir = getenv("cmaq_folder")
+
 ;print("Passed Date: "+date)
 
 ;aconc_dir = getenv("postdata_dir")
 grid_dir = getenv("mcip_dir")
 plot_dir = getenv("dir_graph")
 
-print("/groups/ESS/zsun/cmaq/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc")
-cdf_file1 = addfile("/groups/ESS/zsun/cmaq/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc","r")
+print(cmaq_dir+"/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc")
+cdf_file1 = addfile(cmaq_dir+"/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc","r")
 cdf_file= addfile(grid_dir+"/GRIDCRO2D_"+date+".nc","r")
 
 ptime = (/"12","13","14","15","16","17","18","19","20","21","22","23","00","01","02","03","04","05","06","07","08","09","10","11"/)
@@ -185,3 +187,4 @@ if [ $? -eq 0 ]; then
 else
     echo "Generating images/gif Failed!"
 fi
+

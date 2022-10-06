@@ -5,13 +5,16 @@ cmaq_folder="/groups/ESS3/aalnaim/cmaq"
 mkdir -p $cmaq_folder/results/
 chmod +x $cmaq_folder/results/ -R
 rm $cmaq_folder/results/* # clean everything first
+
 # Setting env variables
-# export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d')
-# export stdate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
-# export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
-export YYYYMMDD_POST='20220806'
-export stdate_file='20220806'
-export eddate_file='20220807'
+export YYYYMMDD_POST=$(date -d '3 day ago' '+%Y%m%d')
+
+export stdate_file=$(date -d '3 day ago' '+%Y%m%d')
+export eddate_file=$(date -d '2 day ago' '+%Y%m%d')
+
+# export YYYYMMDD_POST='20220806'
+# export stdate_file='20220806'
+# export eddate_file='20220807'
 
 export wfname=$cmaq_folder"/results/geoweaver_evalution_"$YYYYMMDD_POST"_results.txt"
 
@@ -279,5 +282,4 @@ if [ $? -eq 0 ]; then
 else
     echo "Evaluation Failed!"
 fi
-
 

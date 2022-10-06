@@ -1,10 +1,13 @@
 # load the prediction_rf.csv into a NetCDF file for visualization
 from cmaq_ai_utils import *
 
-# end_date = datetime.today()
-# base = end_date - timedelta(days=2)
-sdate = date(2022, 8, 6)   # start date
-edate = date(2022, 8, 7)   # end date
+# Auto date method
+sdate, edate = get_date_range_auto(days_ago=3)
+
+# Manual date method
+# sdate = date(2022, 8, 6)   # start date
+# edate = date(2022, 8, 7)   # end date
+
 days = get_days_list(sdate, edate)
 
 prediction_path = f"{cmaq_folder}/prediction_files/"
@@ -12,7 +15,7 @@ prediction_path = f"{cmaq_folder}/prediction_files/"
 all_hourly_files = sorted(glob.glob(os.path.join(prediction_path, "*.csv")))
 # print("overall hourly files: ", all_hourly_files)
 
-for i in range(1):
+for i in range(len(days)-1):
   print(days[i])
   
   df_cdf = xr.open_dataset("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_"+days[i+1]+"_extracted.nc")

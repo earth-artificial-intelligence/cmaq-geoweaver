@@ -4,17 +4,20 @@
 cmaq_folder="/groups/ESS3/aalnaim/cmaq"
 mkdir $cmaq_folder"/plots"
 # Setting env variables
-# export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d')
-# export stdate_post=$(date -d '2 day ago' '+%Y-%m-%d')
-# export eddate_post=$(date -d '1 day ago' '+%Y-%m-%d')
+export YYYYMMDD_POST=$(date -d '3 day ago' '+%Y%m%d')
 
-# export stdate_file=$(date -d '2 day ago' '+%Y%m%d')
-# export eddate_file=$(date -d '1 day ago' '+%Y%m%d')
-export YYYYMMDD_POST='20220806'
-export stdate_post='2022-08-06'
-export eddate_post='2022-08-07'
-export stdate_file='20220806'
-export eddate_file='20220807'
+export stdate_post=$(date -d '3 day ago' '+%Y-%m-%d')
+export eddate_post=$(date -d '2 day ago' '+%Y-%m-%d')
+
+export stdate_file=$(date -d '3 day ago' '+%Y%m%d')
+export eddate_file=$(date -d '2 day ago' '+%Y%m%d')
+
+# export YYYYMMDD_POST='20221002'
+# export stdate_post='2022-10-02'
+# export eddate_post='2022-10-03'
+# export stdate_file='20221002'
+# export eddate_file='20221003'
+
 
 export postdata_dir=$cmaq_folder"/prediction_nc_files"
 export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
@@ -36,21 +39,21 @@ end setvalues
 
 begin
 
-date = getenv("YYYYMMDD_POST")
-d1 = getenv("stdate_post")
-d2 = getenv("eddate_post")
+date = getenv("YYYYMMDD_POST") 
+d1 = getenv("stdate_post") 
+d2 = getenv("eddate_post") 
 
 dFile1 = getenv("stdate_file")
 dFile2 = getenv("eddate_file")
 
 obs_dir = getenv("obs_dir_NCL")
-plot_dir = getenv("graph_dir")
+plot_dir = getenv("graph_dir") 
 
 hr=new(24,"string")
 hr=(/"00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"/)
 
 print(plot_dir)
-aconc_dir = getenv("postdata_dir")
+aconc_dir = getenv("postdata_dir") 
 grid_dir = getenv("mcip_dir")
 
 print(aconc_dir+"/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc")
@@ -300,7 +303,7 @@ do it = 0, nt-1
   delete(wks)
   delete(pmid_O3)
   delete(hollow_O3)
-  system("composite -geometry 100x70+900+900 /groups/ESS/aalnaim/cmaq/mason-logo-green.png "+pname+".png "+pname+".png")
+  system("composite -geometry 100x70+900+900 /groups/ESS/zsun/cmaq/mason-logo-green.png "+pname+".png "+pname+".png")
 
 
   delete(pmid)
@@ -337,3 +340,4 @@ else
     echo "Removing ncl file: geoweaver_plot_daily_O3_Airnow.ncl..."
 	#rm $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
 fi
+

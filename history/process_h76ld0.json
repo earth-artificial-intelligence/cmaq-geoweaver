@@ -1,4 +1,34 @@
 [{
+  "history_id" : "vcu6ifrtg3r",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1665023826740,
+  "history_end_time" : 1665032721312,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "hxfav377zc7",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1665021842186,
+  "history_end_time" : 1665023785765,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "cr2z3ys1zs8",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\nimport matplotlib.pyplot as plt\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS3/aalnaim/cmaq/\" # change if you want to use your own folder\n# cmaq_folder = \"/Users/uhhmed/localCMAQ\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"",
+  "history_output" : "",
+  "history_begin_time" : 1664680914304,
+  "history_end_time" : 1664680929037,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "100001",
+  "indicator" : "Stopped"
+},{
   "history_id" : "xh95vsali6q",
   "history_input" : "No code saved",
   "history_output" : "Skipped",
