@@ -1,4 +1,54 @@
 [{
+  "history_id" : "ufOAjcb3S0OKIHckig",
+  "history_input" : "6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;l8vlic-STu5Y;wny2dz-vCYnc;3asyzj-i1qkz;9xdvh6-PSQv2;ex3vh9-HVFGU;b8uv5z-HcZah;iicy7w-A3ZuG;fsk7f2-IC0Rc;is1w3m-IXw8a;h76ld0-PSAZy;s6hbic-9FcIP;pvzabv-dWvHX;8i9ptn-wDXJ0;sgm1fk-d1VDr;",
+  "history_output" : "0h0vdgw8du8;5k5hvg6v1cc;ahxqv4wfmws;2umsunp335p;zds3475rfby;mqjsfw60dow;j5f7m5rsulw;xg4h6dqyo3r;yebmdxsws9f;k39ukjlapys;foxy4gnmc91;efgrj0wm9ak;xqebaa2vwz5;vz147uw8m81;d3c2s7wsphg;8j9xsdzwen4;zrvrww0zv46;1mvt11aljts;",
+  "history_begin_time" : 1666675051685,
+  "history_end_time" : 1666676634743,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "p6wvf2;",
+  "indicator" : "Failed"
+},{
+  "history_id" : "pfGMBPpuPAdYU0TmHZ",
+  "history_input" : "6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;l8vlic-STu5Y;wny2dz-vCYnc;3asyzj-i1qkz;9xdvh6-PSQv2;ex3vh9-HVFGU;b8uv5z-HcZah;iicy7w-A3ZuG;fsk7f2-IC0Rc;is1w3m-IXw8a;h76ld0-PSAZy;s6hbic-9FcIP;pvzabv-dWvHX;8i9ptn-wDXJ0;sgm1fk-d1VDr;",
+  "history_output" : "vpa73uqvbfk;45cokwrh61v;na1t0bpv8xv;jvaoxg8foxd;8o1nhdfumlu;t37mezvvfnx;p6h74g8zfki;dg9cl9dc3a1;dv6hrs7mlmt;eyga4zh9s6u;fd2sc2i6zrq;ehwp0x0jx23;rsu8rbqagwc;wig4u339zyg;xu23p2whxrl;0y6l00euk6s;agqspusb03e;h5f8ypfwnqx;",
+  "history_begin_time" : 1666674516772,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "p6wvf2;",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "7DJDtt6mSoWW6RSEQH",
+  "history_input" : "6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;l8vlic-STu5Y;wny2dz-vCYnc;3asyzj-i1qkz;9xdvh6-PSQv2;ex3vh9-HVFGU;b8uv5z-HcZah;iicy7w-A3ZuG;fsk7f2-IC0Rc;is1w3m-IXw8a;h76ld0-PSAZy;s6hbic-9FcIP;pvzabv-dWvHX;8i9ptn-wDXJ0;sgm1fk-d1VDr;",
+  "history_output" : "ph43s81029v;j88fskmmni8;8id4wbw49eu;m33hrky3ehl;m784t8sxdre;1e1frv6960l;x53b2geao02;yqti7ud7y0j;4j2m6ukcjbm;wtuyq600f3o;uav5g592jg6;xymvr8fxq01;em8ixxg151j;oe2p0snmpe1;ty8umouzauh;7ie88bpy9vl;06qbh2m0kga;dl16qme98f4;",
+  "history_begin_time" : 1665949241979,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "p6wvf2;",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "TOsbKv3hAKLj0gQytI",
+  "history_input" : "6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;l8vlic-STu5Y;wny2dz-vCYnc;3asyzj-i1qkz;9xdvh6-PSQv2;ex3vh9-HVFGU;b8uv5z-HcZah;iicy7w-A3ZuG;fsk7f2-IC0Rc;is1w3m-IXw8a;h76ld0-PSAZy;s6hbic-9FcIP;pvzabv-dWvHX;8i9ptn-wDXJ0;sgm1fk-d1VDr;",
+  "history_output" : "w111eizypr9;ead54f1gzhr;11zv7w1hbn0;sfzxf22jek6;ve7ywg04qtp;sus9vk34kt8;f7o3uj5xxp5;i8dpjnjeqa2;i4gm7jyh1ta;hqiuinfud81;kfqmfzjb3og;m65z77kzh2m;fmik6r1466r;30am58xdcrd;xgvssj1dmkl;lc6ol254cs4;pjun6tk3u3x;h2h7073jsk9;",
+  "history_begin_time" : 1665949031519,
+  "history_end_time" : 1665949168561,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "p6wvf2;",
+  "indicator" : "Running"
+},{
+  "history_id" : "GRHY9AE3IGdnofnqaA",
+  "history_input" : "6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;l8vlic-STu5Y;wny2dz-vCYnc;3asyzj-i1qkz;9xdvh6-PSQv2;ex3vh9-HVFGU;b8uv5z-HcZah;iicy7w-A3ZuG;fsk7f2-IC0Rc;is1w3m-IXw8a;h76ld0-PSAZy;s6hbic-9FcIP;pvzabv-dWvHX;8i9ptn-wDXJ0;sgm1fk-d1VDr;",
+  "history_output" : "evbpo9u7ikf;ny2d6929iwp;l90djwts007;keo71gk4l1t;4j5ombkdjse;97w2so1dk06;nyk9mgxe5zm;trtxrpvvq6u;xyduqe5st72;ygb8kczpnt3;p3xnhtw75nd;copfed9te9s;4kiigjlydyq;d0mld03t2ly;gq09hzg32zi;d8y79w28cjv;k94ixjzkqoz;67fg6lg3sex;",
+  "history_begin_time" : 1665813080574,
+  "history_end_time" : null,
+  "history_notes" : null,
+  "history_process" : "bwmstg2ttkuz78c4jj64",
+  "host_id" : "p6wvf2;",
+  "indicator" : "Stopped"
+},{
   "history_id" : "729A63yqvHI5kMNl16",
   "history_input" : "6up921-23Fn2;xpdg66-3fH6n;xlayd5-ELgJd;argv3i-SntSw;l8vlic-STu5Y;wny2dz-vCYnc;3asyzj-i1qkz;9xdvh6-PSQv2;ex3vh9-HVFGU;b8uv5z-HcZah;iicy7w-A3ZuG;fsk7f2-IC0Rc;is1w3m-IXw8a;h76ld0-PSAZy;s6hbic-9FcIP;pvzabv-dWvHX;8i9ptn-wDXJ0;",
   "history_output" : "5gzsx6olyon;6mt6dnsxycl;mslof9dpjii;n0rrzkxuq5r;pocqqo1pl8e;4ra82zl1b9b;sikfz3ufrsc;9dqetbb1y58;n69oujp4w3u;df4d8f990qs;pgmwow2d0ea;phq9t6oau5l;rivs1wrdcb3;vcu6ifrtg3r;wgi2pyls8qw;ytgbr8sua9h;z8hz5crft5v;",

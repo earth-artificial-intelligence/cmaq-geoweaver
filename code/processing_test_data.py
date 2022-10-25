@@ -4,7 +4,7 @@ from cmaq_ai_utils import *
 
 
 # Auto date method
-sdate, edate = get_date_range_auto(days_ago=3)
+sdate, edate = get_date_range_auto(days_ago=4)
 
 # Manual date method
 # sdate = date(2022, 8, 6)   # start date
@@ -42,15 +42,11 @@ for x in range(len(days)-1):
     
     df_hourly = pd.DataFrame()
     
-    print("df_cmaq.variables['O3'] shape: ", df_cmaq.variables['O3'].shape)
-    print("df_cmaq.variables['O3'][:] shape: ", df_cmaq.variables['O3'][:].shape)
-    print("df_cmaq.variables['O3'][:].values[k, 0].shape", df_cmaq.variables['O3'][:].values[k, 0].shape)
+    
     # CMAQ data
     # O3 variable
     o3=df_cmaq.variables['O3'][:].values[k, 0]
     cmaq_O3=list(np.ravel(o3).transpose())
-    print("o3 shape: ", o3.shape)
-    print("cmaq_O3 shape: ", np.ravel(o3).transpose().shape)
     
     # NO2
     no2=df_cmaq.variables['NO2'][:].values[k, 0]

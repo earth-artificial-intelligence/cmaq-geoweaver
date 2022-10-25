@@ -37,6 +37,9 @@ with pd.read_csv("/groups/ESS3/aalnaim/cmaq/merged_cmaq_one_year.csv", chunksize
     #if count == 10:
     final_chunk_df.to_csv(f"{cmaq_folder}/training_new_one_year_valid_test.csv",mode='a',index=False)
     break
-
-
+    
+    
 print("All records should be incorporated into :", f"{cmaq_folder}/training_new_one_year_valid_test.csv")
+
+
+

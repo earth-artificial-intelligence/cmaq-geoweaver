@@ -28,13 +28,13 @@ for testing_df in df_from_each_hourly_file:
   #X = testing_df.drop(['YYYYMMDDHH','Latitude','Longitude'],axis=1)
   testing_df['time_of_day'] = (testing_df['hours'] % 24 + 4) // 4
 
-  # Make coords even more coarse by rounding to closest multiple of 5
+  # Make coords even more coarse by rounding to closest multiple of 5 
   # (e.g., 40, 45, 85, 55)
   #testing_df['Latitude_ExtraCoarse'] = 0.1 * round(testing_df['Latitude']/0.1)
   #testing_df['Longitude_ExtraCoarse'] = 0.1 * round(testing_df['Longitude']/0.1)
   X = testing_df.drop(['YYYYMMDDHH','Latitude','Longitude', 'CO(moles/s)'],axis=1)
-
-  print(X.columns)
+  
+#   print(X.columns)
 
 # # making prediction
   pred = loaded_model.predict(X)

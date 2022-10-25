@@ -2,7 +2,7 @@
 from cmaq_ai_utils import *
 
 # Auto date method
-sdate, edate = get_date_range_auto(days_ago=3)
+sdate, edate = get_date_range_auto(days_ago=4)
 
 # Manual date method
 # sdate = date(2022, 8, 6)   # start date

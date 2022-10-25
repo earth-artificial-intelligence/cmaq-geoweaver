@@ -7,10 +7,10 @@ chmod +x $cmaq_folder/results/ -R
 rm $cmaq_folder/results/* # clean everything first
 
 # Setting env variables
-export YYYYMMDD_POST=$(date -d '3 day ago' '+%Y%m%d')
+export YYYYMMDD_POST=$(date -d '4 day ago' '+%Y%m%d')
 
-export stdate_file=$(date -d '3 day ago' '+%Y%m%d')
-export eddate_file=$(date -d '2 day ago' '+%Y%m%d')
+export stdate_file=$(date -d '4 day ago' '+%Y%m%d')
+export eddate_file=$(date -d '3 day ago' '+%Y%m%d')
 
 # export YYYYMMDD_POST='20220806'
 # export stdate_file='20220806'

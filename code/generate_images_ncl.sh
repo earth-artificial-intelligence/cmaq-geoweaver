@@ -5,15 +5,15 @@ export cmaq_folder="/groups/ESS3/aalnaim/cmaq"
 mkdir $cmaq_folder"/plots"
 rm $cmaq_folder/plots/* # clean everything first
 
-echo $(date -d '3 day ago' '+%Y%m%d')
+echo $(date -d '4 day ago' '+%Y%m%d')
 # Setting env variables
-export YYYYMMDD_POST=$(date -d '3 day ago' '+%Y%m%d')
+export YYYYMMDD_POST=$(date -d '4 day ago' '+%Y%m%d')
 
-export stdate_post=$(date -d '3 day ago' '+%Y-%m-%d')
-export eddate_post=$(date -d '2 day ago' '+%Y-%m-%d')
+export stdate_post=$(date -d '4 day ago' '+%Y-%m-%d')
+export eddate_post=$(date -d '3 day ago' '+%Y-%m-%d')
 
-export stdate_file=$(date -d '3 day ago' '+%Y%m%d')
-export eddate_file=$(date -d '2 day ago' '+%Y%m%d')
+export stdate_file=$(date -d '4 day ago' '+%Y%m%d')
+export eddate_file=$(date -d '3 day ago' '+%Y%m%d')
 
 # export YYYYMMDD_POST='20221002'
 # export stdate_post='2022-10-02'
@@ -174,13 +174,17 @@ end do
 delete(res)
 
 end
+exit
 EOF
 
-
-ncl $cmaq_folder/geoweaver_plot_daily_O3.ncl
+echo "NCL script started!"
+ncl $cmaq_folder/geoweaver_plot_daily_O3.ncl 
+echo "NCL script Done!"
 
 # convert -delay 100 *.png 20220613_20220614.gif
+echo "Converting images to .gif started!"
 convert -delay 100 $cmaq_folder/plots/testPlot*.png $cmaq_folder/plots/"Map_"$YYYYMMDD_POST.gif
+echo "Converting images to .gif Done!"
 
 if [ $? -eq 0 ]; then
     echo "Generating images/gif Completed Successfully"
