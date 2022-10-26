@@ -319,6 +319,16 @@
   "host_id" : null,
   "indicator" : "Done"
 },{
+  "history_id" : "KPgDPGC17jir",
+  "history_input" : "# Write first python in Geoweaver# NASA GEOWEAVER\n# CMAQ-AI Model: Training Voting-XGBoost model\n\n# Importing necessary libraries\nimport pandas as pd\nimport sklearn\nfrom sklearn.ensemble import RandomForestRegressor\nfrom xgboost.sklearn import XGBRegressor\nimport pickle\nfrom cmaq_ai_utils import *\n\n# importing data\nfinal=pd.read_csv(f'{cmaq_folder}/training_one_year.csv')\nprint(final.head())\nfinal=final.dropna()\n#print(\"shape before: \", final.shape)\n#final = final.loc[(final['CMAQ12KM_O3(ppb)']-final['AirNOW_O3'])/final['AirNOW_O3']<0.05]\n#print(\"shape 1 after: \", final.shape)\n#final = final.loc[(final['CMAQ12KM_O3(ppb)']-final['AirNOW_O3'])/final['AirNOW_O3']>-0.05]\n#print(\"shape 2 after: \", final.shape)\n\nfinal['time_of_day'] = (final['hours'] % 24 + 4) // 4\n\n# Make coords even more coarse by rounding to closest multiple of 5 \n# (e.g., 40, 45, 85, 55)\n#final['Latitude_ExtraCoarse'] = 0.1 * round(final['Latitude_x']/0.1)\n#final['Longitude_ExtraCoarse'] = 0.1 * round(final['Longitude_x']/0.1)\n\n\n\ncreate_and_clean_folder(f\"{cmaq_folder}/models/\")\n\n# Processing training  data\nX = final.drop(['AirNOW_O3','Latitude_x','Longitude_x','Lat_airnow','Lon_airnow', 'Lat_cmaq', 'Lon_cmaq', 'Latitude_y', 'Longitude_y', 'StationID'],axis=1)\nprint(\"input shape:\", X.shape)\ny = final['AirNOW_O3']\n\nrf = RandomForestRegressor(bootstrap=True, ccp_alpha=0.0, criterion='mse',\n                      max_depth=None, max_features='auto', max_leaf_nodes=None,\n                      max_samples=None, min_impurity_decrease=0.0,\n                      min_samples_leaf=1,\n                      min_samples_split=2, min_weight_fraction_leaf=0.0,\n                      n_estimators=100, n_jobs=-1, oob_score=False,\n                      random_state=3086, verbose=0, warm_start=False)\n\nrf.fit(X, y)\n\n# save the model to disk\nfilename = f'{cmaq_folder}/models/rf_pycaret_o3_one_year.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\npickle.dump(rf, open(filename, 'wb'))\n",
+  "history_output" : "      StationID  Latitude_x  Longitude_x  AirNOW_O3  ...  CFRAC  month  day  hours\n0     120350004   29.489082   -81.276833       15.0  ...    NaN      8    1     12\n1     360850111   40.580200   -74.199402       27.0  ...    NaN      8    1     12\n2     390610040   39.128860   -84.504044       29.0  ...    NaN      8    1     12\n3     390990013   41.096157   -80.658905       29.0  ...    NaN      8    1     12\n4  840450070006   34.635960   -82.810669       23.0  ...    NaN      8    1     12\n\n[5 rows x 24 columns]\ninput shape: (9286860, 15)\n/home/aalnaim/CMAQAI/lib/python3.8/site-packages/sklearn/ensemble/_forest.py:396: FutureWarning: Criterion 'mse' was deprecated in v1.0 and will be removed in version 1.2. Use `criterion='squared_error'` which is equivalent.\n  warn(\n",
+  "history_begin_time" : 1663898282809,
+  "history_end_time" : 1663899475123,
+  "history_notes" : null,
+  "history_process" : "s6hbic",
+  "host_id" : null,
+  "indicator" : "Failed"
+},{
   "history_id" : "1pM0QJAcQ7Zq",
   "history_input" : "# Write first python in Geoweaver# NASA GEOWEAVER\n# CMAQ-AI Model: Training Voting-XGBoost model\n\n# Importing necessary libraries\nimport pandas as pd\nimport sklearn\nfrom sklearn.ensemble import RandomForestRegressor\nfrom xgboost.sklearn import XGBRegressor\nimport pickle\nfrom cmaq_ai_utils import *\n\n# importing data\nfinal=pd.read_csv(f'{cmaq_folder}/trainingNew.csv')\nprint(final.head())\nfinal=final.dropna()\n#print(\"shape before: \", final.shape)\n#final = final.loc[(final['CMAQ12KM_O3(ppb)']-final['AirNOW_O3'])/final['AirNOW_O3']<0.05]\n#print(\"shape 1 after: \", final.shape)\n#final = final.loc[(final['CMAQ12KM_O3(ppb)']-final['AirNOW_O3'])/final['AirNOW_O3']>-0.05]\n#print(\"shape 2 after: \", final.shape)\n\nfinal['time_of_day'] = (final['hours'] % 24 + 4) // 4\n\n# Make coords even more coarse by rounding to closest multiple of 5 \n# (e.g., 40, 45, 85, 55)\n#final['Latitude_ExtraCoarse'] = 0.1 * round(final['Latitude_x']/0.1)\n#final['Longitude_ExtraCoarse'] = 0.1 * round(final['Longitude_x']/0.1)\n\n\n\ncreate_and_clean_folder(f\"{cmaq_folder}/models/\")\n\n# Processing training  data\nX = final.drop(['AirNOW_O3','Latitude_x','Longitude_x','Lat_airnow','Lon_airnow', 'Lat_cmaq', 'Lon_cmaq', 'Latitude_y', 'Longitude_y', 'StationID'],axis=1)\nprint(\"input shape:\", X.shape)\ny = final['AirNOW_O3']\n\nrf = RandomForestRegressor(bootstrap=True, ccp_alpha=0.0, criterion='mse',\n                      max_depth=None, max_features='auto', max_leaf_nodes=None,\n                      max_samples=None, min_impurity_decrease=0.0,\n                      min_samples_leaf=1,\n                      min_samples_split=2, min_weight_fraction_leaf=0.0,\n                      n_estimators=100, n_jobs=-1, oob_score=False,\n                      random_state=3086, verbose=0, warm_start=False)\n\nrf.fit(X, y)\n\n# save the model to disk\nfilename = f'{cmaq_folder}/models/rf_pycaret_o3_new_matched.sav'\n#filename = 'D:/Research/CMAQ/local_test/xgboost.sav'\npickle.dump(rf, open(filename, 'wb'))",
   "history_output" : "   StationID  Latitude_x  Longitude_x  AirNOW_O3  ...  CFRAC  month  day  hours\n0  060290008   35.054401  -119.403900       19.0  ...    0.0      8    1     12\n1  090011123   41.401402   -73.444702       29.0  ...    1.0      8    1     12\n2  120118002   26.086399   -80.111397       12.0  ...    0.0      8    1     12\n3  340250005   40.277645   -74.005096       33.0  ...    1.0      8    1     12\n4  320312002   39.250439  -119.956741       38.0  ...    1.0      8    1     12\n\n[5 rows x 25 columns]\ninput shape: (58682, 16)\n/home/zsun/.local/lib/python3.8/site-packages/sklearn/ensemble/_forest.py:396: FutureWarning: Criterion 'mse' was deprecated in v1.0 and will be removed in version 1.2. Use `criterion='squared_error'` which is equivalent.\n  warn(\n",
@@ -839,26 +849,6 @@
   "host_id" : "p6wvf2",
   "indicator" : "Stopped"
 },{
-  "history_id" : "om4j1vyrbil",
-  "history_input" : null,
-  "history_output" : null,
-  "history_begin_time" : null,
-  "history_end_time" : 1660854222336,
-  "history_notes" : null,
-  "history_process" : "s6hbic",
-  "host_id" : "p6wvf2",
-  "indicator" : "Stopped"
-},{
-  "history_id" : "co6ib7b0z1k",
-  "history_input" : null,
-  "history_output" : null,
-  "history_begin_time" : null,
-  "history_end_time" : 1660786975153,
-  "history_notes" : null,
-  "history_process" : "s6hbic",
-  "host_id" : "p6wvf2",
-  "indicator" : "Stopped"
-},{
   "history_id" : "gg16kzj1430",
   "history_input" : null,
   "history_output" : null,
@@ -879,11 +869,31 @@
   "host_id" : "p6wvf2",
   "indicator" : "Stopped"
 },{
+  "history_id" : "co6ib7b0z1k",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660786975153,
+  "history_notes" : null,
+  "history_process" : "s6hbic",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
   "history_id" : "tdky0zbi5wn",
   "history_input" : null,
   "history_output" : null,
   "history_begin_time" : null,
   "history_end_time" : 1660853992793,
+  "history_notes" : null,
+  "history_process" : "s6hbic",
+  "host_id" : "p6wvf2",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "om4j1vyrbil",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1660854222336,
   "history_notes" : null,
   "history_process" : "s6hbic",
   "host_id" : "p6wvf2",

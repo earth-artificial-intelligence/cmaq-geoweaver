@@ -37,14 +37,16 @@ d2 = getenv("eddate_post")
 dFile1 = getenv("stdate_file")
 dFile2 = getenv("eddate_file")
 
+cmaq_dir = getenv("cmaq_folder")
+
 ;print("Passed Date: "+date)
 
 ;aconc_dir = getenv("postdata_dir")
 grid_dir = getenv("mcip_dir")
 plot_dir = getenv("dir_graph")
 
-print("/groups/ESS/zsun/cmaq/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc")
-cdf_file1 = addfile("/groups/ESS/zsun/cmaq/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc","r")
+print(cmaq_dir+"/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc")
+cdf_file1 = addfile(cmaq_dir+"/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc","r")
 cdf_file= addfile(grid_dir+"/GRIDCRO2D_"+date+".nc","r")
 
 ptime = (/"12","13","14","15","16","17","18","19","20","21","22","23","00","01","02","03","04","05","06","07","08","09","10","11"/)
@@ -201,7 +203,7 @@ do
     echo "$predict_nc_file doesn't exist. Skipping..."
     continue
   fi
-  
+
   rm -rf $cmaq_folder/plots/* # clean everything in the folder first
 
   ncl $cmaq_folder/geoweaver_plot_daily_O3.ncl
@@ -216,7 +218,7 @@ do
   cp $predict_nc_file $permanent_location/netcdfs/
   cp $cmaq_folder/plots/"Map_"$YYYYMMDD_POST.gif $permanent_location/gifs/
   echo "Moved the generated netcdfs and gifs to permanent locations"
-  
+
 done
 
 
@@ -226,4 +228,3 @@ if [ $? -eq 0 ]; then
 else
     echo "Generating images/gif Failed!"
 fi
-
