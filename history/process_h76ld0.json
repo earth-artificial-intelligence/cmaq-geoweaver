@@ -1,4 +1,284 @@
 [{
+  "history_id" : "sdv72i4taui",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666685317343,
+  "history_end_time" : 1666685918695,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "ia4y9xlmlzv",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666682218533,
+  "history_end_time" : 1666683406503,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "o7uh29a5xsy",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666681701644,
+  "history_end_time" : 1666681701644,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "cmalrs4qeta",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666681684521,
+  "history_end_time" : 1666681684521,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "p4hoo4n4wny",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666681592913,
+  "history_end_time" : 1666681656090,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "pCVeOfXyq88f",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\nimport matplotlib.pyplot as plt\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/zsun/cmaq/\" # change if you want to use your own folder\n# cmaq_folder = \"/Users/uhhmed/localCMAQ\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef get_days_list_for_prediction(sdate, edate):\n  \"\"\"\n  This will return the day before sdate to enddate,for example, if sdate = 10142022, edate = 10152022. This function will return [10132022, 10142022, 10152022].\n  \"\"\"\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"\n\ntoday = datetime.today()\nedate = today - timedelta(days=1)\nsdate = today - timedelta(days=4)\n\nprint(get_days_list_for_prediction(sdate, edate))\n",
+  "history_output" : "['20221021', '20221022', '20221023', '20221024']\n",
+  "history_begin_time" : 1666680497398,
+  "history_end_time" : 1666680498771,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "KW4ciWg6ZsK3",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\nimport matplotlib.pyplot as plt\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/zsun/cmaq/\" # change if you want to use your own folder\n# cmaq_folder = \"/Users/uhhmed/localCMAQ\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef get_days_list_for_prediction(sdate, edate):\n  \"\"\"\n  This will return the day before sdate to enddate,for example, if sdate = 10142022, edate = 10152022. This function will return [10132022, 10142022, 10152022].\n  \"\"\"\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"\n\ntoday = datetime.today()\nedate = today - timedelta(days=0)\nsdate = today - timedelta(days=4)\n\nprint(get_days_list_for_prediction(sdate, edate))\n",
+  "history_output" : "['20221021', '20221022', '20221023', '20221024', '20221025']\n",
+  "history_begin_time" : 1666680473147,
+  "history_end_time" : 1666680474532,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "asV0P5A578pE",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\nimport matplotlib.pyplot as plt\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/zsun/cmaq/\" # change if you want to use your own folder\n# cmaq_folder = \"/Users/uhhmed/localCMAQ\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef get_days_list_for_prediction(sdate, edate):\n  \"\"\"\n  This will return the day before sdate to enddate,for example, if sdate = 10142022, edate = 10152022. This function will return [10132022, 10142022, 10152022].\n  \"\"\"\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"\n\ntoday = datetime.today()\nedate = today - timedelta(days=2)\nsdate = today - timedelta(days=4)\n\nprint(get_days_list_for_prediction(sdate, edate))\n",
+  "history_output" : "['20221021', '20221022', '20221023']\n",
+  "history_begin_time" : 1666680453026,
+  "history_end_time" : 1666680454412,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "72qRjdxuOvqi",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\nimport matplotlib.pyplot as plt\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/zsun/cmaq/\" # change if you want to use your own folder\n# cmaq_folder = \"/Users/uhhmed/localCMAQ\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef get_days_list_for_prediction(sdate, edate):\n  \"\"\"\n  This will return the day before sdate to enddate,for example, if sdate = 10142022, edate = 10152022. This function will return [10132022, 10142022, 10152022].\n  \"\"\"\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"\n\ntoday = datetime.today()\nedate = today - timedelta(days=2)\nsdate = today - timedelta(days=2)\n\nprint(get_days_list_for_prediction(sdate, edate))\n",
+  "history_output" : "['20221023']\n",
+  "history_begin_time" : 1666680413481,
+  "history_end_time" : 1666680416530,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "0jw4q0o3kqx",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666678879218,
+  "history_end_time" : 1666678879218,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "7m0zonm64yv",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666576238878,
+  "history_end_time" : 1666577007696,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "6bq5jd2aaef",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666553421748,
+  "history_end_time" : 1666553446657,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "mtxyt0394h0",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666542247577,
+  "history_end_time" : 1666553384744,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "eoiziz0i4o3",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1665934797983,
+  "history_end_time" : 1665935665911,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "hpgc7ceflpj",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1665932107473,
+  "history_end_time" : 1665934029302,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "rwxfr18tbk9",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1665930832328,
+  "history_end_time" : 1665930832328,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "51rdlb1cc92",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1665930614471,
+  "history_end_time" : 1665930705231,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "VSr2YDehG1mm",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\nimport matplotlib.pyplot as plt\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/zsun/cmaq/\" # change if you want to use your own folder\n# cmaq_folder = \"/Users/uhhmed/localCMAQ\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef get_days_list_for_prediction(sdate, edate):\n  \"\"\"\n  This will return the day before sdate to enddate,for example, if sdate = 10142022, edate = 10152022. This function will return [10132022, 10142022, 10152022].\n  \"\"\"\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"\n\ntoday = datetime.today()\nedate = today - timedelta(days=2)\nsdate = today - timedelta(days=2)\n\nprint(get_days_list_for_prediction(sdate, edate))\n",
+  "history_output" : "['20221014']\n",
+  "history_begin_time" : 1665930503427,
+  "history_end_time" : 1665930505498,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "88kz0ekhh92",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1665930050152,
+  "history_end_time" : 1665930589646,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "7jaqLFkvFwEr",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\nimport matplotlib.pyplot as plt\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/zsun/cmaq/\" # change if you want to use your own folder\n# cmaq_folder = \"/Users/uhhmed/localCMAQ\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef get_days_list_for_prediction(sdate, edate):\n  \"\"\"\n  This will return the day before sdate to enddate,for example, if sdate = 10142022, edate = 10152022. This function will return [10132022, 10142022, 10152022].\n  \"\"\"\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"\n\ntoday = datetime.today()\nedate = today - timedelta(days=2)\nsdate = edate - timedelta(days=2)\n\nprint(get_days_list_for_prediction(sdate, edate))\n",
+  "history_output" : "['20221012', '20221013', '20221014']\n",
+  "history_begin_time" : 1665929986935,
+  "history_end_time" : 1665929989310,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "g49hpnazlc4",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1665928489333,
+  "history_end_time" : 1665928489333,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "Milo0HKPBja2",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\nimport matplotlib.pyplot as plt\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/zsun/cmaq/\" # change if you want to use your own folder\n# cmaq_folder = \"/Users/uhhmed/localCMAQ\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef get_days_list_for_prediction(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"\n\ntoday = datetime.today()\nedate = today - timedelta(days=1)\nsdate = edate - timedelta(days=1)\n\nprint(get_days_list_for_prediction(sdate, edate))\n",
+  "history_output" : "['20221014', '20221015']\n",
+  "history_begin_time" : 1665928287106,
+  "history_end_time" : 1665928288474,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "4cYcD682CnhW",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\nimport matplotlib.pyplot as plt\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/zsun/cmaq/\" # change if you want to use your own folder\n# cmaq_folder = \"/Users/uhhmed/localCMAQ\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"\n\ntoday = datetime.today()\nedate = today - timedelta(days=1)\nsdate = edate - timedelta(days=1)\n\nprint(get_days_list(sdate, edate))\n",
+  "history_output" : "['20221014', '20221015', '20221016']\n",
+  "history_begin_time" : 1665928228445,
+  "history_end_time" : 1665928229825,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "khm34DTk68CL",
+  "history_input" : "# All the utility functions that most steps in CMAQ-AI need\n# this file should not contain any direct call of function\n# it should be dedicated to define functions or variables\n\nimport xarray as xr\nimport pandas as pd\nimport glob, os\nimport numpy as np\nfrom pathlib import Path\nfrom datetime import date, datetime, timedelta\nimport matplotlib.pyplot as plt\n\n# home directory\nhome = str(Path.home())\ncmaq_folder = \"/groups/ESS/zsun/cmaq/\" # change if you want to use your own folder\n# cmaq_folder = \"/Users/uhhmed/localCMAQ\" # change if you want to use your own folder\n\ndef get_days_list(sdate, edate):\n  days=[]\n  \n  delta = edate - sdate       # as timedelta\n\n  for i in range(delta.days + 1):\n    day = sdate + timedelta(days=i)\n    list_day=day.strftime('%Y%m%d')\n    days.append(list_day)\n  # add one more day\n  one_more_day = sdate + timedelta(days=delta.days + 1)\n  list_day=one_more_day.strftime('%Y%m%d')\n  days.append(list_day)\n  \n  return days\n\ndef create_and_clean_folder(folder_path):\n  os.makedirs(folder_path, exist_ok=True)\n  # clean all files inside the folder\n  for f in os.listdir(folder_path):\n    os.remove(os.path.join(folder_path, f))\n\ndef remove_file(file_path):\n  print(f'remove old files{file_path}')\n  if os.path.exists(file_path):\n    os.remove(file_path)\n    \ndef turn_2_digits(a):\n  return f\"{a:02}\"\n\ntoday = datetime.today()\nedate = today - timedelta(days=1)\nsdate = edate - timedelta(days=2)\n\nprint(get_days_list(sdate, edate))\n",
+  "history_output" : "['20221013', '20221014', '20221015', '20221016']\n",
+  "history_begin_time" : 1665928187077,
+  "history_end_time" : 1665928190777,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "l0ovg337wvl",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1665926309112,
+  "history_end_time" : 1665926309112,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "zymc9rv32zh",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1665007808726,
+  "history_end_time" : 1665007808726,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "m27gq91tfq2",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1664983201633,
+  "history_end_time" : 1665009008661,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "5es6bvozsk3",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1664949775945,
+  "history_end_time" : 1664949775945,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Skipped"
+},{
   "history_id" : "xh95vsali6q",
   "history_input" : "No code saved",
   "history_output" : "Skipped",

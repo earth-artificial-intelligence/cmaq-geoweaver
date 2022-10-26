@@ -2,30 +2,21 @@
 # generate images and gif from the NetCDF files
 
 cmaq_folder="/groups/ESS/zsun/cmaq"
+permanent_location="/groups/ESS3/zsun/cmaq/ai_results/"
 mkdir $cmaq_folder"/plots"
-rm $cmaq_folder/plots/* # clean everything first
 
-echo $(date -d '2 day ago' '+%Y%m%d')
-# Setting env variables
-#export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
-export YYYYMMDD_POST='20220806'
-#export stdate_post=$(date -d '2 day ago' '+%Y-%m-%d') #This needs to be auto date
-export stdate_post='2022-08-06'
-#export eddate_post=$(date -d '1 day ago' '+%Y-%m-%d') #This needs to be auto date
-export eddate_post='2022-08-07'
-
-#export stdate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
-export stdate_file='20220806'
-#export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
-export eddate_file='20220807'
 
 export postdata_dir=$cmaq_folder"/prediction_nc_files"
 export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
 export dir_graph=$cmaq_folder"/plots"
 
+echo "Loading NCL"
 module load ncl
+echo "Loaded NCL"
 
 rm $cmaq_folder/geoweaver_plot_daily_O3.ncl
+
+echo "Drafting "$cmaq_folder/geoweaver_plot_daily_O3.ncl
 cat <<EOF >> $cmaq_folder/geoweaver_plot_daily_O3.ncl
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
@@ -37,7 +28,7 @@ end setvalues
 
 begin
 
-cmaq_dir = getenv("cmaq_folder")
+print("NCL script successfully begin: ")
 
 date = getenv("YYYYMMDD_POST")
 d1 = getenv("stdate_post")
@@ -172,16 +163,67 @@ end do
 delete(res)
 
 end
+exit
 EOF
 
+echo "Start to run the NCL script: "$cmaq_folder"/geoweaver_plot_daily_O3.ncl"
 
-ncl $cmaq_folder/geoweaver_plot_daily_O3.ncl
+echo "ncl "$cmaq_folder"/geoweaver_plot_daily_O3.ncl"
 
-# convert -delay 100 *.png 20220613_20220614.gif
-convert -delay 100 $cmaq_folder/plots/testPlot*.png $cmaq_folder/plots/"Map_"$YYYYMMDD_POST.gif
+echo $(date -d '1 day ago' '+%Y%m%d')
+
+days_back=7
+
+for i in $(seq 1 $days_back)
+do
+  end_day=$i
+  echo "$end_day days ago"
+  begin_day=$((i+1))
+  # Setting env variables
+  export YYYYMMDD_POST=$(date -d $begin_day' day ago' '+%Y%m%d') #This needs to be auto date `date -d "-2 day ${1}" +%Y%m%d`
+  #export YYYYMMDD_POST='20220806'
+  export stdate_post=$(date -d $begin_day' day ago' '+%Y-%m-%d') #This needs to be auto date
+  #export stdate_post='2022-08-06'
+  export eddate_post=$(date -d $end_day' day ago' '+%Y-%m-%d') #This needs to be auto date
+  #export eddate_post='2022-08-08'
+
+  export stdate_file=$(date -d $begin_day' day ago' '+%Y%m%d') #This needs to be auto date
+  #export stdate_file='20220806'
+  export eddate_file=$(date -d $end_day' day ago' '+%Y%m%d') #This needs to be auto date
+  #export eddate_file='20220808'
+  stdate_file=$(date -d $begin_day' day ago' '+%Y%m%d')
+  echo "stdate_file="$stdate_file
+  # determine if the prediction netcdf is there
+  predict_nc_file=$cmaq_folder"/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"$stdate_file"_ML_extracted.nc"
+  if [ -f "$predict_nc_file" ]; then
+    echo "$predict_nc_file exists."
+  else
+    echo "$predict_nc_file doesn't exist. Skipping..."
+    continue
+  fi
+  
+  rm -rf $cmaq_folder/plots/* # clean everything in the folder first
+
+  ncl $cmaq_folder/geoweaver_plot_daily_O3.ncl
+
+  echo "Finished "$cmaq_folder"/geoweaver_plot_daily_O3.ncl"
+
+  # convert -delay 100 *.png 20220613_20220614.gif
+  convert -delay 100 $cmaq_folder/plots/testPlot*.png $cmaq_folder/plots/"Map_"$YYYYMMDD_POST.gif
+  echo "Converted images to gif"
+
+  # cp the results to permanent location
+  cp $predict_nc_file $permanent_location/netcdfs/
+  cp $cmaq_folder/plots/"Map_"$YYYYMMDD_POST.gif $permanent_location/gifs/
+  echo "Moved the generated netcdfs and gifs to permanent locations"
+  
+done
+
+
 
 if [ $? -eq 0 ]; then
     echo "Generating images/gif Completed Successfully"
 else
     echo "Generating images/gif Failed!"
 fi
+

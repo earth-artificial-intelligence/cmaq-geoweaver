@@ -31,6 +31,21 @@ def get_days_list(sdate, edate):
   
   return days
 
+def get_days_list_for_prediction(sdate, edate):
+  """
+  This will return the day before sdate to enddate,for example, if sdate = 10142022, edate = 10152022. This function will return [10132022, 10142022, 10152022].
+  """
+  days=[]
+  
+  delta = edate - sdate       # as timedelta
+
+  for i in range(delta.days + 1):
+    day = sdate + timedelta(days=i)
+    list_day=day.strftime('%Y%m%d')
+    days.append(list_day)
+  
+  return days
+
 def create_and_clean_folder(folder_path):
   os.makedirs(folder_path, exist_ok=True)
   # clean all files inside the folder
@@ -44,3 +59,10 @@ def remove_file(file_path):
     
 def turn_2_digits(a):
   return f"{a:02}"
+
+#today = datetime.today()
+#edate = today - timedelta(days=1)
+#sdate = today - timedelta(days=4)
+
+#print(get_days_list_for_prediction(sdate, edate))
+

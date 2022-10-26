@@ -1,24 +1,13 @@
 #!/bin/bash
 # generate images and gif from the prediction NetCDF files and overlay the AirNow station observation on the top
 
-cmaq_folder="/groups/ESS3/aalnaim/cmaq"
+cmaq_folder="/groups/ESS/zsun/cmaq"
 mkdir $cmaq_folder"/plots"
-# Setting env variables
-# export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d')
-# export stdate_post=$(date -d '2 day ago' '+%Y-%m-%d')
-# export eddate_post=$(date -d '1 day ago' '+%Y-%m-%d')
-
-# export stdate_file=$(date -d '2 day ago' '+%Y%m%d')
-# export eddate_file=$(date -d '1 day ago' '+%Y%m%d')
-export YYYYMMDD_POST='20220806'
-export stdate_post='2022-08-06'
-export eddate_post='2022-08-07'
-export stdate_file='20220806'
-export eddate_file='20220807'
+permanent_location=/groups/ESS3/zsun/cmaq/ai_results/
 
 export postdata_dir=$cmaq_folder"/prediction_nc_files"
 export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
-export graph_dir=$cmaq_folder"/plots"
+export graph_dir="/groups/ESS/zsun/cmaq/plots"
 
 export obs_dir_NCL="/groups/ESS/share/projects/SWUS3km/data/OBS/AirNow/AQF5X"
 
@@ -36,21 +25,21 @@ end setvalues
 
 begin
 
-date = getenv("YYYYMMDD_POST")
-d1 = getenv("stdate_post")
-d2 = getenv("eddate_post")
+date = getenv("YYYYMMDD_POST") 
+d1 = getenv("stdate_post") 
+d2 = getenv("eddate_post") 
 
 dFile1 = getenv("stdate_file")
 dFile2 = getenv("eddate_file")
 
 obs_dir = getenv("obs_dir_NCL")
-plot_dir = getenv("graph_dir")
+plot_dir = getenv("graph_dir") 
 
 hr=new(24,"string")
 hr=(/"00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"/)
 
 print(plot_dir)
-aconc_dir = getenv("postdata_dir")
+aconc_dir = getenv("postdata_dir") 
 grid_dir = getenv("mcip_dir")
 
 print(aconc_dir+"/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc")
@@ -300,7 +289,7 @@ do it = 0, nt-1
   delete(wks)
   delete(pmid_O3)
   delete(hollow_O3)
-  system("composite -geometry 100x70+900+900 /groups/ESS/aalnaim/cmaq/mason-logo-green.png "+pname+".png "+pname+".png")
+  system("composite -geometry 100x70+900+900 /groups/ESS/zsun/cmaq/mason-logo-green.png "+pname+".png "+pname+".png")
 
 
   delete(pmid)
@@ -321,13 +310,53 @@ delete(res)
 ;/
 
 end
+print("ncl business is done")
+exit
 EOF
 
+days_back=7
 
-ncl $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
+for i in $(seq 1 $days_back)
+do
+  end_day=$i
+  echo "$end_day days ago"
+  begin_day=$((i+1))
+  # Setting env variables
+  export YYYYMMDD_POST=$(date -d $begin_day' day ago' '+%Y%m%d')
+  export stdate_post=$(date -d $begin_day' day ago' '+%Y-%m-%d') 
+  export eddate_post=$(date -d $end_day' day ago' '+%Y-%m-%d')
 
-convert -delay 100 $cmaq_folder/plots/OBS*.png $cmaq_folder/plots/"Airnow_"$YYYYMMDD_POST.gif
+  export stdate_file=$(date -d $begin_day' day ago' '+%Y%m%d') 
+  export eddate_file=$(date -d $end_day' day ago' '+%Y%m%d')
+  
+  predict_nc_file=$cmaq_folder"/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"$stdate_file"_ML_extracted.nc"
+  if [ -f "$predict_nc_file" ]; then
+    echo "$predict_nc_file exists."
+  else
+    echo "$predict_nc_file doesn't exist. Skipping..."
+    continue
+  fi
+  
+  predict_gif_file=$permanent_location/gifs/"Airnow_"$YYYYMMDD_POST.gif
+  if [ -f "$predict_gif_file" ]; then
+    echo "$predict_gif_file exists. Skipping..."
+    continue
+  else
+    echo "$predict_gif_file doesn't exist. Generating..."
+  fi
+  
+  rm -rf $cmaq_folder/plots/* # clean everything first
 
+  ncl $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
+
+  convert -delay 100 $cmaq_folder/plots/OBS*.png $cmaq_folder/plots/"Airnow_"$YYYYMMDD_POST.gif
+
+  # copy the result files to permanent location
+  echo "Copy Airnow gif to permanent location"
+  cp $cmaq_folder/plots/"Airnow_"$YYYYMMDD_POST.gif $permanent_location/gifs/
+
+done
+  
 if [ $? -eq 0 ]; then
     echo "Generating AirNow images/gif Completed Successfully"
 	echo "Removing ncl file: geoweaver_plot_daily_O3_Airnow.ncl..."
@@ -337,3 +366,4 @@ else
     echo "Removing ncl file: geoweaver_plot_daily_O3_Airnow.ncl..."
 	#rm $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
 fi
+

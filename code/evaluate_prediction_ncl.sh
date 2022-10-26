@@ -1,28 +1,15 @@
 #!/bin/bash
 # evaluate the prediction accuracy
 
-cmaq_folder="/groups/ESS3/aalnaim/cmaq"
+cmaq_folder="/groups/ESS/zsun/cmaq"
 mkdir -p $cmaq_folder/results/
 chmod +x $cmaq_folder/results/ -R
-rm $cmaq_folder/results/* # clean everything first
-# Setting env variables
-# export YYYYMMDD_POST=$(date -d '2 day ago' '+%Y%m%d')
-# export stdate_file=$(date -d '2 day ago' '+%Y%m%d') #This needs to be auto date
-# export eddate_file=$(date -d '1 day ago' '+%Y%m%d') #This needs to be auto date
-export YYYYMMDD_POST='20220806'
-export stdate_file='20220806'
-export eddate_file='20220807'
 
-export wfname=$cmaq_folder"/results/geoweaver_evalution_"$YYYYMMDD_POST"_results.txt"
+#export YYYYMMDD_POST='20220806'
+#export stdate_file='20220806'
+#export eddate_file='20220808'
 
-export obs_dir_NCL="/groups/ESS/share/projects/SWUS3km/data/OBS/AirNow/AQF5X"
-export ofname="/AQF5X_Hourly_"
-
-export postdata_dir=$cmaq_folder"/prediction_nc_files/"
-
-export mfname="COMBINE3D_ACONC_v531_gcc_AQF5X_"$stdate_file"_ML_extracted.nc"
-
-export grid_fname="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/GRIDCRO2D_"$YYYYMMDD_POST".nc" #This needs to be auto date
+#This needs to be auto date
 
 export dx=12000
 
@@ -268,16 +255,58 @@ write_table(wfname,"a",[/sdate,dimsizes(tt),avg(oO324(tt)),avg(mO324(tt)),rmse,c
 delete(tt)
 end
 
+exit
 EOF
 
+days_back=7
+for i in $(seq 1 $days_back)
+do
+  end_day=$i
+  echo "$end_day days ago"
+  begin_day=$((i+1))
+  # Setting env variables
+  export YYYYMMDD_POST=$(date -d $begin_day' day ago' '+%Y%m%d')
+  export stdate_file=$(date -d $begin_day' day ago' '+%Y%m%d') #This needs to be auto date
+  export eddate_file=$(date -d $end_day' day ago' '+%Y%m%d') #This needs to be auto date
+  export wfname=$cmaq_folder"/results/geoweaver_evalution_"$YYYYMMDD_POST"_results.txt"
 
-ncl $cmaq_folder/geoweaver_eva_daily_O3.ncl
+  export obs_dir_NCL="/groups/ESS/share/projects/SWUS3km/data/OBS/AirNow/AQF5X"
+  export ofname="/AQF5X_Hourly_"
 
-if [ $? -eq 0 ]; then
+  export postdata_dir=$cmaq_folder"/prediction_nc_files/"
+
+  export mfname="COMBINE3D_ACONC_v531_gcc_AQF5X_"$stdate_file"_ML_extracted.nc"
+
+  export grid_fname="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/GRIDCRO2D_"$YYYYMMDD_POST".nc" 
+  echo "Current Day: "$stdate_file
+  # determine if the prediction netcdf is there
+  predict_nc_file=$cmaq_folder"/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"$stdate_file"_ML_extracted.nc"
+  if [ -f "$predict_nc_file" ]; then
+    echo "$predict_nc_file exists."
+  else
+    echo "$predict_nc_file doesn't exist. Skipping..."
+    continue
+  fi
+  
+  predict_gif_file=$permanent_location/gifs/"AirNow_"$YYYYMMDD_POST.gif
+  if [ -f "$predict_gif_file" ]; then
+    echo "$predict_gif_file exists. Skipping..."
+    continue
+  else
+    echo "$predict_gif_file doesn't exist. Generating..."
+  fi
+  
+  rm -rf $cmaq_folder/results/* # clean everything first
+  ncl $cmaq_folder/geoweaver_eva_daily_O3.ncl
+  
+  if [ $? -eq 0 ]; then
     echo "Evaluation Completed Successfully"
     cat $wfname
-else
+  else
     echo "Evaluation Failed!"
-fi
+  fi
+  
+done
+
 
 

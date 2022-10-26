@@ -1,0 +1,171 @@
+[{
+  "history_id" : "3bldxpn4kg5",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666576238729,
+  "history_end_time" : 1666577006576,
+  "history_notes" : null,
+  "history_process" : "6up921",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "ec241elvgmx",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666576238772,
+  "history_end_time" : 1666577006604,
+  "history_notes" : null,
+  "history_process" : "xpdg66",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "ssmb528x4j0",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666576238776,
+  "history_end_time" : 1666577006605,
+  "history_notes" : null,
+  "history_process" : "xlayd5",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "px48yi3lh2g",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666576238783,
+  "history_end_time" : 1666577006606,
+  "history_notes" : null,
+  "history_process" : "argv3i",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "zvfn0ylpy2y",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1666577006607,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "ydvm5hzzt9w",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666576238833,
+  "history_end_time" : 1666577006619,
+  "history_notes" : null,
+  "history_process" : "wny2dz",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "ayomatcn0ag",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1666577006620,
+  "history_notes" : null,
+  "history_process" : "3asyzj",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "6f9n6v77t9j",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666576238849,
+  "history_end_time" : 1666577006622,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "4bw854rwcyb",
+  "history_input" : "# get hourly CMAQ data into csv for prediction\n\nfrom cmaq_ai_utils import *\n\n\n#edate = datetime.today()\n#sdate = edate - timedelta(days=1)\ntoday = datetime.today()\nedate = today - timedelta(days=2)\nsdate = today - timedelta(days=3)\n\n#sdate = date(2022, 8, 6)   # start date\n#edate = date(2022, 8, 8)   # end date\ndays = get_days_list_for_prediction(sdate, edate)\n\nreal_hour_list = [12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11]\ntime_step_in_netcdf_list = range(0,24)\n\ntest_folder = f\"{cmaq_folder}/testing_input_hourly/\"\ncreate_and_clean_folder(test_folder)\n\nfor x in range(len(days)-1):\n  current_day = days[x]\n  next_day = days[x+1]\n  print(\"Getting data for: \"+current_day)\n  \n  # read cmaq results\n  cmaq_file = \"/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_\"+current_day+\"_extracted.nc\"\n  if not os.path.exists(cmaq_file):\n    print(f\"CMAQ file {cmaq_file} doesn't exist\")\n    continue\n  df_cmaq = xr.open_dataset(cmaq_file)\n  \n  # read mcip results \n  mcip_file = \"/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/METCRO2D_\"+current_day+\".nc\"\n  df_mcip = xr.open_dataset(mcip_file)\n  \n  # read emissions results \n  df_emis = xr.open_dataset(\"/groups/ESS/share/projects/SWUS3km/data/cmaqdata/emis2021/12km/all/emis_mole_all_\"+current_day+\"_AQF5X_cmaq_cb6ae7_2017gb_17j.ncf\")\n  \n  for k in time_step_in_netcdf_list:\n    real_hour_value = real_hour_list[k]\n    \n    if real_hour_value<12:\n      day = next_day\n    else:\n      day = current_day\n    \n    df_hourly = pd.DataFrame()\n    \n    print(\"df_cmaq.variables['O3'] shape: \", df_cmaq.variables['O3'].shape)\n    print(\"df_cmaq.variables['O3'][:] shape: \", df_cmaq.variables['O3'][:].shape)\n    print(\"df_cmaq.variables['O3'][:].values[k, 0].shape\", df_cmaq.variables['O3'][:].values[k, 0].shape)\n    # CMAQ data\n    # O3 variable\n    o3=df_cmaq.variables['O3'][:].values[k, 0]\n    cmaq_O3=list(np.ravel(o3).transpose())\n    print(\"o3 shape: \", o3.shape)\n    print(\"cmaq_O3 shape: \", np.ravel(o3).transpose().shape)\n    \n    # NO2\n    no2=df_cmaq.variables['NO2'][:].values[k, 0]\n    cmaq_NO2=list(np.ravel(no2).transpose())\n    \n    # CO\n    co=df_cmaq.variables['CO'][:].values[k, 0]\n    cmaq_CO=list(np.ravel(co).transpose())\n    \n    # PM25_CO\n    pm25=df_cmaq.variables['PM25_OC'][:].values[k, 0]\n    cmaq_PM25_CO=list(np.ravel(pm25).transpose())\n    \n    # EMIS data\n    co_emis=df_emis.variables['CO'][:].values[k, 0]\n    CO_emi=list(np.ravel(co_emis).transpose())    \n    \n    # MCIP data\n    # CO variable\n    prsfc=df_mcip.variables['PRSFC'][:].values[k, 0]\n    PRSFC=list(np.ravel(prsfc).transpose())\n    \n    # NO2\n    pbl=df_mcip.variables['PBL'][:].values[k, 0]\n    PBL=list(np.ravel(pbl).transpose())\n    \n    # TEMP2\n    temp2=df_mcip.variables['TEMP2'][:].values[k, 0]\n    TEMP2=list(np.ravel(temp2).transpose())\n    \n    # WSPD10\n    wspd10=df_mcip.variables['WSPD10'][:].values[k, 0]\n    WSPD10=list(np.ravel(wspd10).transpose())\n    \n    # WDIR10\n    wdir10=df_mcip.variables['WDIR10'][:].values[k, 0]\n    WDIR10=list(np.ravel(wdir10).transpose())\n    \n    # RGRND\n    rgrnd=df_mcip.variables['RGRND'][:].values[k, 0]\n    RGRND=list(np.ravel(rgrnd).transpose())\n    \n    # CFRAC\n    cfrac=df_mcip.variables['CFRAC'][:].values[k, 0]\n    CFRAC=list(np.ravel(cfrac).transpose())\n    \n    ## LAT/LON data\n    df_coords = xr.open_dataset('/home/yli74/scripts/plots/2020fire/GRIDCRO2D')\n    \n    lat = df_coords.variables['LAT'][:].values[0,0]\n    print(\"lat shape\", lat.shape)\n    lat_flt=np.ravel(lat)\n    LAT=lat_flt #np.tile(lat_flt,1)\n    \n    lon = df_coords.variables['LON'][:].values[0,0]\n    lon_flt=np.ravel(lon)\n    LON=lon_flt #np.tile(lon_flt,1)\n    \n    df_hourly['Latitude'] = LAT\n    df_hourly['Longitude'] = LON\n    df_hourly['YYYYMMDDHH'] = day+turn_2_digits(real_hour_value)\n    df_hourly['CMAQ12KM_O3(ppb)'] = cmaq_O3\n    df_hourly['CMAQ12KM_NO2(ppb)'] = cmaq_NO2\n    df_hourly['CMAQ12KM_CO(ppm)'] = cmaq_CO\n    df_hourly['CMAQ_OC(ug/m3)'] = cmaq_PM25_CO\n    df_hourly['CO(moles/s)'] = CO_emi\n    df_hourly['PRSFC(Pa)'] = PRSFC\n    df_hourly['PBL(m)'] = PBL\n    df_hourly['TEMP2(K)'] = TEMP2\n    df_hourly['WSPD10(m/s)'] = WSPD10\n    df_hourly['WDIR10(degree)'] = WDIR10\n    df_hourly['RGRND(W/m2)'] = RGRND\n    df_hourly['CFRAC'] = CFRAC\n    df_hourly['month'] = df_hourly['YYYYMMDDHH'].str[4:6]\n    df_hourly['day'] = df_hourly['YYYYMMDDHH'].str[6:8]\n    df_hourly['hours'] = df_hourly['YYYYMMDDHH'].str[8:10]\n    print(f'Saving file: test_data_{day}_{turn_2_digits(real_hour_value)}.csv')\n    df_hourly.to_csv(f'{test_folder}/test_data_{day}_{turn_2_digits(real_hour_value)}.csv',index=False)\n\nprint('Done with preparing testing data!')",
+  "history_output" : "",
+  "history_begin_time" : 1666576239609,
+  "history_end_time" : 1666577028367,
+  "history_notes" : null,
+  "history_process" : "ex3vh9",
+  "host_id" : "aqt8fv",
+  "indicator" : "Done"
+},{
+  "history_id" : "ilo9ykryvaf",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1666577007670,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "n7mf3tj08np",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1666577007676,
+  "history_notes" : null,
+  "history_process" : "iicy7w",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "b0rr1aq24v6",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1666577007679,
+  "history_notes" : null,
+  "history_process" : "fsk7f2",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "ylq5phn0710",
+  "history_input" : null,
+  "history_output" : null,
+  "history_begin_time" : null,
+  "history_end_time" : 1666577007687,
+  "history_notes" : null,
+  "history_process" : "is1w3m",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "7m0zonm64yv",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666576238878,
+  "history_end_time" : 1666577007696,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "qjcnkw9jiqp",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666576238884,
+  "history_end_time" : 1666577007698,
+  "history_notes" : null,
+  "history_process" : "s6hbic",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "bpmi3qk8wo2",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666576238907,
+  "history_end_time" : 1666577007707,
+  "history_notes" : null,
+  "history_process" : "pvzabv",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+},{
+  "history_id" : "hi51rfwntgq",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1666576238912,
+  "history_end_time" : 1666577007711,
+  "history_notes" : null,
+  "history_process" : "8i9ptn",
+  "host_id" : "aqt8fv",
+  "indicator" : "Stopped"
+}]

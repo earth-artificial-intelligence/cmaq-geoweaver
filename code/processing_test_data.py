@@ -2,12 +2,16 @@
 
 from cmaq_ai_utils import *
 
-# end_date = datetime.today()
-# base = end_date - timedelta(days=2)
 
-sdate = date(2022, 8, 6)   # start date
-edate = date(2022, 8, 7)   # end date
-days = get_days_list(sdate, edate)
+#edate = datetime.today()
+#sdate = edate - timedelta(days=1)
+today = datetime.today()
+edate = today
+sdate = today - timedelta(days=7)
+
+#sdate = date(2022, 8, 6)   # start date
+#edate = date(2022, 8, 8)   # end date
+days = get_days_list_for_prediction(sdate, edate)
 
 real_hour_list = [12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11]
 time_step_in_netcdf_list = range(0,24)
@@ -21,10 +25,22 @@ for x in range(len(days)-1):
   print("Getting data for: "+current_day)
   
   # read cmaq results
-  df_cmaq = xr.open_dataset("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_"+current_day+"_extracted.nc")
+  cmaq_file = "/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_"+current_day+"_extracted.nc"
+  if not os.path.exists(cmaq_file):
+    print(f"CMAQ file {cmaq_file} doesn't exist")
+    continue
+  
+  target_cdf_file = f'{cmaq_folder}/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_'+current_day+'_ML_extracted.nc'
+    
+  if os.path.exists(target_cdf_file):
+    print(f"{target_cdf_file} already exists")
+    continue
+  
+  df_cmaq = xr.open_dataset(cmaq_file)
   
   # read mcip results 
-  df_mcip = xr.open_dataset("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/METCRO2D_"+current_day+".nc")
+  mcip_file = "/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/METCRO2D_"+current_day+".nc"
+  df_mcip = xr.open_dataset(mcip_file)
   
   # read emissions results 
   df_emis = xr.open_dataset("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/emis2021/12km/all/emis_mole_all_"+current_day+"_AQF5X_cmaq_cb6ae7_2017gb_17j.ncf")
@@ -39,15 +55,15 @@ for x in range(len(days)-1):
     
     df_hourly = pd.DataFrame()
     
-    print("df_cmaq.variables['O3'] shape: ", df_cmaq.variables['O3'].shape)
-    print("df_cmaq.variables['O3'][:] shape: ", df_cmaq.variables['O3'][:].shape)
-    print("df_cmaq.variables['O3'][:].values[k, 0].shape", df_cmaq.variables['O3'][:].values[k, 0].shape)
+    #print("df_cmaq.variables['O3'] shape: ", df_cmaq.variables['O3'].shape)
+    #print("df_cmaq.variables['O3'][:] shape: ", df_cmaq.variables['O3'][:].shape)
+    #print("df_cmaq.variables['O3'][:].values[k, 0].shape", df_cmaq.variables['O3'][:].values[k, 0].shape)
     # CMAQ data
     # O3 variable
     o3=df_cmaq.variables['O3'][:].values[k, 0]
     cmaq_O3=list(np.ravel(o3).transpose())
-    print("o3 shape: ", o3.shape)
-    print("cmaq_O3 shape: ", np.ravel(o3).transpose().shape)
+    #print("o3 shape: ", o3.shape)
+    #print("cmaq_O3 shape: ", np.ravel(o3).transpose().shape)
     
     # NO2
     no2=df_cmaq.variables['NO2'][:].values[k, 0]
@@ -98,7 +114,7 @@ for x in range(len(days)-1):
     df_coords = xr.open_dataset('/home/yli74/scripts/plots/2020fire/GRIDCRO2D')
     
     lat = df_coords.variables['LAT'][:].values[0,0]
-    print("lat shape", lat.shape)
+    #print("lat shape", lat.shape)
     lat_flt=np.ravel(lat)
     LAT=lat_flt #np.tile(lat_flt,1)
     
