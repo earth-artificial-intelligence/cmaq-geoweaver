@@ -1,0 +1,81 @@
+[{
+  "history_id" : "hhld2g70iii",
+  "history_input" : "from pyairnow.conv import aqi_to_concentration\nimport pandas as pd\nimport requests\nimport json\n\n\nlat = '32.047501'\nlon = '-110.773903'\nAPI_KEY = '9FF8FB8B-229C-424F-8882-3AF164DD8C17'\n\n# distance is used when no reporting area is associated with the latitude/longitude, \n# looks for an observation from a nearby reporting area within this distance (in miles).\ndistance = '50' \n\n# Construct a list of date string, each timed at midnight.\ndate_range_str = [date.strftime('%Y-%m-%dT00-0000') for date in pd.date_range('2017-01-01','2017-02-28')]\n\n# An empty list to save the O3 data returned.\nO3_data = []\nCO_data = []\nNO2_data = []\n\n# Loop through each date to intiate an API call for the duration specified above.\nfor dateStr in date_range_str:\n\n    # Construct URL to contact airnowapi.org and get the AQI (Air Quality Index) for our desired location.\n    url = f'https://www.airnowapi.org/aq/observation/latLong/historical/?format=application/json&latitude={lat}&longitude={lon}&date={dateStr}&distance={distance}&API_KEY={API_KEY}'\n\n    # Initiate the request to the API.\n    res = requests.get(url)\n    # Extract the AQI level for our location.\n    aqiData = json.loads(res.content)[0]['AQI']\n\n    # This function can be passed the AQI observations \n    # and return the corresponding O3 level in that area for the day.\n    O3_data.append(aqi_to_concentration(aqiData, 'O3'))\n    CO_data.append(aqi_to_concentration(aqiData, 'CO'))\n    NO2_data.append(aqi_to_concentration(aqiData, 'NO2'))\n\npd.DataFrame({\"Date\": date_range_str, \"Lat\": lat, \"Lon\": lon, \"AirNow_O3\": O3_data, \"AirNow_CO\": CO_data, \"AirNow_NO2\": NO2_data}).to_csv(\"/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/airnow_data.csv\", index=False)\n",
+  "history_output" : "",
+  "history_begin_time" : 1667525983831,
+  "history_end_time" : 1667525998384,
+  "history_notes" : null,
+  "history_process" : "di7md3",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "bfa9w6nzol1",
+  "history_input" : "from pyairnow.conv import aqi_to_concentration\nimport pandas as pd\nimport requests\nimport json\n\n\nlat = '32.047501'\nlon = '-110.773903'\nAPI_KEY = '9FF8FB8B-229C-424F-8882-3AF164DD8C17'\n\n# distance is used when no reporting area is associated with the latitude/longitude, \n# looks for an observation from a nearby reporting area within this distance (in miles).\ndistance = '50' \n\n# Construct a list of date string, each timed at midnight.\ndate_range_str = [date.strftime('%Y-%m-%dT00-0000') for date in pd.date_range('2021-01-01','2021-02-28')]\n\n# An empty list to save the O3 data returned.\nO3_data = []\nCO_data = []\nNO2_data = []\n\n# Loop through each date to intiate an API call for the duration specified above.\nfor dateStr in date_range_str:\n\n    # Construct URL to contact airnowapi.org and get the AQI (Air Quality Index) for our desired location.\n    url = f'https://www.airnowapi.org/aq/observation/latLong/historical/?format=application/json&latitude={lat}&longitude={lon}&date={dateStr}&distance={distance}&API_KEY={API_KEY}'\n\n    # Initiate the request to the API.\n    res = requests.get(url)\n    # Extract the AQI level for our location.\n    aqiData = json.loads(res.content)[0]['AQI']\n\n    # This function can be passed the AQI observations \n    # and return the corresponding O3 level in that area for the day.\n    O3_data.append(aqi_to_concentration(aqiData, 'O3'))\n    CO_data.append(aqi_to_concentration(aqiData, 'CO'))\n    NO2_data.append(aqi_to_concentration(aqiData, 'NO2'))\n\npd.DataFrame({\"Date\": date_range_str, \"Lat\": lat, \"Lon\": lon, \"AirNow_O3\": O3_data, \"AirNow_CO\": CO_data, \"AirNow_NO2\": NO2_data}).to_csv(\"/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/airnow_data.csv\", index=False)\n",
+  "history_output" : "",
+  "history_begin_time" : 1667525476219,
+  "history_end_time" : 1667525491548,
+  "history_notes" : null,
+  "history_process" : "di7md3",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "zwsh5847fh1",
+  "history_input" : "from pyairnow.conv import aqi_to_concentration\nimport pandas as pd\nimport requests\nimport json\n\n\nlat = '32.047501'\nlon = '-110.773903'\nAPI_KEY = '9FF8FB8B-229C-424F-8882-3AF164DD8C17'\n\n# distance is used when no reporting area is associated with the latitude/longitude, \n# looks for an observation from a nearby reporting area within this distance (in miles).\ndistance = '50' \n\n# Construct a list of date string, each timed at midnight.\ndate_range_str = [date.strftime('%Y-%m-%dT00-0000') for date in pd.date_range('2021-01-01','2021-01-31')]\n\n# An empty list to save the O3 data returned.\nO3_data = []\nCO_data = []\nNO2_data = []\n\n# Loop through each date to intiate an API call for the duration specified above.\nfor dateStr in date_range_str:\n\n    # Construct URL to contact airnowapi.org and get the AQI (Air Quality Index) for our desired location.\n    url = f'https://www.airnowapi.org/aq/observation/latLong/historical/?format=application/json&latitude={lat}&longitude={lon}&date={dateStr}&distance={distance}&API_KEY={API_KEY}'\n\n    # Initiate the request to the API.\n    res = requests.get(url)\n    # Extract the AQI level for our location.\n    aqiData = json.loads(res.content)[0]['AQI']\n\n    # This function can be passed the AQI observations \n    # and return the corresponding O3 level in that area for the day.\n    O3_data.append(aqi_to_concentration(aqiData, 'O3'))\n    CO_data.append(aqi_to_concentration(aqiData, 'CO'))\n    NO2_data.append(aqi_to_concentration(aqiData, 'NO2'))\n\npd.DataFrame({\"Date\": date_range_str, \"Lat\": lat, \"Lon\": lon, \"AirNow_O3\": O3_data, \"AirNow_CO\": CO_data, \"AirNow_NO2\": NO2_data}).to_csv(\"/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/airnow_data.csv\", index=False)\n",
+  "history_output" : "",
+  "history_begin_time" : 1667311126733,
+  "history_end_time" : 1667311134828,
+  "history_notes" : null,
+  "history_process" : "di7md3",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "wscydueav5k",
+  "history_input" : "from pyairnow.conv import aqi_to_concentration\nimport pandas as pd\nimport requests\nimport json\n\n\nlat = '32.047501'\nlon = '-110.773903'\nAPI_KEY = '9FF8FB8B-229C-424F-8882-3AF164DD8C17'\n\n# distance is used when no reporting area is associated with the latitude/longitude, \n# looks for an observation from a nearby reporting area within this distance (in miles).\ndistance = '50' \n\n# Construct a list of date string, each timed at midnight.\ndate_range_str = [date.strftime('%Y-%m-%dT00-0000') for date in pd.date_range('2021-01-01','2021-01-31')]\n\n# An empty list to save the O3 data returned.\nO3_data = []\nCO_data = []\nNO2_data = []\n\n# Loop through each date to intiate an API call for the duration specified above.\nfor dateStr in date_range_str:\n\n    # Construct URL to contact airnowapi.org and get the AQI (Air Quality Index) for our desired location.\n    url = f'https://www.airnowapi.org/aq/observation/latLong/historical/?format=application/json&latitude={lat}&longitude={lon}&date={dateStr}&distance={distance}&API_KEY={API_KEY}'\n\n    # Initiate the request to the API.\n    res = requests.get(url)\n    # Extract the AQI level for our location.\n    aqiData = json.loads(res.content)[0]['AQI']\n\n    # This function can be passed the AQI observations \n    # and return the corresponding O3 level in that area for the day.\n    O3_data.append(aqi_to_concentration(aqiData, 'O3'))\n    CO_data.append(aqi_to_concentration(aqiData, 'CO'))\n    NO2_data.append(aqi_to_concentration(aqiData, 'NO2'))\n\npd.DataFrame({\"Date\": date_range_str, \"Lat\": lat, \"Lon\": lon, \"AirNow_O3\": O3_data, \"AirNow_CO\": CO_data, \"AirNow_NO2\": NO2_data}).to_csv(\"/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/airnow_data.csv\", index=False)\n",
+  "history_output" : "",
+  "history_begin_time" : 1667310945062,
+  "history_end_time" : 1667310954355,
+  "history_notes" : null,
+  "history_process" : "di7md3",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "vgtnnkfybwq",
+  "history_input" : "from pyairnow.conv import aqi_to_concentration\nimport pandas as pd\nimport requests\nimport json\n\n\nlat = '32.047501'\nlon = '-110.773903'\nAPI_KEY = '9FF8FB8B-229C-424F-8882-3AF164DD8C17'\n\n# distance is used when no reporting area is associated with the latitude/longitude, \n# looks for an observation from a nearby reporting area within this distance (in miles).\ndistance = '50' \n\n# Construct a list of date string, each timed at midnight.\ndate_range_str = [date.strftime('%Y-%m-%dT00-0000') for date in pd.date_range('2021-01-01','2021-01-31')]\n\n# An empty list to save the O3 data returned.\nO3_data = []\nCO_data = []\nNO2_data = []\n\n# Loop through each date to intiate an API call for the duration specified above.\nfor dateStr in date_range_str:\n\n    # Construct URL to contact airnowapi.org and get the AQI (Air Quality Index) for our desired location.\n    url = f'https://www.airnowapi.org/aq/observation/latLong/historical/?format=application/json&latitude={lat}&longitude={lon}&date={dateStr}&distance={distance}&API_KEY={API_KEY}'\n\n    # Initiate the request to the API.\n    res = requests.get(url)\n    # Extract the AQI level for our location.\n    aqiData = json.loads(res.content)[0]['AQI']\n\n    # This function can be passed the AQI observations \n    # and return the corresponding O3 level in that area for the day.\n    O3_data.append(aqi_to_concentration(aqiData, 'O3'))\n    CO_data.append(aqi_to_concentration(aqiData, 'CO'))\n    NO2_data.append(aqi_to_concentration(aqiData, 'NO2'))\n\npd.DataFrame({\"Date\": date_range_str, \"Lat\": lat, \"Lon\": lon, \"AirNow_O3\": O3_data, \"AirNow_CO\": CO_data, \"AirNow_NO2\": NO2_data}).to_csv(\"/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/airnow_data.csv\", index=False)\n",
+  "history_output" : "",
+  "history_begin_time" : 1667310872598,
+  "history_end_time" : 1667310881222,
+  "history_notes" : null,
+  "history_process" : "di7md3",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "se4y5u29s2m",
+  "history_input" : "from pyairnow.conv import aqi_to_concentration\nimport pandas as pd\nimport requests\nimport json\n\n\nlat = '32.047501'\nlon = '-110.773903'\nAPI_KEY = '9FF8FB8B-229C-424F-8882-3AF164DD8C17'\n\n# distance is used when no reporting area is associated with the latitude/longitude, \n# looks for an observation from a nearby reporting area within this distance (in miles).\ndistance = '50' \n\n# Construct a list of date string, each timed at midnight.\ndate_range_str = [date.strftime('%Y-%m-%dT00-0000') for date in pd.date_range('2021-01-01','2021-01-31')]\n\n# An empty list to save the O3 data returned.\nO3_data = []\nCO_data = []\nNO2_data = []\n\n# Loop through each date to intiate an API call for the duration specified above.\nfor dateStr in date_range_str:\n\n    # Construct URL to contact airnowapi.org and get the AQI (Air Quality Index) for our desired location.\n    url = f'https://www.airnowapi.org/aq/observation/latLong/historical/?format=application/json&latitude={lat}&longitude={lon}&date={dateStr}&distance={distance}&API_KEY={API_KEY}'\n\n    # Initiate the request to the API.\n    res = requests.get(url)\n    # Extract the AQI level for our location.\n    aqiData = json.loads(res.content)[0]['AQI']\n\n    # This function can be passed the AQI observations \n    # and return the corresponding O3 level in that area for the day.\n    O3_data.append(aqi_to_concentration(aqiData, 'O3'))\n    CO_data.append(aqi_to_concentration(aqiData, 'CO'))\n    NO2_data.append(aqi_to_concentration(aqiData, 'NO2'))\n\npd.DataFrame({\"Date\": date_range_str, \"Lat\": lat, \"Lon\": lon, \"AirNow_O3\": O3_data, \"AirNow_CO\": CO_data, \"AirNow_NO2\": NO2_data}).to_csv(\"/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/airnow_data.csv\", index=False)\n",
+  "history_output" : "",
+  "history_begin_time" : 1667310711352,
+  "history_end_time" : 1667310720168,
+  "history_notes" : null,
+  "history_process" : "di7md3",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "k87w6lx23ro",
+  "history_input" : "from pyairnow.conv import aqi_to_concentration\nimport pandas as pd\nimport requests\nimport json\n\n\nlat = '32.047501'\nlon = '-110.773903'\nAPI_KEY = '9FF8FB8B-229C-424F-8882-3AF164DD8C17'\n\n# distance is used when no reporting area is associated with the latitude/longitude, \n# looks for an observation from a nearby reporting area within this distance (in miles).\ndistance = '50' \n\n# Construct a list of date string, each timed at midnight.\ndate_range_str = [date.strftime('%Y-%m-%dT00-0000') for date in pd.date_range('2021-01-01','2021-01-31')]\n\n# An empty list to save the O3 data returned.\nO3_data = []\nCO_data = []\nNO2_data = []\n\n# Loop through each date to intiate an API call for the duration specified above.\nfor dateStr in date_range_str:\n\n    # Construct URL to contact airnowapi.org and get the AQI (Air Quality Index) for our desired location.\n    url = f'https://www.airnowapi.org/aq/observation/latLong/historical/?format=application/json&latitude={lat}&longitude={lon}&date={dateStr}&distance={distance}&API_KEY={API_KEY}'\n\n    # Initiate the request to the API.\n    res = requests.get(url)\n    # Extract the AQI level for our location.\n    aqiData = json.loads(res.content)[0]['AQI']\n\n    # This function can be passed the AQI observations \n    # and return the corresponding O3 level in that area for the day.\n    O3_data.append(aqi_to_concentration(aqiData, 'O3'))\n    CO_data.append(aqi_to_concentration(aqiData, 'CO'))\n    NO2_data.append(aqi_to_concentration(aqiData, 'NO2'))\n\npd.DataFrame({\"Date\": date_range_str, \"Lat\": lat, \"Lon\": lon, \"AirNow_O3\": O3_data, \"AirNow_CO\": CO_data, \"AirNow_NO2\": NO2_data}).to_csv(\"/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/airnow_data.csv\", index=False)\n",
+  "history_output" : "",
+  "history_begin_time" : 1667310643532,
+  "history_end_time" : 1667310651970,
+  "history_notes" : null,
+  "history_process" : "di7md3",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "Sl2lJN2ODShb",
+  "history_input" : "from pyairnow.conv import aqi_to_concentration\nimport pandas as pd\nimport requests\nimport json\n\n\nlat = '32.047501'\nlon = '-110.773903'\nAPI_KEY = '9FF8FB8B-229C-424F-8882-3AF164DD8C17'\n\n# distance is used when no reporting area is associated with the latitude/longitude, \n# looks for an observation from a nearby reporting area within this distance (in miles).\ndistance = '50' \n\n# Construct a list of date string, each timed at midnight.\ndate_range_str = [date.strftime('%Y-%m-%dT00-0000') for date in pd.date_range('2021-01-01','2021-01-31')]\n\n# An empty list to save the O3 data returned.\nO3_data = []\nCO_data = []\nNO2_data = []\n\n# Loop through each date to intiate an API call for the duration specified above.\nfor dateStr in date_range_str:\n\n    # Construct URL to contact airnowapi.org and get the AQI (Air Quality Index) for our desired location.\n    url = f'https://www.airnowapi.org/aq/observation/latLong/historical/?format=application/json&latitude={lat}&longitude={lon}&date={dateStr}&distance={distance}&API_KEY={API_KEY}'\n\n    # Initiate the request to the API.\n    res = requests.get(url)\n    # Extract the AQI level for our location.\n    aqiData = json.loads(res.content)[0]['AQI']\n\n    # This function can be passed the AQI observations \n    # and return the corresponding O3 level in that area for the day.\n    O3_data.append(aqi_to_concentration(aqiData, 'O3'))\n    CO_data.append(aqi_to_concentration(aqiData, 'CO'))\n    NO2_data.append(aqi_to_concentration(aqiData, 'NO2'))\n\npd.DataFrame({\"Date\": date_range_str, \"Lat\": lat, \"Lon\": lon, \"AirNow_O3\": O3_data, \"AirNow_CO\": CO_data, \"AirNow_NO2\": NO2_data}).to_csv(\"airnow_data.csv\", index=False)\n",
+  "history_output" : "",
+  "history_begin_time" : 1667310421291,
+  "history_end_time" : 1667310431372,
+  "history_notes" : null,
+  "history_process" : "di7md3",
+  "host_id" : null,
+  "indicator" : "Done"
+},]

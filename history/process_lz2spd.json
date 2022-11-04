@@ -1,0 +1,131 @@
+[{
+  "history_id" : "gp9945zobqf",
+  "history_input" : "import json\nimport pandas as pd\nimport ee\n\ntry:\n    ee.Initialize()\nexcept Exception as e:\n    ee.Authenticate()\n    ee.Initialize()\n\n# identify a 500 meter buffer around our Point Of Interest (POI)\npoi = ee.Geometry.Point(32.047501, -110.773903).buffer(500)\n\n# Get TROPOMI NRTI Image Collection for GoogleEarth Engine\ntropomiCollection = ee.ImageCollection(\"COPERNICUS/S5P/OFFL/L3_O3\").filterDate('2019-01-01','2019-02-28')\n\ndef poi_mean(img):\n    # This function will reduce all the points in the area we specified in \"poi\" and average all the data into a single daily value\n    mean = img.reduceRegion(reducer=ee.Reducer.mean(), \n    geometry=poi,scale=250).get('O3_column_number_density')\n    return img.set('date', img.date().format()).set('mean',mean)\n    \n# Map function to our ImageCollection\npoi_reduced_imgs = tropomiCollection.map(poi_mean)\nnested_list = poi_reduced_imgs.reduceColumns(ee.Reducer.toList(2), ['date','mean']).values().get(0)\n\n# we need to call the callback method \"getInfo\" to retrieve the data\ndf = pd.DataFrame(nested_list.getInfo(), columns=['Date','tropomi_O3_mean'])\n\n\n# Convert Date column to DateTime\ndf['Date'] = pd.to_datetime(df['Date'])\ndf = df.set_index('Date')\n# convert tropomi_O3_mean to ppbV (parts-per-billion-volume)\ndf['tropomi_O3.ppbV'] = (df['tropomi_O3_mean']/3)*224\n\ndf.drop('tropomi_O3_mean', inplace=True, axis=1)\n# Save data to CSV file\ndf.to_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/tropomi_O3.csv')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667525999954,
+  "history_end_time" : 1667526005076,
+  "history_notes" : null,
+  "history_process" : "lz2spd",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "5pxaj5tnrz9",
+  "history_input" : "import json\nimport pandas as pd\nimport ee\n\ntry:\n    ee.Initialize()\nexcept Exception as e:\n    ee.Authenticate()\n    ee.Initialize()\n\n# identify a 500 meter buffer around our Point Of Interest (POI)\npoi = ee.Geometry.Point(32.047501, -110.773903).buffer(500)\n\n# Get TROPOMI NRTI Image Collection for GoogleEarth Engine\ntropomiCollection = ee.ImageCollection(\"COPERNICUS/S5P/OFFL/L3_O3\").filterDate('2019-01-01','2019-02-28')\n\ndef poi_mean(img):\n    # This function will reduce all the points in the area we specified in \"poi\" and average all the data into a single daily value\n    mean = img.reduceRegion(reducer=ee.Reducer.mean(), \n    geometry=poi,scale=250).get('O3_column_number_density')\n    return img.set('date', img.date().format()).set('mean',mean)\n    \n# Map function to our ImageCollection\npoi_reduced_imgs = tropomiCollection.map(poi_mean)\nnested_list = poi_reduced_imgs.reduceColumns(ee.Reducer.toList(2), ['date','mean']).values().get(0)\n\n# we need to call the callback method \"getInfo\" to retrieve the data\ndf = pd.DataFrame(nested_list.getInfo(), columns=['Date','tropomi_O3_mean'])\n\n\n# Convert Date column to DateTime\ndf['Date'] = pd.to_datetime(df['Date'])\ndf = df.set_index('Date')\n# convert tropomi_O3_mean to ppbV (parts-per-billion-volume)\ndf['tropomi_O3.ppbV'] = (df['tropomi_O3_mean']/3)*224\n\ndf.drop('tropomi_O3_mean', inplace=True, axis=1)\n# Save data to CSV file\ndf.to_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/tropomi_O3.csv')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667525493270,
+  "history_end_time" : 1667525499621,
+  "history_notes" : null,
+  "history_process" : "lz2spd",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "WnZZOfnAVGAH",
+  "history_input" : "import json\nimport pandas as pd\nimport ee\n\ntry:\n    ee.Initialize()\nexcept Exception as e:\n    ee.Authenticate()\n    ee.Initialize()\n\n# identify a 500 meter buffer around our Point Of Interest (POI)\npoi = ee.Geometry.Point(32.047501, -110.773903).buffer(500)\n\n# Get TROPOMI NRTI Image Collection for GoogleEarth Engine\ntropomiCollection = ee.ImageCollection(\"COPERNICUS/S5P/OFFL/L3_O3\").filterDate('2019-01-01','2019-02-28')\n\ndef poi_mean(img):\n    # This function will reduce all the points in the area we specified in \"poi\" and average all the data into a single daily value\n    mean = img.reduceRegion(reducer=ee.Reducer.mean(), \n    geometry=poi,scale=250).get('O3_column_number_density')\n    return img.set('date', img.date().format()).set('mean',mean)\n    \n# Map function to our ImageCollection\npoi_reduced_imgs = tropomiCollection.map(poi_mean)\nnested_list = poi_reduced_imgs.reduceColumns(ee.Reducer.toList(2), ['date','mean']).values().get(0)\n\n# we need to call the callback method \"getInfo\" to retrieve the data\ndf = pd.DataFrame(nested_list.getInfo(), columns=['Date','tropomi_O3_mean'])\n\n\n# Convert Date column to DateTime\ndf['Date'] = pd.to_datetime(df['Date'])\ndf = df.set_index('Date')\n# convert tropomi_O3_mean to ppbV (parts-per-billion-volume)\ndf['tropomi_O3.ppbV'] = (df['tropomi_O3_mean']/3)*224\n\ndf.drop('tropomi_O3_mean', inplace=True, axis=1)\n# Save data to CSV file\ndf.to_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/tropomi_O3.csv')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667523834909,
+  "history_end_time" : 1667523852902,
+  "history_notes" : null,
+  "history_process" : "lz2spd",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "54WaOJOdrA8J",
+  "history_input" : "import json\nimport pandas as pd\nimport ee\n\ntry:\n    ee.Initialize()\nexcept Exception as e:\n    ee.Authenticate()\n    ee.Initialize()\n\n# identify a 500 meter buffer around our Point Of Interest (POI)\npoi = ee.Geometry.Point(32.047501, -110.773903).buffer(500)\n\n# Get TROPOMI NRTI Image Collection for GoogleEarth Engine\ntropomiCollection = ee.ImageCollection(\"COPERNICUS/S5P/OFFL/L3_O3\").filterDate('2018-01-01','2018-02-28')\n\ndef poi_mean(img):\n    # This function will reduce all the points in the area we specified in \"poi\" and average all the data into a single daily value\n    mean = img.reduceRegion(reducer=ee.Reducer.mean(), \n    geometry=poi,scale=250).get('O3_column_number_density')\n    return img.set('date', img.date().format()).set('mean',mean)\n    \n# Map function to our ImageCollection\npoi_reduced_imgs = tropomiCollection.map(poi_mean)\nnested_list = poi_reduced_imgs.reduceColumns(ee.Reducer.toList(2), ['date','mean']).values().get(0)\n\n# we need to call the callback method \"getInfo\" to retrieve the data\ndf = pd.DataFrame(nested_list.getInfo(), columns=['Date','tropomi_O3_mean'])\n\n\n# Convert Date column to DateTime\ndf['Date'] = pd.to_datetime(df['Date'])\ndf = df.set_index('Date')\n# convert tropomi_O3_mean to ppbV (parts-per-billion-volume)\ndf['tropomi_O3.ppbV'] = (df['tropomi_O3_mean']/3)*224\n\ndf.drop('tropomi_O3_mean', inplace=True, axis=1)\n# Save data to CSV file\ndf.to_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/tropomi_O3.csv')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667523817298,
+  "history_end_time" : 1667523820727,
+  "history_notes" : null,
+  "history_process" : "lz2spd",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "5GNAOss53X1E",
+  "history_input" : "import json\nimport pandas as pd\nimport ee\n\ntry:\n    ee.Initialize()\nexcept Exception as e:\n    ee.Authenticate()\n    ee.Initialize()\n\n# identify a 500 meter buffer around our Point Of Interest (POI)\npoi = ee.Geometry.Point(32.047501, -110.773903).buffer(500)\n\n# Get TROPOMI NRTI Image Collection for GoogleEarth Engine\ntropomiCollection = ee.ImageCollection(\"COPERNICUS/S5P/OFFL/L3_O3\").filterDate('2017-01-01','2017-02-28')\n\ndef poi_mean(img):\n    # This function will reduce all the points in the area we specified in \"poi\" and average all the data into a single daily value\n    mean = img.reduceRegion(reducer=ee.Reducer.mean(), \n    geometry=poi,scale=250).get('O3_column_number_density')\n    return img.set('date', img.date().format()).set('mean',mean)\n    \n# Map function to our ImageCollection\npoi_reduced_imgs = tropomiCollection.map(poi_mean)\nnested_list = poi_reduced_imgs.reduceColumns(ee.Reducer.toList(2), ['date','mean']).values().get(0)\n\n# we need to call the callback method \"getInfo\" to retrieve the data\ndf = pd.DataFrame(nested_list.getInfo(), columns=['Date','tropomi_O3_mean'])\n\n\n# Convert Date column to DateTime\ndf['Date'] = pd.to_datetime(df['Date'])\ndf = df.set_index('Date')\n# convert tropomi_O3_mean to ppbV (parts-per-billion-volume)\ndf['tropomi_O3.ppbV'] = (df['tropomi_O3_mean']/3)*224\n\ndf.drop('tropomi_O3_mean', inplace=True, axis=1)\n# Save data to CSV file\ndf.to_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/tropomi_O3.csv')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667523790366,
+  "history_end_time" : 1667523794565,
+  "history_notes" : null,
+  "history_process" : "lz2spd",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "BXpF4CH7Cs9C",
+  "history_input" : "import json\nimport pandas as pd\nimport ee\n\ntry:\n    ee.Initialize()\nexcept Exception as e:\n    ee.Authenticate()\n    ee.Initialize()\n\n# identify a 500 meter buffer around our Point Of Interest (POI)\npoi = ee.Geometry.Point(32.047501, -110.773903).buffer(500)\n\n# Get TROPOMI NRTI Image Collection for GoogleEarth Engine\ntropomiCollection = ee.ImageCollection(\"COPERNICUS/S5P/OFFL/L3_O3\").filterDate('2021-01-01','2021-02-28')\n\ndef poi_mean(img):\n    # This function will reduce all the points in the area we specified in \"poi\" and average all the data into a single daily value\n    mean = img.reduceRegion(reducer=ee.Reducer.mean(), \n    geometry=poi,scale=250).get('O3_column_number_density')\n    return img.set('date', img.date().format()).set('mean',mean)\n    \n# Map function to our ImageCollection\npoi_reduced_imgs = tropomiCollection.map(poi_mean)\nnested_list = poi_reduced_imgs.reduceColumns(ee.Reducer.toList(2), ['date','mean']).values().get(0)\n\n# we need to call the callback method \"getInfo\" to retrieve the data\ndf = pd.DataFrame(nested_list.getInfo(), columns=['Date','tropomi_O3_mean'])\n\n# Make date match CMAQ and Airnow retrieved data. This is done only becuase TROPOMI doesn't have data before 2018, so making the data the same as the other source for merging later.\n# If the data retrieved for CMAQ and Airnow is after 2018, then this below line can be deleted.\ndf[\"Date\"] = pd.date_range(\"20170101\", \"20170227\").strftime('%Y%m%d')\n# Convert Date column to DateTime\ndf['Date'] = pd.to_datetime(df['Date'])\ndf = df.set_index('Date')\n# convert tropomi_O3_mean to ppbV (parts-per-billion-volume)\ndf['tropomi_O3.ppbV'] = (df['tropomi_O3_mean']/3)*224\n\ndf.drop('tropomi_O3_mean', inplace=True, axis=1)\n# Save data to CSV file\ndf.to_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/tropomi_O3.csv')\n",
+  "history_output" : "Traceback (most recent call last):\n  File \"data_tropomi_gee.py\", line 32, in <module>\n    df[\"Date\"] = pd.date_range(\"20170101\", \"20170227\").strftime('%Y%m%d')\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/core/frame.py\", line 3978, in __setitem__\n    self._set_item(key, value)\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/core/frame.py\", line 4172, in _set_item\n    value = self._sanitize_column(value)\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/core/frame.py\", line 4905, in _sanitize_column\n    com.require_length_match(value, self.index)\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/core/common.py\", line 561, in require_length_match\n    raise ValueError(\nValueError: Length of values (58) does not match length of index (339)\n",
+  "history_begin_time" : 1667523500971,
+  "history_end_time" : 1667523507508,
+  "history_notes" : null,
+  "history_process" : "lz2spd",
+  "host_id" : null,
+  "indicator" : "Failed"
+},{
+  "history_id" : "aJEXsg7vJVJi",
+  "history_input" : "import json\nimport pandas as pd\nimport ee\n\ntry:\n    ee.Initialize()\nexcept Exception as e:\n    ee.Authenticate()\n    ee.Initialize()\n\n# identify a 500 meter buffer around our Point Of Interest (POI)\npoi = ee.Geometry.Point(32.047501, -110.773903).buffer(500)\n\n# Get TROPOMI NRTI Image Collection for GoogleEarth Engine\ntropomiCollection = ee.ImageCollection(\"COPERNICUS/S5P/OFFL/L3_O3\").filterDate('2021-01-01','2021-02-28')\n\ndef poi_mean(img):\n    # This function will reduce all the points in the area we specified in \"poi\" and average all the data into a single daily value\n    mean = img.reduceRegion(reducer=ee.Reducer.mean(), \n    geometry=poi,scale=250).get('O3_column_number_density')\n    return img.set('date', img.date().format()).set('mean',mean)\n    \n# Map function to our ImageCollection\npoi_reduced_imgs = tropomiCollection.map(poi_mean)\nnested_list = poi_reduced_imgs.reduceColumns(ee.Reducer.toList(2), ['date','mean']).values().get(0)\n\n# we need to call the callback method \"getInfo\" to retrieve the data\ndf = pd.DataFrame(nested_list.getInfo(), columns=['Date','tropomi_O3_mean'])\n\n# Convert Date column to DateTime\ndf['Date'] = pd.to_datetime(df['Date'])\ndf = df.set_index('Date')\n# convert tropomi_O3_mean to ppbV (parts-per-billion-volume)\ndf['tropomi_O3.ppbV'] = (df['tropomi_O3_mean']/3)*224\n\ndf.drop('tropomi_O3_mean', inplace=True, axis=1)\n# Save data to CSV file\ndf.to_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/tropomi_O3.csv')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667510566690,
+  "history_end_time" : 1667510579735,
+  "history_notes" : null,
+  "history_process" : "lz2spd",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "9hv2zkylc9m",
+  "history_input" : "import json\nimport pandas as pd\nimport ee\n\ntry:\n    ee.Initialize()\nexcept Exception as e:\n    ee.Authenticate()\n    ee.Initialize()\n\n# identify a 500 meter buffer around our Point Of Interest (POI)\npoi = ee.Geometry.Point(32.047501, -110.773903).buffer(500)\n\n# Get TROPOMI NRTI Image Collection for GoogleEarth Engine\ntropomiCollection = ee.ImageCollection(\"COPERNICUS/S5P/OFFL/L3_O3\").filterDate('2021-01-01','2021-01-31')\n\ndef poi_mean(img):\n    # This function will reduce all the points in the area we specified in \"poi\" and average all the data into a single daily value\n    mean = img.reduceRegion(reducer=ee.Reducer.mean(), \n    geometry=poi,scale=250).get('O3_column_number_density')\n    return img.set('date', img.date().format()).set('mean',mean)\n    \n# Map function to our ImageCollection\npoi_reduced_imgs = tropomiCollection.map(poi_mean)\nnested_list = poi_reduced_imgs.reduceColumns(ee.Reducer.toList(2), ['date','mean']).values().get(0)\n\n# we need to call the callback method \"getInfo\" to retrieve the data\ndf = pd.DataFrame(nested_list.getInfo(), columns=['Date','tropomi_O3_mean'])\n\n# Convert Date column to DateTime\ndf['Date'] = pd.to_datetime(df['Date'])\ndf = df.set_index('Date')\n# convert tropomi_O3_mean to ppbV (parts-per-billion-volume)\ndf['tropomi_O3.ppbV'] = (df['tropomi_O3_mean']/3)*224\n\ndf.drop('tropomi_O3_mean', inplace=True, axis=1)\n# Save data to CSV file\ndf.to_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/tropomi_O3.csv')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667311136016,
+  "history_end_time" : 1667311141029,
+  "history_notes" : null,
+  "history_process" : "lz2spd",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "trt89g5e49k",
+  "history_input" : "import json\nimport pandas as pd\nimport ee\n\ntry:\n    ee.Initialize()\nexcept Exception as e:\n    ee.Authenticate()\n    ee.Initialize()\n\n# identify a 500 meter buffer around our Point Of Interest (POI)\npoi = ee.Geometry.Point(32.047501, -110.773903).buffer(500)\n\n# Get TROPOMI NRTI Image Collection for GoogleEarth Engine\ntropomiCollection = ee.ImageCollection(\"COPERNICUS/S5P/OFFL/L3_O3\").filterDate('2021-01-01','2021-01-31')\n\ndef poi_mean(img):\n    # This function will reduce all the points in the area we specified in \"poi\" and average all the data into a single daily value\n    mean = img.reduceRegion(reducer=ee.Reducer.mean(), \n    geometry=poi,scale=250).get('O3_column_number_density')\n    return img.set('date', img.date().format()).set('mean',mean)\n    \n# Map function to our ImageCollection\npoi_reduced_imgs = tropomiCollection.map(poi_mean)\nnested_list = poi_reduced_imgs.reduceColumns(ee.Reducer.toList(2), ['date','mean']).values().get(0)\n\n# we need to call the callback method \"getInfo\" to retrieve the data\ndf = pd.DataFrame(nested_list.getInfo(), columns=['Date','tropomi_O3_mean'])\n\n# Convert Date column to DateTime\ndf['Date'] = pd.to_datetime(df['Date'])\ndf = df.set_index('Date')\n# convert tropomi_O3_mean to ppbV (parts-per-billion-volume)\ndf['tropomi_O3.ppbV'] = (df['tropomi_O3_mean']/3)*224\n\ndf.drop('tropomi_O3_mean', inplace=True, axis=1)\n# Save data to CSV file\ndf.to_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/tropomi_O3.csv')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667310955860,
+  "history_end_time" : 1667310961594,
+  "history_notes" : null,
+  "history_process" : "lz2spd",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "vywbdcvpftm",
+  "history_input" : "import json\nimport pandas as pd\nimport ee\n\ntry:\n    ee.Initialize()\nexcept Exception as e:\n    ee.Authenticate()\n    ee.Initialize()\n\n# identify a 500 meter buffer around our Point Of Interest (POI)\npoi = ee.Geometry.Point(32.047501, -110.773903).buffer(500)\n\n# Get TROPOMI NRTI Image Collection for GoogleEarth Engine\ntropomiCollection = ee.ImageCollection(\"COPERNICUS/S5P/OFFL/L3_O3\").filterDate('2021-01-01','2021-01-31')\n\ndef poi_mean(img):\n    # This function will reduce all the points in the area we specified in \"poi\" and average all the data into a single daily value\n    mean = img.reduceRegion(reducer=ee.Reducer.mean(), \n    geometry=poi,scale=250).get('O3_column_number_density')\n    return img.set('date', img.date().format()).set('mean',mean)\n    \n# Map function to our ImageCollection\npoi_reduced_imgs = tropomiCollection.map(poi_mean)\nnested_list = poi_reduced_imgs.reduceColumns(ee.Reducer.toList(2), ['date','mean']).values().get(0)\n\n# we need to call the callback method \"getInfo\" to retrieve the data\ndf = pd.DataFrame(nested_list.getInfo(), columns=['Date','tropomi_O3_mean'])\n\n# Convert Date column to DateTime\ndf['Date'] = pd.to_datetime(df['Date'])\ndf = df.set_index('Date')\n# convert tropomi_O3_mean to ppbV (parts-per-billion-volume)\ndf['tropomi_O3.ppbV'] = (df['tropomi_O3_mean']/3)*224\n\ndf.drop('tropomi_O3_mean', inplace=True, axis=1)\n# Save data to CSV file\ndf.to_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/tropomi_O3.csv')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667310882566,
+  "history_end_time" : 1667310887361,
+  "history_notes" : null,
+  "history_process" : "lz2spd",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "xot27ckmri4",
+  "history_input" : "import json\nimport pandas as pd\nimport ee\n\ntry:\n    ee.Initialize()\nexcept Exception as e:\n    ee.Authenticate()\n    ee.Initialize()\n\n# identify a 500 meter buffer around our Point Of Interest (POI)\npoi = ee.Geometry.Point(32.047501, -110.773903).buffer(500)\n\n# Get TROPOMI NRTI Image Collection for GoogleEarth Engine\ntropomiCollection = ee.ImageCollection(\"COPERNICUS/S5P/OFFL/L3_O3\").filterDate('2021-01-01','2021-01-31')\n\ndef poi_mean(img):\n    # This function will reduce all the points in the area we specified in \"poi\" and average all the data into a single daily value\n    mean = img.reduceRegion(reducer=ee.Reducer.mean(), \n    geometry=poi,scale=250).get('O3_column_number_density')\n    return img.set('date', img.date().format()).set('mean',mean)\n    \n# Map function to our ImageCollection\npoi_reduced_imgs = tropomiCollection.map(poi_mean)\nnested_list = poi_reduced_imgs.reduceColumns(ee.Reducer.toList(2), ['date','mean']).values().get(0)\n\n# we need to call the callback method \"getInfo\" to retrieve the data\ndf = pd.DataFrame(nested_list.getInfo(), columns=['Date','tropomi_O3_mean'])\n\n# Convert Date column to DateTime\ndf['Date'] = pd.to_datetime(df['Date'])\ndf = df.set_index('Date')\n# convert tropomi_O3_mean to ppbV (parts-per-billion-volume)\ndf['tropomi_O3.ppbV'] = (df['tropomi_O3_mean']/3)*224\n\ndf.drop('tropomi_O3_mean', inplace=True, axis=1)\n# Save data to CSV file\ndf.to_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/tropomi_O3.csv')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667310721462,
+  "history_end_time" : 1667310727320,
+  "history_notes" : null,
+  "history_process" : "lz2spd",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "c2tpyv0nlhl",
+  "history_input" : "import json\nimport pandas as pd\nimport ee\n\ntry:\n    ee.Initialize()\nexcept Exception as e:\n    ee.Authenticate()\n    ee.Initialize()\n\n# identify a 500 meter buffer around our Point Of Interest (POI)\npoi = ee.Geometry.Point(32.047501, -110.773903).buffer(500)\n\n# Get TROPOMI NRTI Image Collection for GoogleEarth Engine\ntropomiCollection = ee.ImageCollection(\"COPERNICUS/S5P/OFFL/L3_O3\").filterDate('2021-01-01','2021-01-31')\n\ndef poi_mean(img):\n    # This function will reduce all the points in the area we specified in \"poi\" and average all the data into a single daily value\n    mean = img.reduceRegion(reducer=ee.Reducer.mean(), \n    geometry=poi,scale=250).get('O3_column_number_density')\n    return img.set('date', img.date().format()).set('mean',mean)\n    \n# Map function to our ImageCollection\npoi_reduced_imgs = tropomiCollection.map(poi_mean)\nnested_list = poi_reduced_imgs.reduceColumns(ee.Reducer.toList(2), ['date','mean']).values().get(0)\n\n# we need to call the callback method \"getInfo\" to retrieve the data\ndf = pd.DataFrame(nested_list.getInfo(), columns=['Date','tropomi_O3_mean'])\n\n# Convert Date column to DateTime\ndf['Date'] = pd.to_datetime(df['Date'])\ndf = df.set_index('Date')\n# convert tropomi_O3_mean to ppbV (parts-per-billion-volume)\ndf['tropomi_O3.ppbV'] = (df['tropomi_O3_mean']/3)*224\n\ndf.drop('tropomi_O3_mean', inplace=True, axis=1)\n# Save data to CSV file\ndf.to_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/tropomi_O3.csv')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667310653555,
+  "history_end_time" : 1667310659140,
+  "history_notes" : null,
+  "history_process" : "lz2spd",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "MUy40nOeVlpo",
+  "history_input" : "import json\nimport pandas as pd\nimport ee\n\ntry:\n    ee.Initialize()\nexcept Exception as e:\n    ee.Authenticate()\n    ee.Initialize()\n\n# identify a 500 meter buffer around our Point Of Interest (POI)\npoi = ee.Geometry.Point(32.047501, -110.773903).buffer(500)\n\n# Get TROPOMI NRTI Image Collection for GoogleEarth Engine\ntropomiCollection = ee.ImageCollection(\"COPERNICUS/S5P/OFFL/L3_O3\").filterDate('2021-01-01','2021-01-31')\n\ndef poi_mean(img):\n    # This function will reduce all the points in the area we specified in \"poi\" and average all the data into a single daily value\n    mean = img.reduceRegion(reducer=ee.Reducer.mean(), \n    geometry=poi,scale=250).get('O3_column_number_density')\n    return img.set('date', img.date().format()).set('mean',mean)\n    \n# Map function to our ImageCollection\npoi_reduced_imgs = tropomiCollection.map(poi_mean)\nnested_list = poi_reduced_imgs.reduceColumns(ee.Reducer.toList(2), ['date','mean']).values().get(0)\n\n# we need to call the callback method \"getInfo\" to retrieve the data\ndf = pd.DataFrame(nested_list.getInfo(), columns=['Date','tropomi_O3_mean'])\n\n# Convert Date column to DateTime\ndf['Date'] = pd.to_datetime(df['Date'])\ndf = df.set_index('Date')\n# convert tropomi_O3_mean to ppbV (parts-per-billion-volume)\ndf['tropomi_O3.ppbV'] = (df['tropomi_O3_mean']/3)*224\n\ndf.drop('tropomi_O3_mean', inplace=True, axis=1)\n# Save data to CSV file\ndf.to_csv('tropomi_O3.csv')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667310475468,
+  "history_end_time" : 1667310481438,
+  "history_notes" : null,
+  "history_process" : "lz2spd",
+  "host_id" : null,
+  "indicator" : "Done"
+},]

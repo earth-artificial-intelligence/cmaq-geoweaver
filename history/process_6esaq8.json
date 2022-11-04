@@ -1,0 +1,71 @@
+[{
+  "history_id" : "8x9iilkdotd",
+  "history_input" : "import pandas as pd\nimport pickle\nimport math\nimport sklearn\n\n\n\nfinal = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/final.csv')\n\n\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set input.\nX = final[31:].drop(['Date', 'AirNow_O3', 'Lat', 'Lon', 'latitude', 'longitude', 'date', 'O3_MDA8', 'O3_AVG'],axis=1)\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set target.\ny = final[31:]['AirNow_O3']\n\nfilename = f'/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/xgboost.sav'\nensemble = pickle.load(open(filename, 'rb'))\n\npred = ensemble.predict(X)\ndataset = final.iloc[31:].copy()\ndataset['prediction'] = pred.tolist()\n\nmse = sklearn.metrics.mean_squared_error(pred, y)\nrmse = math.sqrt(mse)\n\nprint(mse, rmse)\n\ndataset.to_csv(\"/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/prediction.csv\", index=False)\n",
+  "history_output" : "/opt/anaconda3/lib/python3.8/site-packages/xgboost/compat.py:36: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.\n  from pandas import MultiIndex, Int64Index\n/opt/anaconda3/lib/python3.8/site-packages/xgboost/data.py:262: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.\n  elif isinstance(data.columns, (pd.Int64Index, pd.RangeIndex)):\n6.624688883396663 2.573847097905519\n",
+  "history_begin_time" : 1667526095020,
+  "history_end_time" : 1667526097048,
+  "history_notes" : null,
+  "history_process" : "6esaq8",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "n6rf5tmp3dx",
+  "history_input" : "import pandas as pd\nimport pickle\nimport math\nimport sklearn\n\n\n\nfinal = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/final.csv')\n\n\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set input.\nX = final[31:].drop(['Date', 'AirNow_O3', 'Lat', 'Lon', 'latitude', 'longitude', 'date', 'O3_MDA8', 'O3_AVG'],axis=1)\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set target.\ny = final[31:]['AirNow_O3']\n\nfilename = f'/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/xgboost.sav'\nensemble = pickle.load(open(filename, 'rb'))\n\npred = ensemble.predict(X)\ndataset = final.iloc[31:].copy()\ndataset['prediction'] = pred.tolist()\n\nmse = sklearn.metrics.mean_squared_error(pred, y)\nrmse = math.sqrt(mse)\n\nprint(mse, rmse)\n\ndataset.to_csv(\"/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/prediction.csv\", index=False)\n",
+  "history_output" : "Traceback (most recent call last):\n  File \"xgboost_prediction.py\", line 17, in <module>\n    ensemble = pickle.load(open(filename, 'rb'))\nFileNotFoundError: [Errno 2] No such file or directory: '/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/xgboost.sav'\n",
+  "history_begin_time" : 1667525588572,
+  "history_end_time" : 1667525590585,
+  "history_notes" : null,
+  "history_process" : "6esaq8",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
+  "history_id" : "ziULRgKZzXCw",
+  "history_input" : "import pandas as pd\nimport pickle\nimport math\nimport sklearn\n\n\n\nfinal = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/final.csv')\n\n\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set input.\nX = final[31:].drop(['Date', 'AirNow_O3', 'Lat', 'Lon', 'latitude', 'longitude', 'date', 'O3_MDA8', 'O3_AVG'],axis=1)\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set target.\ny = final[31:]['AirNow_O3']\n\nfilename = f'/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/xgboost.sav'\nensemble = pickle.load(open(filename, 'rb'))\n\npred = ensemble.predict(X)\ndataset = final.iloc[31:].copy()\ndataset['prediction'] = pred.tolist()\n\nmse = sklearn.metrics.mean_squared_error(pred, y)\nrmse = math.sqrt(mse)\n\nprint(mse, rmse)\n\ndataset.to_csv(\"/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/prediction.csv\", index=False)\n",
+  "history_output" : "/opt/anaconda3/lib/python3.8/site-packages/xgboost/compat.py:36: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.\n  from pandas import MultiIndex, Int64Index\n/opt/anaconda3/lib/python3.8/site-packages/xgboost/data.py:262: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.\n  elif isinstance(data.columns, (pd.Int64Index, pd.RangeIndex)):\n6.960765148026877 2.6383262019748197\n",
+  "history_begin_time" : 1667525008835,
+  "history_end_time" : 1667525011051,
+  "history_notes" : null,
+  "history_process" : "6esaq8",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "fMilpaUlmqr7",
+  "history_input" : "import pandas as pd\nimport pickle\nimport math\nimport sklearn\n\n\n\nfinal = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/final.csv')\n\n\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set input.\nX = final[31:].drop(['Date', 'AirNow_O3', 'Lat', 'Lon', 'latitude', 'longitude', 'date', 'O3_MDA8', 'O3_AVG'],axis=1)\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set target.\ny = final[31:]['AirNow_O3']\n\nfilename = f'/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/xgboost.sav'\nensemble = pickle.load(open(filename, 'rb'))\n\npred = ensemble.predict(X)\nfinal.iloc[31:].copy()['prediction'] = pred.tolist()\n\nmse = sklearn.metrics.mean_squared_error(pred, y)\nrmse = math.sqrt(mse)\n\nprint(mse, rmse)\n\nfinal.to_csv(\"/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/final.csv\", index=False)\n",
+  "history_output" : "/opt/anaconda3/lib/python3.8/site-packages/xgboost/compat.py:36: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.\n  from pandas import MultiIndex, Int64Index\n/opt/anaconda3/lib/python3.8/site-packages/xgboost/data.py:262: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.\n  elif isinstance(data.columns, (pd.Int64Index, pd.RangeIndex)):\n6.960765148026877 2.6383262019748197\n",
+  "history_begin_time" : 1667524865029,
+  "history_end_time" : 1667524867155,
+  "history_notes" : null,
+  "history_process" : "6esaq8",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "mhBCdgNJWrRq",
+  "history_input" : "import pandas as pd\nimport pickle\nimport math\nimport sklearn\n\n\n\nfinal = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/final.csv')\n\n\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set input.\nX = final[31:].drop(['Date', 'AirNow_O3', 'Lat', 'Lon', 'latitude', 'longitude', 'date', 'O3_MDA8', 'O3_AVG'],axis=1)\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set target.\ny = final[31:]['AirNow_O3']\n\nfilename = f'/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/xgboost.sav'\nensemble = pickle.load(open(filename, 'rb'))\n\npred = ensemble.predict(X)\nfinal.iloc[31:]['prediction'] = pred.tolist()\n\nmse = sklearn.metrics.mean_squared_error(pred, y)\nrmse = math.sqrt(mse)\n\nprint(mse, rmse)\n\nfinal.to_csv(\"/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/final.csv\", index=False)\n",
+  "history_output" : "/opt/anaconda3/lib/python3.8/site-packages/xgboost/compat.py:36: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.\n  from pandas import MultiIndex, Int64Index\n/opt/anaconda3/lib/python3.8/site-packages/xgboost/data.py:262: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.\n  elif isinstance(data.columns, (pd.Int64Index, pd.RangeIndex)):\nxgboost_prediction.py:20: SettingWithCopyWarning: \nA value is trying to be set on a copy of a slice from a DataFrame.\nTry using .loc[row_indexer,col_indexer] = value instead\nSee the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy\n  final.iloc[31:]['prediction'] = pred.tolist()\n6.960765148026877 2.6383262019748197\n",
+  "history_begin_time" : 1667524849391,
+  "history_end_time" : 1667524851506,
+  "history_notes" : null,
+  "history_process" : "6esaq8",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "q1TE0Z2OICEx",
+  "history_input" : "import pandas as pd\nimport pickle\nimport math\nimport sklearn\n\n\n\nfinal = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/final.csv')\n\n\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set input.\nX = final[31:].drop(['Date', 'AirNow_O3', 'Lat', 'Lon', 'latitude', 'longitude', 'date', 'O3_MDA8', 'O3_AVG'],axis=1)\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set target.\ny = final[31:]['AirNow_O3']\n\nfilename = f'/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/xgboost.sav'\nensemble = pickle.load(open(filename, 'rb'))\n\npred = ensemble.predict(X)\nfinal.iloc[31:]['prediction'] = pred.tolist()\n\nmse = sklearn.metrics.mean_squared_error(pred, y)\nrmse = math.sqrt(mse)\n\nprint(mse, rmse)\n",
+  "history_output" : "/opt/anaconda3/lib/python3.8/site-packages/xgboost/compat.py:36: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.\n  from pandas import MultiIndex, Int64Index\n/opt/anaconda3/lib/python3.8/site-packages/xgboost/data.py:262: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.\n  elif isinstance(data.columns, (pd.Int64Index, pd.RangeIndex)):\nxgboost_prediction.py:20: SettingWithCopyWarning: \nA value is trying to be set on a copy of a slice from a DataFrame.\nTry using .loc[row_indexer,col_indexer] = value instead\nSee the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy\n  final.iloc[31:]['prediction'] = pred.tolist()\n6.960765148026877 2.6383262019748197\n",
+  "history_begin_time" : 1667524777068,
+  "history_end_time" : 1667524779165,
+  "history_notes" : null,
+  "history_process" : "6esaq8",
+  "host_id" : null,
+  "indicator" : "Done"
+},{
+  "history_id" : "efukBdGyX3eu",
+  "history_input" : "import pandas as pd\nimport pickle\nimport math\nimport sklearn\n\n\n\nfinal = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/final.csv')\n\n\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set input.\nX = final[31:].drop(['Date', 'AirNow_O3', 'Lat', 'Lon', 'latitude', 'longitude', 'date', 'O3_MDA8', 'O3_AVG'],axis=1)\n# Get the remaining rows after row 31 corresponding to the month of February as the testing set target.\ny = final[31:]['AirNow_O3']\n\nfilename = f'/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/xgboost.sav'\nensemble = pickle.load(open(filename, 'rb'))\n\npred = ensemble.predict(X)\nfinal['prediction'] = pred.tolist()\n\nmse = sklearn.metrics.mean_squared_error(pred, y)\nrmse = math.sqrt(mse)\n\nprint(mse, rmse)\n",
+  "history_output" : "/opt/anaconda3/lib/python3.8/site-packages/xgboost/compat.py:36: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.\n  from pandas import MultiIndex, Int64Index\n/opt/anaconda3/lib/python3.8/site-packages/xgboost/data.py:262: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.\n  elif isinstance(data.columns, (pd.Int64Index, pd.RangeIndex)):\nTraceback (most recent call last):\n  File \"xgboost_prediction.py\", line 20, in <module>\n    final['prediction'] = pred.tolist()\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/core/frame.py\", line 3978, in __setitem__\n    self._set_item(key, value)\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/core/frame.py\", line 4172, in _set_item\n    value = self._sanitize_column(value)\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/core/frame.py\", line 4905, in _sanitize_column\n    com.require_length_match(value, self.index)\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/core/common.py\", line 561, in require_length_match\n    raise ValueError(\nValueError: Length of values (27) does not match length of index (58)\n",
+  "history_begin_time" : 1667524748534,
+  "history_end_time" : 1667524750625,
+  "history_notes" : null,
+  "history_process" : "6esaq8",
+  "host_id" : null,
+  "indicator" : "Failed"
+},]

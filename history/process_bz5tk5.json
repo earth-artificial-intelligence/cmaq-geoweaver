@@ -1,0 +1,31 @@
+[{
+  "history_id" : "0vnfpajpjkz",
+  "history_input" : "import matplotlib.pyplot as plt\nimport pandas as pd\n\ndataset = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/prediction.csv')\n\n    \nplt.rc('font', size=12)\nfig, ax = plt.subplots(figsize=(20, 13))\n\n# Specify how our lines should look\nax.plot(dataset.Date, dataset.prediction, color='tab:orange', label='Prediction')\n# Use linestyle keyword to style our plot\nax.plot(dataset.Date, dataset.AirNow_O3, color='green', linestyle='--',\n        label='AirNow')\n\nax.plot(dataset.Date, dataset.O3_AVG, color='blue', linestyle='--',\n        label='CMAQ_O3')\n# Redisplay the legend to show our new wind gust line\nax.legend(loc='upper left')\n# Same as above\nax.set_xlabel('Time')\nplt.xticks(rotation=45)\nax.set_ylabel('Values')\nax.set_title('Compare Observed, Prediction, CMAQ Simulation')\nax.grid(True)\nax.legend(loc='upper left')\nfig.savefig('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/pred.png')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667526098255,
+  "history_end_time" : 1667526100837,
+  "history_notes" : null,
+  "history_process" : "bz5tk5",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "rp2n6ix3c0n",
+  "history_input" : "import matplotlib.pyplot as plt\nimport pandas as pd\n\ndataset = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/prediction.csv')\n\n    \nplt.rc('font', size=12)\nfig, ax = plt.subplots(figsize=(20, 13))\n\n# Specify how our lines should look\nax.plot(dataset.Date, dataset.prediction, color='tab:orange', label='Prediction')\n# Use linestyle keyword to style our plot\nax.plot(dataset.Date, dataset.AirNow_O3, color='green', linestyle='--',\n        label='AirNow')\n\nax.plot(dataset.Date, dataset.O3_AVG, color='blue', linestyle='--',\n        label='CMAQ_O3')\n# Redisplay the legend to show our new wind gust line\nax.legend(loc='upper left')\n# Same as above\nax.set_xlabel('Time')\nplt.xticks(rotation=45)\nax.set_ylabel('Values')\nax.set_title('Compare Observed, Prediction, CMAQ Simulation')\nax.grid(True)\nax.legend(loc='upper left')\nfig.savefig('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/pred.png')\n",
+  "history_output" : "Traceback (most recent call last):\n  File \"visualize_prediction.py\", line 4, in <module>\n    dataset = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/prediction.csv')\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/util/_decorators.py\", line 211, in wrapper\n    return func(*args, **kwargs)\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/util/_decorators.py\", line 317, in wrapper\n    return func(*args, **kwargs)\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/io/parsers/readers.py\", line 950, in read_csv\n    return _read(filepath_or_buffer, kwds)\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/io/parsers/readers.py\", line 605, in _read\n    parser = TextFileReader(filepath_or_buffer, **kwds)\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/io/parsers/readers.py\", line 1442, in __init__\n    self._engine = self._make_engine(f, self.engine)\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/io/parsers/readers.py\", line 1729, in _make_engine\n    self.handles = get_handle(\n  File \"/opt/anaconda3/lib/python3.8/site-packages/pandas/io/common.py\", line 857, in get_handle\n    handle = open(\nFileNotFoundError: [Errno 2] No such file or directory: '/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/prediction.csv'\n",
+  "history_begin_time" : 1667525591641,
+  "history_end_time" : 1667525593666,
+  "history_notes" : null,
+  "history_process" : "bz5tk5",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
+  "history_id" : "KT1y7tothqkE",
+  "history_input" : "import matplotlib.pyplot as plt\nimport pandas as pd\n\ndataset = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/prediction.csv')\n\n    \nplt.rc('font', size=12)\nfig, ax = plt.subplots(figsize=(20, 13))\n\n# Specify how our lines should look\nax.plot(dataset.Date, dataset.prediction, color='tab:orange', label='Prediction')\n# Use linestyle keyword to style our plot\nax.plot(dataset.Date, dataset.AirNow_O3, color='green', linestyle='--',\n        label='AirNow')\n\nax.plot(dataset.Date, dataset.O3_AVG, color='blue', linestyle='--',\n        label='CMAQ_O3')\n# Redisplay the legend to show our new wind gust line\nax.legend(loc='upper left')\n# Same as above\nax.set_xlabel('Time')\nplt.xticks(rotation=45)\nax.set_ylabel('Values')\nax.set_title('Compare Observed, Prediction, CMAQ Simulation')\nax.grid(True)\nax.legend(loc='upper left')\nfig.savefig('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/pred.png')\n",
+  "history_output" : "",
+  "history_begin_time" : 1667525073312,
+  "history_end_time" : 1667525075710,
+  "history_notes" : null,
+  "history_process" : "bz5tk5",
+  "host_id" : null,
+  "indicator" : "Done"
+},]

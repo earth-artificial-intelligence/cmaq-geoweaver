@@ -1,0 +1,31 @@
+[{
+  "history_id" : "x6e42eb686p",
+  "history_input" : "import matplotlib.pyplot as plt\nimport pandas as pd\n\ndataset = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/prediction.csv')\n\nplt.rc('font', size=15)\nfig, ax = plt.subplots(figsize=(25, 4))\n\n# Specify how our lines should look\nax.plot(dataset.Date, dataset.prediction, color='tab:red',  label='Prediction')\nax.plot(dataset.Date, dataset.O3_AVG, color='tab:blue',\n        label='CMAQ')\n\n# Use linestyle keyword to style our plot\nax.plot(dataset.Date, dataset.AirNow_O3, color='tab:green',\n        label='AirNow',linestyle='--')\n\n# Same as above\nax.set_xlabel('Date',size=20)\nax.set_ylabel('O3 (ppbv)',size=20)\nax.set_title('February',fontsize=25)\nax.grid(True)\nplt.xticks(rotation=45)\nax.legend(loc='upper left')\nfig.savefig('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/pred_monthly.png')\n\n",
+  "history_output" : "",
+  "history_begin_time" : 1667526099030,
+  "history_end_time" : 1667526100852,
+  "history_notes" : null,
+  "history_process" : "g00sya",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "b5aqg4xwu0u",
+  "history_input" : "import matplotlib.pyplot as plt\nimport pandas as pd\n\ndataset = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/prediction.csv')\n\nplt.rc('font', size=15)\nfig, ax = plt.subplots(figsize=(25, 4))\n\n# Specify how our lines should look\nax.plot(dataset.Date, dataset.prediction, color='tab:red',  label='Prediction')\nax.plot(dataset.Date, dataset.O3_AVG, color='tab:blue',\n        label='CMAQ')\n\n# Use linestyle keyword to style our plot\nax.plot(dataset.Date, dataset.AirNow_O3, color='tab:green',\n        label='AirNow',linestyle='--')\n\n# Same as above\nax.set_xlabel('Date',size=20)\nax.set_ylabel('O3 (ppbv)',size=20)\nax.set_title('February',fontsize=25)\nax.grid(True)\nplt.xticks(rotation=45)\nax.legend(loc='upper left')\nfig.savefig('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/pred_monthly.png')\n\n",
+  "history_output" : "",
+  "history_begin_time" : 1667525592304,
+  "history_end_time" : 1667525593680,
+  "history_notes" : null,
+  "history_process" : "g00sya",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "YVyjcCeQkB7h",
+  "history_input" : "import matplotlib.pyplot as plt\nimport pandas as pd\n\ndataset = pd.read_csv('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/prediction.csv')\n\nplt.rc('font', size=15)\nfig, ax = plt.subplots(figsize=(25, 4))\n\n# Specify how our lines should look\nax.plot(dataset.Date, dataset.prediction, color='tab:red',  label='Prediction')\nax.plot(dataset.Date, dataset.O3_AVG, color='tab:blue',\n        label='CMAQ')\n\n# Use linestyle keyword to style our plot\nax.plot(dataset.Date, dataset.AirNow_O3, color='tab:green',\n        label='AirNow',linestyle='--')\n\n# Same as above\nax.set_xlabel('Date',size=20)\nax.set_ylabel('O3 (ppbv)',size=20)\nax.set_title('February',fontsize=25)\nax.grid(True)\nplt.xticks(rotation=45)\nax.legend(loc='upper left')\nfig.savefig('/Users/uhhmed/Desktop/CMAQ_Ch15_bookCode/pred_monthly.png')\n\n",
+  "history_output" : "",
+  "history_begin_time" : 1667525156528,
+  "history_end_time" : 1667525158622,
+  "history_notes" : null,
+  "history_process" : "g00sya",
+  "host_id" : null,
+  "indicator" : "Done"
+},]
