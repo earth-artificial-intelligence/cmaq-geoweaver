@@ -134,12 +134,4 @@
   "lang" : "python",
   "owner" : "111111",
   "confidential" : "FALSE"
-},{
-  "id" : "we0dck",
-  "name" : "snowex_aso",
-  "description" : "python",
-  "code" : "# general purpose data manipulation and analysis\nimport numpy as np\n\n# packages for working with raster datasets\nimport rasterio\nfrom rasterio.mask import mask\nfrom rasterio.plot import show\nfrom rasterio.enums import Resampling\n\nimport xarray # allows us to work with raster data as arrays\n\n# packages for working with geospatial data\nimport geopandas as gpd\nimport pycrs\n\nfrom shapely.geometry import box\n\n# import packages for viewing the data\nimport matplotlib.pyplot as pyplot\n",
-  "lang" : "python",
-  "owner" : "111111",
-  "confidential" : "FALSE"
 }]
