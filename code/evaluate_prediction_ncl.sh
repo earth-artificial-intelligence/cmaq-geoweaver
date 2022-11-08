@@ -2,8 +2,11 @@
 # evaluate the prediction accuracy
 
 cmaq_folder="/groups/ESS/zsun/cmaq"
+permanent_eval_folder="/groups/ESS3/zsun/cmaq/ai_results/evaluation/"
 mkdir -p $cmaq_folder/results/
+mkdir -p $permanent_eval_folder
 chmod +x $cmaq_folder/results/ -R
+chmod +x $permanent_eval_folder -R
 
 #export YYYYMMDD_POST='20220806'
 #export stdate_file='20220806'
@@ -277,7 +280,7 @@ do
 
   export mfname="COMBINE3D_ACONC_v531_gcc_AQF5X_"$stdate_file"_ML_extracted.nc"
 
-  export grid_fname="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/GRIDCRO2D_"$YYYYMMDD_POST".nc"
+  export grid_fname="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/GRIDCRO2D_"$YYYYMMDD_POST".nc" 
   echo "Current Day: "$stdate_file
   # determine if the prediction netcdf is there
   predict_nc_file=$cmaq_folder"/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"$stdate_file"_ML_extracted.nc"
@@ -287,7 +290,7 @@ do
     echo "$predict_nc_file doesn't exist. Skipping..."
     continue
   fi
-
+  
   predict_gif_file=$permanent_location/gifs/"AirNow_"$YYYYMMDD_POST.gif
   if [ -f "$predict_gif_file" ]; then
     echo "$predict_gif_file exists. Skipping..."
@@ -295,15 +298,19 @@ do
   else
     echo "$predict_gif_file doesn't exist. Generating..."
   fi
-
+  
   rm -rf $cmaq_folder/results/* # clean everything first
   ncl $cmaq_folder/geoweaver_eva_daily_O3.ncl
-
+  
   if [ $? -eq 0 ]; then
     echo "Evaluation Completed Successfully"
     cat $wfname
+    cp $wfname $permanent_eval_folder"eval_"$stdate_file".txt"
   else
     echo "Evaluation Failed!"
   fi
-
+  
 done
+
+
+

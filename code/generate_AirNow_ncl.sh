@@ -25,21 +25,21 @@ end setvalues
 
 begin
 
-date = getenv("YYYYMMDD_POST")
-d1 = getenv("stdate_post")
-d2 = getenv("eddate_post")
+date = getenv("YYYYMMDD_POST") 
+d1 = getenv("stdate_post") 
+d2 = getenv("eddate_post") 
 
 dFile1 = getenv("stdate_file")
 dFile2 = getenv("eddate_file")
 
 obs_dir = getenv("obs_dir_NCL")
-plot_dir = getenv("graph_dir")
+plot_dir = getenv("graph_dir") 
 
 hr=new(24,"string")
 hr=(/"00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"/)
 
 print(plot_dir)
-aconc_dir = getenv("postdata_dir")
+aconc_dir = getenv("postdata_dir") 
 grid_dir = getenv("mcip_dir")
 
 print(aconc_dir+"/COMBINE3D_ACONC_v531_gcc_AQF5X_"+dFile1+"_ML_extracted.nc")
@@ -314,7 +314,7 @@ print("ncl business is done")
 exit
 EOF
 
-days_back=7
+days_back=3
 
 for i in $(seq 1 $days_back)
 do
@@ -323,12 +323,12 @@ do
   begin_day=$((i+1))
   # Setting env variables
   export YYYYMMDD_POST=$(date -d $begin_day' day ago' '+%Y%m%d')
-  export stdate_post=$(date -d $begin_day' day ago' '+%Y-%m-%d')
+  export stdate_post=$(date -d $begin_day' day ago' '+%Y-%m-%d') 
   export eddate_post=$(date -d $end_day' day ago' '+%Y-%m-%d')
 
-  export stdate_file=$(date -d $begin_day' day ago' '+%Y%m%d')
+  export stdate_file=$(date -d $begin_day' day ago' '+%Y%m%d') 
   export eddate_file=$(date -d $end_day' day ago' '+%Y%m%d')
-
+  
   predict_nc_file=$cmaq_folder"/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"$stdate_file"_ML_extracted.nc"
   if [ -f "$predict_nc_file" ]; then
     echo "$predict_nc_file exists."
@@ -336,7 +336,7 @@ do
     echo "$predict_nc_file doesn't exist. Skipping..."
     continue
   fi
-
+  
   predict_gif_file=$permanent_location/gifs/"Airnow_"$YYYYMMDD_POST.gif
   if [ -f "$predict_gif_file" ]; then
     echo "$predict_gif_file exists. Skipping..."
@@ -344,7 +344,7 @@ do
   else
     echo "$predict_gif_file doesn't exist. Generating..."
   fi
-
+  
   rm -rf $cmaq_folder/plots/* # clean everything first
 
   ncl $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
@@ -366,3 +366,4 @@ else
     echo "Removing ncl file: geoweaver_plot_daily_O3_Airnow.ncl..."
 	#rm $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
 fi
+

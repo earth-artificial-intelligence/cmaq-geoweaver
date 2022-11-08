@@ -23,38 +23,38 @@ for x in range(len(days)-1):
   current_day = days[x]
   next_day = days[x+1]
   print("Getting data for: "+current_day)
-
+  
   # read cmaq results
   cmaq_file = "/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_"+current_day+"_extracted.nc"
   if not os.path.exists(cmaq_file):
     print(f"CMAQ file {cmaq_file} doesn't exist")
     continue
-
+  
   target_cdf_file = f'{cmaq_folder}/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_'+current_day+'_ML_extracted.nc'
-
+    
   if os.path.exists(target_cdf_file):
     print(f"{target_cdf_file} already exists")
     continue
-
+  
   df_cmaq = xr.open_dataset(cmaq_file)
-
-  # read mcip results
+  
+  # read mcip results 
   mcip_file = "/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/METCRO2D_"+current_day+".nc"
   df_mcip = xr.open_dataset(mcip_file)
-
-  # read emissions results
+  
+  # read emissions results 
   df_emis = xr.open_dataset("/groups/ESS/share/projects/SWUS3km/data/cmaqdata/emis2021/12km/all/emis_mole_all_"+current_day+"_AQF5X_cmaq_cb6ae7_2017gb_17j.ncf")
-
+  
   for k in time_step_in_netcdf_list:
     real_hour_value = real_hour_list[k]
-
+    
     if real_hour_value<12:
       day = next_day
     else:
       day = current_day
-
+    
     df_hourly = pd.DataFrame()
-
+    
     #print("df_cmaq.variables['O3'] shape: ", df_cmaq.variables['O3'].shape)
     #print("df_cmaq.variables['O3'][:] shape: ", df_cmaq.variables['O3'][:].shape)
     #print("df_cmaq.variables['O3'][:].values[k, 0].shape", df_cmaq.variables['O3'][:].values[k, 0].shape)
@@ -64,64 +64,64 @@ for x in range(len(days)-1):
     cmaq_O3=list(np.ravel(o3).transpose())
     #print("o3 shape: ", o3.shape)
     #print("cmaq_O3 shape: ", np.ravel(o3).transpose().shape)
-
+    
     # NO2
     no2=df_cmaq.variables['NO2'][:].values[k, 0]
     cmaq_NO2=list(np.ravel(no2).transpose())
-
+    
     # CO
     co=df_cmaq.variables['CO'][:].values[k, 0]
     cmaq_CO=list(np.ravel(co).transpose())
-
+    
     # PM25_CO
     pm25=df_cmaq.variables['PM25_OC'][:].values[k, 0]
     cmaq_PM25_CO=list(np.ravel(pm25).transpose())
-
+    
     # EMIS data
     co_emis=df_emis.variables['CO'][:].values[k, 0]
-    CO_emi=list(np.ravel(co_emis).transpose())
-
+    CO_emi=list(np.ravel(co_emis).transpose())    
+    
     # MCIP data
     # CO variable
     prsfc=df_mcip.variables['PRSFC'][:].values[k, 0]
     PRSFC=list(np.ravel(prsfc).transpose())
-
+    
     # NO2
     pbl=df_mcip.variables['PBL'][:].values[k, 0]
     PBL=list(np.ravel(pbl).transpose())
-
+    
     # TEMP2
     temp2=df_mcip.variables['TEMP2'][:].values[k, 0]
     TEMP2=list(np.ravel(temp2).transpose())
-
+    
     # WSPD10
     wspd10=df_mcip.variables['WSPD10'][:].values[k, 0]
     WSPD10=list(np.ravel(wspd10).transpose())
-
+    
     # WDIR10
     wdir10=df_mcip.variables['WDIR10'][:].values[k, 0]
     WDIR10=list(np.ravel(wdir10).transpose())
-
+    
     # RGRND
     rgrnd=df_mcip.variables['RGRND'][:].values[k, 0]
     RGRND=list(np.ravel(rgrnd).transpose())
-
+    
     # CFRAC
     cfrac=df_mcip.variables['CFRAC'][:].values[k, 0]
     CFRAC=list(np.ravel(cfrac).transpose())
-
+    
     ## LAT/LON data
     df_coords = xr.open_dataset('/home/yli74/scripts/plots/2020fire/GRIDCRO2D')
-
+    
     lat = df_coords.variables['LAT'][:].values[0,0]
     #print("lat shape", lat.shape)
     lat_flt=np.ravel(lat)
     LAT=lat_flt #np.tile(lat_flt,1)
-
+    
     lon = df_coords.variables['LON'][:].values[0,0]
     lon_flt=np.ravel(lon)
     LON=lon_flt #np.tile(lon_flt,1)
-
+    
     df_hourly['Latitude'] = LAT
     df_hourly['Longitude'] = LON
     df_hourly['YYYYMMDDHH'] = day+turn_2_digits(real_hour_value)
