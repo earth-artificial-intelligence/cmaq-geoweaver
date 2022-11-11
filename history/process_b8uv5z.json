@@ -3,11 +3,11 @@
   "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
   "history_output" : "Running",
   "history_begin_time" : 1667925237509,
-  "history_end_time" : 1667925227332,
+  "history_end_time" : 1667950923707,
   "history_notes" : null,
   "history_process" : "b8uv5z",
   "host_id" : "aqt8fv",
-  "indicator" : "Running"
+  "indicator" : "Stopped"
 },{
   "history_id" : "7ytkdsmvs4k",
   "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",

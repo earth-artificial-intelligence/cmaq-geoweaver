@@ -3,11 +3,11 @@
   "history_input" : "No code saved",
   "history_output" : "Skipped",
   "history_begin_time" : 1667925180644,
-  "history_end_time" : 1667925180644,
+  "history_end_time" : 1667950923695,
   "history_notes" : null,
   "history_process" : "6up921",
   "host_id" : "aqt8fv",
-  "indicator" : "Skipped"
+  "indicator" : "Stopped"
 },{
   "history_id" : "wtelclc3p5o",
   "history_input" : "No code saved",
@@ -53,11 +53,11 @@
   "history_input" : "No code saved",
   "history_output" : "Skipped",
   "history_begin_time" : 1666681684425,
-  "history_end_time" : 1666681684425,
+  "history_end_time" : 1667950920437,
   "history_notes" : null,
   "history_process" : "6up921",
   "host_id" : "aqt8fv",
-  "indicator" : "Skipped"
+  "indicator" : "Stopped"
 },{
   "history_id" : "zyqmg05au1a",
   "history_input" : "No code saved",
