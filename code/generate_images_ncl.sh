@@ -1,23 +1,27 @@
 #!/bin/bash
-# generate images and gif from the NetCDF files
 
 cmaq_folder="/groups/ESS/zsun/cmaq"
+
+# generate images and gif from the NetCDF files
+
+echo "cmaq_folder="${cmaq_folder}
 permanent_location="/groups/ESS3/zsun/cmaq/ai_results/"
-mkdir $cmaq_folder"/plots"
+mkdir "${cmaq_folder}/plots"
 
 
 export postdata_dir=$cmaq_folder"/prediction_nc_files"
 export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
-export dir_graph=$cmaq_folder"/plots"
+export dir_graph="${cmaq_folder}/plots"
 
 echo "Loading NCL"
+source /home/zsun/.bashrc
 module load ncl
 echo "Loaded NCL"
 
-rm $cmaq_folder/geoweaver_plot_daily_O3.ncl
+rm ${cmaq_folder}/geoweaver_plot_daily_O3.ncl
 
-echo "Drafting "$cmaq_folder/geoweaver_plot_daily_O3.ncl
-cat <<EOF >> $cmaq_folder/geoweaver_plot_daily_O3.ncl
+echo "Drafting "${cmaq_folder}/geoweaver_plot_daily_O3.ncl
+cat <<EOF >> ${cmaq_folder}/geoweaver_plot_daily_O3.ncl
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/contributed.ncl"
@@ -50,7 +54,7 @@ cdf_file= addfile(grid_dir+"/GRIDCRO2D_"+date+".nc","r")
 ptime = (/"12","13","14","15","16","17","18","19","20","21","22","23","00","01","02","03","04","05","06","07","08","09","10","11"/)
 
 time = cdf_file1->TFLAG(:,0,:)
-o3 = cdf_file1->O3(:,:,:) ;ppb
+o3 = cdf_file1->O3(:,0,:,:) ;ppb
 ;pm25 = cdf_file1->PM25_TOT(:,0,:,:)
 
 
@@ -172,7 +176,9 @@ echo "ncl "$cmaq_folder"/geoweaver_plot_daily_O3.ncl"
 
 echo $(date -d '1 day ago' '+%Y%m%d')
 
-days_back=3
+days_back=7
+
+force=false
 
 for i in $(seq 1 $days_back)
 do
@@ -202,6 +208,18 @@ do
     continue
   fi
   
+  predict_gif_file=$permanent_location/gifs/Map_$YYYYMMDD_POST.gif
+  if [ "$force" != true ] ; then
+    if [ -f "$predict_gif_file" ]; then
+      echo "$predict_gif_file exists. Skipping..."
+      continue
+    else
+      echo "$predict_gif_file doesn't exist. Generating..."
+    fi
+  else
+    echo "force to regenerate $predict_gif_file.."
+  fi
+  
   rm -rf $cmaq_folder/plots/* # clean everything in the folder first
 
   ncl $cmaq_folder/geoweaver_plot_daily_O3.ncl
@@ -226,4 +244,5 @@ if [ $? -eq 0 ]; then
 else
     echo "Generating images/gif Failed!"
 fi
+
 

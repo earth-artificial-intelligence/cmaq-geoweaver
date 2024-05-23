@@ -1,0 +1,121 @@
+[{
+  "history_id" : "4qyc4ut80o4",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692991816348,
+  "history_end_time" : 1692991816348,
+  "history_notes" : null,
+  "history_process" : "6up921",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "dsf0w4kndeo",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692991816385,
+  "history_end_time" : 1692991816385,
+  "history_notes" : null,
+  "history_process" : "xpdg66",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "s7b8as2of77",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692991816390,
+  "history_end_time" : 1692991816390,
+  "history_notes" : null,
+  "history_process" : "xlayd5",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "kdixqnj5o0j",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692991816394,
+  "history_end_time" : 1692991816394,
+  "history_notes" : null,
+  "history_process" : "argv3i",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "xrrgq5dokuc",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692991816419,
+  "history_end_time" : 1692991816419,
+  "history_notes" : null,
+  "history_process" : "wny2dz",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "w1hid71mfe7",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692991816431,
+  "history_end_time" : 1692991816431,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "fjkm9k6cgoi",
+  "history_input" : "# get hourly CMAQ data into csv for prediction\n\nfrom cmaq_ai_utils import *\n\n\n#edate = datetime.today()\n#sdate = edate - timedelta(days=1)\n# today = datetime.today()\n# edate = today\n# sdate = today - timedelta(days=days_back)\n\n#sdate = date(2022, 8, 6)   # start date\n#edate = date(2022, 8, 8)   # end date\n# days = get_days_list_for_prediction(sdate, edate)\n\nreal_hour_list = [12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11]\ntime_step_in_netcdf_list = range(0,24)\n\ntest_folder = f\"{cmaq_folder}/testing_input_hourly/\"\ncreate_and_clean_folder(test_folder)\n\nfor x in range(len(days)-1):\n  current_day = days[x]\n  next_day = days[x+1]\n  print(\"Getting data for: \"+current_day)\n  \n  # read cmaq results\n  cmaq_file = \"/scratch/yli74/forecast/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_\"+current_day+\".nc\"\n  if not os.path.exists(cmaq_file):\n    print(f\"CMAQ file {cmaq_file} doesn't exist\")\n    continue\n  \n  target_cdf_file = f'{cmaq_folder}/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_'+current_day+'_ML_extracted.nc'\n    \n  if os.path.exists(target_cdf_file):\n    print(f\"{target_cdf_file} already exists\")\n    continue\n  \n  df_cmaq = xr.open_dataset(cmaq_file)\n  \n  # read mcip results \n  mcip_file = \"/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/METCRO2D_\"+current_day+\".nc\"\n  df_mcip = xr.open_dataset(mcip_file)\n  \n  # read emissions results \n  df_emis = xr.open_dataset(\"/groups/ESS/share/projects/SWUS3km/data/cmaqdata/emis2021/12km/all/emis_mole_all_\"+current_day+\"_AQF5X_cmaq_cb6ae7_2017gb_17j.ncf\")\n  \n  for k in time_step_in_netcdf_list:\n    real_hour_value = real_hour_list[k]\n    \n    if real_hour_value<12:\n      day = next_day\n    else:\n      day = current_day\n    \n    df_hourly = pd.DataFrame()\n    \n    #print(\"df_cmaq.variables['O3'] shape: \", df_cmaq.variables['O3'].shape)\n    #print(\"df_cmaq.variables['O3'][:] shape: \", df_cmaq.variables['O3'][:].shape)\n    #print(\"df_cmaq.variables['O3'][:].values[k, 0].shape\", df_cmaq.variables['O3'][:].values[k, 0].shape)\n    # CMAQ data\n    # O3 variable\n    o3=df_cmaq.variables['O3'][:].values[k, 0]\n    cmaq_O3=list(np.ravel(o3).transpose())\n    #print(\"o3 shape: \", o3.shape)\n    #print(\"cmaq_O3 shape: \", np.ravel(o3).transpose().shape)\n    \n    # NO2\n    no2=df_cmaq.variables['NO2'][:].values[k, 0]\n    cmaq_NO2=list(np.ravel(no2).transpose())\n    \n    # CO\n    co=df_cmaq.variables['CO'][:].values[k, 0]\n    cmaq_CO=list(np.ravel(co).transpose())\n    \n    # PM25_CO\n    pm25=df_cmaq.variables['PM25_OC'][:].values[k, 0]\n    cmaq_PM25_CO=list(np.ravel(pm25).transpose())\n    \n    # EMIS data\n    co_emis=df_emis.variables['CO'][:].values[k, 0]\n    CO_emi=list(np.ravel(co_emis).transpose())    \n    \n    # MCIP data\n    # CO variable\n    prsfc=df_mcip.variables['PRSFC'][:].values[k, 0]\n    PRSFC=list(np.ravel(prsfc).transpose())\n    \n    # NO2\n    pbl=df_mcip.variables['PBL'][:].values[k, 0]\n    PBL=list(np.ravel(pbl).transpose())\n    \n    # TEMP2\n    temp2=df_mcip.variables['TEMP2'][:].values[k, 0]\n    TEMP2=list(np.ravel(temp2).transpose())\n    \n    # WSPD10\n    wspd10=df_mcip.variables['WSPD10'][:].values[k, 0]\n    WSPD10=list(np.ravel(wspd10).transpose())\n    \n    # WDIR10\n    wdir10=df_mcip.variables['WDIR10'][:].values[k, 0]\n    WDIR10=list(np.ravel(wdir10).transpose())\n    \n    # RGRND\n    rgrnd=df_mcip.variables['RGRND'][:].values[k, 0]\n    RGRND=list(np.ravel(rgrnd).transpose())\n    \n    # CFRAC\n    cfrac=df_mcip.variables['CFRAC'][:].values[k, 0]\n    CFRAC=list(np.ravel(cfrac).transpose())\n    \n    ## LAT/LON data\n    df_coords = xr.open_dataset('/home/yli74/scripts/plots/2020fire/GRIDCRO2D')\n    \n    lat = df_coords.variables['LAT'][:].values[0,0]\n    #print(\"lat shape\", lat.shape)\n    lat_flt=np.ravel(lat)\n    LAT=lat_flt #np.tile(lat_flt,1)\n    \n    lon = df_coords.variables['LON'][:].values[0,0]\n    lon_flt=np.ravel(lon)\n    LON=lon_flt #np.tile(lon_flt,1)\n    \n    df_hourly['Latitude'] = LAT\n    df_hourly['Longitude'] = LON\n    df_hourly['YYYYMMDDHH'] = day+turn_2_digits(real_hour_value)\n    df_hourly['CMAQ12KM_O3(ppb)'] = cmaq_O3\n    df_hourly['CMAQ12KM_NO2(ppb)'] = cmaq_NO2\n    df_hourly['CMAQ12KM_CO(ppm)'] = cmaq_CO\n    df_hourly['CMAQ_OC(ug/m3)'] = cmaq_PM25_CO\n    df_hourly['CO(moles/s)'] = CO_emi\n    df_hourly['PRSFC(Pa)'] = PRSFC\n    df_hourly['PBL(m)'] = PBL\n    df_hourly['TEMP2(K)'] = TEMP2\n    df_hourly['WSPD10(m/s)'] = WSPD10\n    df_hourly['WDIR10(degree)'] = WDIR10\n    df_hourly['RGRND(W/m2)'] = RGRND\n    df_hourly['CFRAC'] = CFRAC\n    df_hourly['month'] = df_hourly['YYYYMMDDHH'].str[4:6]\n    df_hourly['day'] = df_hourly['YYYYMMDDHH'].str[6:8]\n    df_hourly['hours'] = df_hourly['YYYYMMDDHH'].str[8:10]\n    print(f'Saving file: test_data_{day}_{turn_2_digits(real_hour_value)}.csv')\n    df_hourly.to_csv(f'{test_folder}/test_data_{day}_{turn_2_digits(real_hour_value)}.csv',index=False)\n\nprint('Done with preparing testing data!')",
+  "history_output" : "Running",
+  "history_begin_time" : 1692991818163,
+  "history_end_time" : 1692991817274,
+  "history_notes" : null,
+  "history_process" : "ex3vh9",
+  "host_id" : "100001",
+  "indicator" : "Running"
+},{
+  "history_id" : "7je7ugk57ux",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692991816460,
+  "history_end_time" : 1692991816460,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "ovarsg3mj64",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692991816464,
+  "history_end_time" : 1692991816464,
+  "history_notes" : null,
+  "history_process" : "s6hbic",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "29r6f13jdrt",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692991816468,
+  "history_end_time" : 1692991816468,
+  "history_notes" : null,
+  "history_process" : "pvzabv",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "ilyejechchw",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692991816472,
+  "history_end_time" : 1692991816472,
+  "history_notes" : null,
+  "history_process" : "8i9ptn",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "322z0vpyj30",
+  "history_input" : "#!/bin/bash\n\ndays_back=30\n\npermanent_location=\"/groups/ESS3/zsun/cmaq/ai_results/\"\ncmaq_gif_location=\"/groups/ESS/share/projects/SWUS3km/graph/12km/\"\n\nfor i in $(seq 0 $days_back)\ndo\n  end_day=$i\n  echo \"$end_day days ago\"\n  begin_day=$((i))\n  # Setting env variables\n  YYYYMMDD_POST=$(date -d $begin_day' day ago' '+%Y%m%d')\n  #/groups/ESS/share/projects/SWUS3km/graph/12km/20221108/FORECAST_O3_20221108.gif\n  cp -u $cmaq_gif_location/$YYYYMMDD_POST/\"FORECAST_O3_\"$YYYYMMDD_POST.gif $permanent_location/gifs/\n  cp -u $cmaq_gif_location/$YYYYMMDD_POST/obsoverlay/gif/OBS-FORECAST_O3_$YYYYMMDD_POST.gif $permanent_location/gifs/\n  \ndone\n\n\n",
+  "history_output" : "0 days ago\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230825/FORECAST_O3_20230825.gif': No such file or directory\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230825/obsoverlay/gif/OBS-FORECAST_O3_20230825.gif': No such file or directory\n1 days ago\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230824/FORECAST_O3_20230824.gif': No such file or directory\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230824/obsoverlay/gif/OBS-FORECAST_O3_20230824.gif': No such file or directory\n2 days ago\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230823/obsoverlay/gif/OBS-FORECAST_O3_20230823.gif': No such file or directory\n3 days ago\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230822/obsoverlay/gif/OBS-FORECAST_O3_20230822.gif': No such file or directory\n4 days ago\n5 days ago\n6 days ago\n7 days ago\n8 days ago\n9 days ago\n10 days ago\n11 days ago\n12 days ago\n13 days ago\n14 days ago\n15 days ago\n16 days ago\n17 days ago\n18 days ago\n19 days ago\n20 days ago\n21 days ago\n22 days ago\n23 days ago\n24 days ago\n25 days ago\n26 days ago\n27 days ago\n28 days ago\n29 days ago\n30 days ago\n",
+  "history_begin_time" : 1692991817274,
+  "history_end_time" : 1692991823009,
+  "history_notes" : null,
+  "history_process" : "nndpw6",
+  "host_id" : "100001",
+  "indicator" : "Done"
+}]

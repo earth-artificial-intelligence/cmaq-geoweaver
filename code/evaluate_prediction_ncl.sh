@@ -1,4 +1,6 @@
 #!/bin/bash
+
+
 # evaluate the prediction accuracy
 
 cmaq_folder="/groups/ESS/zsun/cmaq"
@@ -16,6 +18,7 @@ chmod +x $permanent_eval_folder -R
 
 export dx=12000
 
+source /home/zsun/.bashrc
 module load ncl
 
 rm $cmaq_folder/geoweaver_eva_daily_O3.ncl
@@ -59,7 +62,7 @@ delete([/mlat,mlon/])
 
 ;-----read cmaq results-----
 f2 = addfile(mod_dir+mfname,"r")
-mO3 = f2->O3(:,:,:) ;ppb
+mO3 = f2->O3(:,0,:,:) ;ppb
 
 
 nt = dimsizes(mO3(:,0,0))
@@ -262,6 +265,7 @@ exit
 EOF
 
 days_back=7
+force=true
 for i in $(seq 1 $days_back)
 do
   end_day=$i
@@ -291,12 +295,15 @@ do
     continue
   fi
   
-  predict_gif_file=$permanent_location/gifs/"AirNow_"$YYYYMMDD_POST.gif
-  if [ -f "$predict_gif_file" ]; then
-    echo "$predict_gif_file exists. Skipping..."
-    continue
-  else
-    echo "$predict_gif_file doesn't exist. Generating..."
+  predict_eval_file=$permanent_eval_folder"eval_"$stdate_file".txt"
+  
+  if [ "$force" != true ] ; then
+    if [ -f "$predict_eval_file" ]; then
+      echo "$predict_eval_file exists. Skipping..."
+      continue
+    else
+      echo "$predict_eval_file doesn't exist. Generating..."
+    fi
   fi
   
   rm -rf $cmaq_folder/results/* # clean everything first
@@ -305,7 +312,7 @@ do
   if [ $? -eq 0 ]; then
     echo "Evaluation Completed Successfully"
     cat $wfname
-    cp $wfname $permanent_eval_folder"eval_"$stdate_file".txt"
+    cp $wfname $predict_eval_file
   else
     echo "Evaluation Failed!"
   fi

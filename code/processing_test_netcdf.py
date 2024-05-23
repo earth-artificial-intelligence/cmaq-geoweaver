@@ -22,7 +22,7 @@ for i in range(len(days)-1):
   current_day = days[i]
   next_day = days[i+1]
   
-  cmaq_cdf_file = "/groups/ESS/share/projects/SWUS3km/data/cmaqdata/CCTMout/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_"+current_day+"_extracted.nc"
+  cmaq_cdf_file = "/scratch/yli74/forecast/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_"+current_day+".nc"
   
   target_cdf_file = f'{cmaq_folder}/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_'+current_day+'_ML_extracted.nc'
   
@@ -44,6 +44,7 @@ for i in range(len(days)-1):
       day = current_day
     #daily_hourly_files.append(f'{test_folder}/test_data_{day}_{turn_2_digits(real_hour_value)}.csv')
     daily_hourly_files.append(f'{cmaq_folder}/prediction_files/prediction_rf_{day}{turn_2_digits(real_hour_value)}.csv')
+  
   daily_hourly_files = sorted(daily_hourly_files)
   #print("single day hourly files: ", all_hourly_files[i*24:(i+1)*24])
   print("single day hourly files: ", daily_hourly_files)
@@ -51,19 +52,27 @@ for i in range(len(days)-1):
   
   df_csv = pd.concat(df_from_each_hourly_file, ignore_index=True)
 
-  reshaped_prediction = df_csv['prediction'].to_numpy().reshape(24, 265, 442)
+  reshaped_prediction = df_csv['prediction'].to_numpy().reshape(24, 1, 265, 442).astype(np.float32)
   print(reshaped_prediction.shape)
   
-  # Remove "LAY" Dimension in O3 variable already in nc file.
-  reduced_dim = df_cdf['O3'].sel(LAY=1, drop=True)
-
-  # Swap values from original nc file with new prediction data
-  reduced_dim.values = reshaped_prediction
-
+  # retain only two essential variables
+  clean_df_cdf = df_cdf[['O3', 'TFLAG']]
+  print("O3 attrs is: ", df_cdf.O3.attrs)
+  
+  # reduce VAR dim to 1
+  new_tflag = df_cdf['TFLAG'].to_numpy()
+  new_tflag = new_tflag[:, 0, :].reshape(24, 1, 2)
+  
   # Apply changes to data variable in nc file
-  df_cdf['O3'] = (['TSTEP', 'ROW', 'COL'], reshaped_prediction)
+  clean_df_cdf['O3'] = (['TSTEP', 'LAY', 'ROW', 'COL'], reshaped_prediction)
+  clean_df_cdf['TFLAG'] = (['TSTEP', 'VAR', 'DATE-TIME'], new_tflag)
 
+  clean_df_cdf.O3.attrs = df_cdf.O3.attrs
+  clean_df_cdf.TFLAG.attrs = df_cdf.TFLAG.attrs
+  clean_df_cdf.attrs['VGLVLS'] = "1.f, 0.9941f"
+  clean_df_cdf.attrs['VAR-LIST'] = "O3              "
 #   create_and_clean_folder(f"{cmaq_folder}/prediction_nc_files")
-  df_cdf.to_netcdf(target_cdf_file)
+  clean_df_cdf.to_netcdf(target_cdf_file,)
 
   print(f'Saved updated netCDF file: {target_cdf_file}')
+  

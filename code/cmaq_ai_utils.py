@@ -13,7 +13,8 @@ import matplotlib.pyplot as plt
 # home directory
 home = str(Path.home())
 cmaq_folder = "/groups/ESS/zsun/cmaq/" # change if you want to use your own folder
-# cmaq_folder = "/Users/uhhmed/localCMAQ" # change if you want to use your own folder
+model_folder = "/groups/ESS3/zsun/cmaq/models/"
+
 
 def get_days_list(sdate, edate):
   days=[]
@@ -65,4 +66,11 @@ def turn_2_digits(a):
 #sdate = today - timedelta(days=4)
 
 #print(get_days_list_for_prediction(sdate, edate))
+days_back = 60
+days_forward = 7
+today = datetime.today()
+edate = today + timedelta(days=days_forward)
+sdate = today - timedelta(days=days_back)
+days = get_days_list_for_prediction(sdate, edate)
+# cmaq_folder = "/Users/uhhmed/localCMAQ" # change if you want to use your own folder
 

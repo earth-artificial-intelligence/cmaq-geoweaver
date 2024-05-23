@@ -1,0 +1,191 @@
+[{
+  "history_id" : "x1pzjrt1fo0",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692387015126,
+  "history_end_time" : 1692387015126,
+  "history_notes" : null,
+  "history_process" : "6up921",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "62m4p9idn7v",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692387015164,
+  "history_end_time" : 1692387015164,
+  "history_notes" : null,
+  "history_process" : "xpdg66",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "itqepl5um17",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692387015168,
+  "history_end_time" : 1692387015168,
+  "history_notes" : null,
+  "history_process" : "xlayd5",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "94woq0qmf39",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692387015172,
+  "history_end_time" : 1692387015172,
+  "history_notes" : null,
+  "history_process" : "argv3i",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "5fdfng8buuo",
+  "history_input" : null,
+  "history_output" : "Authentication Failed. Wrong Password.",
+  "history_begin_time" : 1692387970430,
+  "history_end_time" : 1692387970487,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
+  "history_id" : "vfbzxxur282",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692387015199,
+  "history_end_time" : 1692387015199,
+  "history_notes" : null,
+  "history_process" : "wny2dz",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "8tzhzxt496d",
+  "history_input" : null,
+  "history_output" : "Authentication Failed. Wrong Password.",
+  "history_begin_time" : 1692387970618,
+  "history_end_time" : 1692387970673,
+  "history_notes" : null,
+  "history_process" : "3asyzj",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
+  "history_id" : "zn3j8oqga7q",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692387015210,
+  "history_end_time" : 1692387015210,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "4gmrxrejqvs",
+  "history_input" : "# get hourly CMAQ data into csv for prediction\n\nfrom cmaq_ai_utils import *\n\n\n#edate = datetime.today()\n#sdate = edate - timedelta(days=1)\n# today = datetime.today()\n# edate = today\n# sdate = today - timedelta(days=days_back)\n\n#sdate = date(2022, 8, 6)   # start date\n#edate = date(2022, 8, 8)   # end date\n# days = get_days_list_for_prediction(sdate, edate)\n\nreal_hour_list = [12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11]\ntime_step_in_netcdf_list = range(0,24)\n\ntest_folder = f\"{cmaq_folder}/testing_input_hourly/\"\ncreate_and_clean_folder(test_folder)\n\nfor x in range(len(days)-1):\n  current_day = days[x]\n  next_day = days[x+1]\n  print(\"Getting data for: \"+current_day)\n  \n  # read cmaq results\n  cmaq_file = \"/scratch/yli74/forecast/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_\"+current_day+\".nc\"\n  if not os.path.exists(cmaq_file):\n    print(f\"CMAQ file {cmaq_file} doesn't exist\")\n    continue\n  \n  target_cdf_file = f'{cmaq_folder}/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_'+current_day+'_ML_extracted.nc'\n    \n  if os.path.exists(target_cdf_file):\n    print(f\"{target_cdf_file} already exists\")\n    continue\n  \n  df_cmaq = xr.open_dataset(cmaq_file)\n  \n  # read mcip results \n  mcip_file = \"/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/METCRO2D_\"+current_day+\".nc\"\n  df_mcip = xr.open_dataset(mcip_file)\n  \n  # read emissions results \n  df_emis = xr.open_dataset(\"/groups/ESS/share/projects/SWUS3km/data/cmaqdata/emis2021/12km/all/emis_mole_all_\"+current_day+\"_AQF5X_cmaq_cb6ae7_2017gb_17j.ncf\")\n  \n  for k in time_step_in_netcdf_list:\n    real_hour_value = real_hour_list[k]\n    \n    if real_hour_value<12:\n      day = next_day\n    else:\n      day = current_day\n    \n    df_hourly = pd.DataFrame()\n    \n    #print(\"df_cmaq.variables['O3'] shape: \", df_cmaq.variables['O3'].shape)\n    #print(\"df_cmaq.variables['O3'][:] shape: \", df_cmaq.variables['O3'][:].shape)\n    #print(\"df_cmaq.variables['O3'][:].values[k, 0].shape\", df_cmaq.variables['O3'][:].values[k, 0].shape)\n    # CMAQ data\n    # O3 variable\n    o3=df_cmaq.variables['O3'][:].values[k, 0]\n    cmaq_O3=list(np.ravel(o3).transpose())\n    #print(\"o3 shape: \", o3.shape)\n    #print(\"cmaq_O3 shape: \", np.ravel(o3).transpose().shape)\n    \n    # NO2\n    no2=df_cmaq.variables['NO2'][:].values[k, 0]\n    cmaq_NO2=list(np.ravel(no2).transpose())\n    \n    # CO\n    co=df_cmaq.variables['CO'][:].values[k, 0]\n    cmaq_CO=list(np.ravel(co).transpose())\n    \n    # PM25_CO\n    pm25=df_cmaq.variables['PM25_OC'][:].values[k, 0]\n    cmaq_PM25_CO=list(np.ravel(pm25).transpose())\n    \n    # EMIS data\n    co_emis=df_emis.variables['CO'][:].values[k, 0]\n    CO_emi=list(np.ravel(co_emis).transpose())    \n    \n    # MCIP data\n    # CO variable\n    prsfc=df_mcip.variables['PRSFC'][:].values[k, 0]\n    PRSFC=list(np.ravel(prsfc).transpose())\n    \n    # NO2\n    pbl=df_mcip.variables['PBL'][:].values[k, 0]\n    PBL=list(np.ravel(pbl).transpose())\n    \n    # TEMP2\n    temp2=df_mcip.variables['TEMP2'][:].values[k, 0]\n    TEMP2=list(np.ravel(temp2).transpose())\n    \n    # WSPD10\n    wspd10=df_mcip.variables['WSPD10'][:].values[k, 0]\n    WSPD10=list(np.ravel(wspd10).transpose())\n    \n    # WDIR10\n    wdir10=df_mcip.variables['WDIR10'][:].values[k, 0]\n    WDIR10=list(np.ravel(wdir10).transpose())\n    \n    # RGRND\n    rgrnd=df_mcip.variables['RGRND'][:].values[k, 0]\n    RGRND=list(np.ravel(rgrnd).transpose())\n    \n    # CFRAC\n    cfrac=df_mcip.variables['CFRAC'][:].values[k, 0]\n    CFRAC=list(np.ravel(cfrac).transpose())\n    \n    ## LAT/LON data\n    df_coords = xr.open_dataset('/home/yli74/scripts/plots/2020fire/GRIDCRO2D')\n    \n    lat = df_coords.variables['LAT'][:].values[0,0]\n    #print(\"lat shape\", lat.shape)\n    lat_flt=np.ravel(lat)\n    LAT=lat_flt #np.tile(lat_flt,1)\n    \n    lon = df_coords.variables['LON'][:].values[0,0]\n    lon_flt=np.ravel(lon)\n    LON=lon_flt #np.tile(lon_flt,1)\n    \n    df_hourly['Latitude'] = LAT\n    df_hourly['Longitude'] = LON\n    df_hourly['YYYYMMDDHH'] = day+turn_2_digits(real_hour_value)\n    df_hourly['CMAQ12KM_O3(ppb)'] = cmaq_O3\n    df_hourly['CMAQ12KM_NO2(ppb)'] = cmaq_NO2\n    df_hourly['CMAQ12KM_CO(ppm)'] = cmaq_CO\n    df_hourly['CMAQ_OC(ug/m3)'] = cmaq_PM25_CO\n    df_hourly['CO(moles/s)'] = CO_emi\n    df_hourly['PRSFC(Pa)'] = PRSFC\n    df_hourly['PBL(m)'] = PBL\n    df_hourly['TEMP2(K)'] = TEMP2\n    df_hourly['WSPD10(m/s)'] = WSPD10\n    df_hourly['WDIR10(degree)'] = WDIR10\n    df_hourly['RGRND(W/m2)'] = RGRND\n    df_hourly['CFRAC'] = CFRAC\n    df_hourly['month'] = df_hourly['YYYYMMDDHH'].str[4:6]\n    df_hourly['day'] = df_hourly['YYYYMMDDHH'].str[6:8]\n    df_hourly['hours'] = df_hourly['YYYYMMDDHH'].str[8:10]\n    print(f'Saving file: test_data_{day}_{turn_2_digits(real_hour_value)}.csv')\n    df_hourly.to_csv(f'{test_folder}/test_data_{day}_{turn_2_digits(real_hour_value)}.csv',index=False)\n\nprint('Done with preparing testing data!')",
+  "history_output" : "Getting data for: 20230719\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230719_ML_extracted.nc already exists\nGetting data for: 20230720\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230720_ML_extracted.nc already exists\nGetting data for: 20230721\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230721_ML_extracted.nc already exists\nGetting data for: 20230722\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230722_ML_extracted.nc already exists\nGetting data for: 20230723\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230723_ML_extracted.nc already exists\nGetting data for: 20230724\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230724_ML_extracted.nc already exists\nGetting data for: 20230725\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230725_ML_extracted.nc already exists\nGetting data for: 20230726\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230726_ML_extracted.nc already exists\nGetting data for: 20230727\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230727_ML_extracted.nc already exists\nGetting data for: 20230728\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230728_ML_extracted.nc already exists\nGetting data for: 20230729\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230729_ML_extracted.nc already exists\nGetting data for: 20230730\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230730_ML_extracted.nc already exists\nGetting data for: 20230731\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230731_ML_extracted.nc already exists\nGetting data for: 20230801\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230801_ML_extracted.nc already exists\nGetting data for: 20230802\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230802_ML_extracted.nc already exists\nGetting data for: 20230803\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230803_ML_extracted.nc already exists\nGetting data for: 20230804\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230804_ML_extracted.nc already exists\nGetting data for: 20230805\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230805_ML_extracted.nc already exists\nGetting data for: 20230806\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230806_ML_extracted.nc already exists\nGetting data for: 20230807\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230807_ML_extracted.nc already exists\nGetting data for: 20230808\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230808_ML_extracted.nc already exists\nGetting data for: 20230809\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230809_ML_extracted.nc already exists\nGetting data for: 20230810\nSaving file: test_data_20230810_12.csv\nSaving file: test_data_20230810_13.csv\nSaving file: test_data_20230810_14.csv\nSaving file: test_data_20230810_15.csv\nSaving file: test_data_20230810_16.csv\nSaving file: test_data_20230810_17.csv\nSaving file: test_data_20230810_18.csv\nSaving file: test_data_20230810_19.csv\nSaving file: test_data_20230810_20.csv\nSaving file: test_data_20230810_21.csv\nSaving file: test_data_20230810_22.csv\nSaving file: test_data_20230810_23.csv\nSaving file: test_data_20230811_00.csv\nSaving file: test_data_20230811_01.csv\nSaving file: test_data_20230811_02.csv\nSaving file: test_data_20230811_03.csv\nSaving file: test_data_20230811_04.csv\nSaving file: test_data_20230811_05.csv\nSaving file: test_data_20230811_06.csv\nSaving file: test_data_20230811_07.csv\nSaving file: test_data_20230811_08.csv\nSaving file: test_data_20230811_09.csv\nSaving file: test_data_20230811_10.csv\nSaving file: test_data_20230811_11.csv\nGetting data for: 20230811\nSaving file: test_data_20230811_12.csv\nSaving file: test_data_20230811_13.csv\nSaving file: test_data_20230811_14.csv\nSaving file: test_data_20230811_15.csv\nSaving file: test_data_20230811_16.csv\nSaving file: test_data_20230811_17.csv\nSaving file: test_data_20230811_18.csv\nSaving file: test_data_20230811_19.csv\nSaving file: test_data_20230811_20.csv\nSaving file: test_data_20230811_21.csv\nSaving file: test_data_20230811_22.csv\nSaving file: test_data_20230811_23.csv\nSaving file: test_data_20230812_00.csv\nSaving file: test_data_20230812_01.csv\nSaving file: test_data_20230812_02.csv\nSaving file: test_data_20230812_03.csv\nSaving file: test_data_20230812_04.csv\nSaving file: test_data_20230812_05.csv\nSaving file: test_data_20230812_06.csv\nSaving file: test_data_20230812_07.csv\nSaving file: test_data_20230812_08.csv\nSaving file: test_data_20230812_09.csv\nSaving file: test_data_20230812_10.csv\nSaving file: test_data_20230812_11.csv\nGetting data for: 20230812\nSaving file: test_data_20230812_12.csv\nSaving file: test_data_20230812_13.csv\nSaving file: test_data_20230812_14.csv\nSaving file: test_data_20230812_15.csv\nSaving file: test_data_20230812_16.csv\nSaving file: test_data_20230812_17.csv\nSaving file: test_data_20230812_18.csv\nSaving file: test_data_20230812_19.csv\nSaving file: test_data_20230812_20.csv\nSaving file: test_data_20230812_21.csv\nSaving file: test_data_20230812_22.csv\nSaving file: test_data_20230812_23.csv\nSaving file: test_data_20230813_00.csv\nSaving file: test_data_20230813_01.csv\nSaving file: test_data_20230813_02.csv\nSaving file: test_data_20230813_03.csv\nSaving file: test_data_20230813_04.csv\nSaving file: test_data_20230813_05.csv\nSaving file: test_data_20230813_06.csv\nSaving file: test_data_20230813_07.csv\nSaving file: test_data_20230813_08.csv\nSaving file: test_data_20230813_09.csv\nSaving file: test_data_20230813_10.csv\nSaving file: test_data_20230813_11.csv\nGetting data for: 20230813\nSaving file: test_data_20230813_12.csv\nSaving file: test_data_20230813_13.csv\nSaving file: test_data_20230813_14.csv\nSaving file: test_data_20230813_15.csv\nSaving file: test_data_20230813_16.csv\nSaving file: test_data_20230813_17.csv\nSaving file: test_data_20230813_18.csv\nSaving file: test_data_20230813_19.csv\nSaving file: test_data_20230813_20.csv\nSaving file: test_data_20230813_21.csv\nSaving file: test_data_20230813_22.csv\nSaving file: test_data_20230813_23.csv\nSaving file: test_data_20230814_00.csv\nSaving file: test_data_20230814_01.csv\nSaving file: test_data_20230814_02.csv\nSaving file: test_data_20230814_03.csv\nSaving file: test_data_20230814_04.csv\nSaving file: test_data_20230814_05.csv\nSaving file: test_data_20230814_06.csv\nSaving file: test_data_20230814_07.csv\nSaving file: test_data_20230814_08.csv\nSaving file: test_data_20230814_09.csv\nSaving file: test_data_20230814_10.csv\nSaving file: test_data_20230814_11.csv\nGetting data for: 20230814\nSaving file: test_data_20230814_12.csv\nSaving file: test_data_20230814_13.csv\nSaving file: test_data_20230814_14.csv\nSaving file: test_data_20230814_15.csv\nSaving file: test_data_20230814_16.csv\nSaving file: test_data_20230814_17.csv\nSaving file: test_data_20230814_18.csv\nSaving file: test_data_20230814_19.csv\nSaving file: test_data_20230814_20.csv\nSaving file: test_data_20230814_21.csv\nSaving file: test_data_20230814_22.csv\nSaving file: test_data_20230814_23.csv\nSaving file: test_data_20230815_00.csv\nSaving file: test_data_20230815_01.csv\nSaving file: test_data_20230815_02.csv\nSaving file: test_data_20230815_03.csv\nSaving file: test_data_20230815_04.csv\nSaving file: test_data_20230815_05.csv\nSaving file: test_data_20230815_06.csv\nSaving file: test_data_20230815_07.csv\nSaving file: test_data_20230815_08.csv\nSaving file: test_data_20230815_09.csv\nSaving file: test_data_20230815_10.csv\nSaving file: test_data_20230815_11.csv\nGetting data for: 20230815\nSaving file: test_data_20230815_12.csv\nSaving file: test_data_20230815_13.csv\nSaving file: test_data_20230815_14.csv\nSaving file: test_data_20230815_15.csv\nSaving file: test_data_20230815_16.csv\nSaving file: test_data_20230815_17.csv\nSaving file: test_data_20230815_18.csv\nSaving file: test_data_20230815_19.csv\nSaving file: test_data_20230815_20.csv\nSaving file: test_data_20230815_21.csv\nSaving file: test_data_20230815_22.csv\nSaving file: test_data_20230815_23.csv\nSaving file: test_data_20230816_00.csv\nSaving file: test_data_20230816_01.csv\nSaving file: test_data_20230816_02.csv\nSaving file: test_data_20230816_03.csv\nSaving file: test_data_20230816_04.csv\nSaving file: test_data_20230816_05.csv\nSaving file: test_data_20230816_06.csv\nSaving file: test_data_20230816_07.csv\nSaving file: test_data_20230816_08.csv\nSaving file: test_data_20230816_09.csv\nSaving file: test_data_20230816_10.csv\nSaving file: test_data_20230816_11.csv\nGetting data for: 20230816\nSaving file: test_data_20230816_12.csv\nSaving file: test_data_20230816_13.csv\nSaving file: test_data_20230816_14.csv\nSaving file: test_data_20230816_15.csv\nSaving file: test_data_20230816_16.csv\nSaving file: test_data_20230816_17.csv\nSaving file: test_data_20230816_18.csv\nSaving file: test_data_20230816_19.csv\nSaving file: test_data_20230816_20.csv\nSaving file: test_data_20230816_21.csv\nSaving file: test_data_20230816_22.csv\nSaving file: test_data_20230816_23.csv\nSaving file: test_data_20230817_00.csv\nSaving file: test_data_20230817_01.csv\nSaving file: test_data_20230817_02.csv\nSaving file: test_data_20230817_03.csv\nSaving file: test_data_20230817_04.csv\nSaving file: test_data_20230817_05.csv\nSaving file: test_data_20230817_06.csv\nSaving file: test_data_20230817_07.csv\nSaving file: test_data_20230817_08.csv\nSaving file: test_data_20230817_09.csv\nSaving file: test_data_20230817_10.csv\nSaving file: test_data_20230817_11.csv\nGetting data for: 20230817\nSaving file: test_data_20230817_12.csv\nSaving file: test_data_20230817_13.csv\nSaving file: test_data_20230817_14.csv\nSaving file: test_data_20230817_15.csv\nSaving file: test_data_20230817_16.csv\nSaving file: test_data_20230817_17.csv\nSaving file: test_data_20230817_18.csv\nSaving file: test_data_20230817_19.csv\nSaving file: test_data_20230817_20.csv\nSaving file: test_data_20230817_21.csv\nSaving file: test_data_20230817_22.csv\nSaving file: test_data_20230817_23.csv\nSaving file: test_data_20230818_00.csv\nSaving file: test_data_20230818_01.csv\nSaving file: test_data_20230818_02.csv\nSaving file: test_data_20230818_03.csv\nSaving file: test_data_20230818_04.csv\nSaving file: test_data_20230818_05.csv\nSaving file: test_data_20230818_06.csv\nSaving file: test_data_20230818_07.csv\nSaving file: test_data_20230818_08.csv\nSaving file: test_data_20230818_09.csv\nSaving file: test_data_20230818_10.csv\nSaving file: test_data_20230818_11.csv\nDone with preparing testing data!\n",
+  "history_begin_time" : 1692387016046,
+  "history_end_time" : 1692387968405,
+  "history_notes" : null,
+  "history_process" : "ex3vh9",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "yfpabw0oh7a",
+  "history_input" : null,
+  "history_output" : "Authentication Failed. Wrong Password.",
+  "history_begin_time" : 1692387969548,
+  "history_end_time" : 1692387969612,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
+  "history_id" : "ehr7lmlc0vb",
+  "history_input" : null,
+  "history_output" : "Authentication Failed. Wrong Password.",
+  "history_begin_time" : 1692387971678,
+  "history_end_time" : 1692387971750,
+  "history_notes" : null,
+  "history_process" : "is1w3m",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
+  "history_id" : "kzo7iaf17la",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692387015241,
+  "history_end_time" : 1692387015241,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "qls95i51xxf",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692387015247,
+  "history_end_time" : 1692387015247,
+  "history_notes" : null,
+  "history_process" : "s6hbic",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "hwj3mtebsgc",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692387015251,
+  "history_end_time" : 1692387015251,
+  "history_notes" : null,
+  "history_process" : "pvzabv",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "8l4u89d3634",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1692387015256,
+  "history_end_time" : 1692387015256,
+  "history_notes" : null,
+  "history_process" : "8i9ptn",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "yajgvtat6jq",
+  "history_input" : null,
+  "history_output" : "Authentication Failed. Wrong Password.",
+  "history_begin_time" : 1692387971492,
+  "history_end_time" : 1692387971570,
+  "history_notes" : null,
+  "history_process" : "iicy7w",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
+  "history_id" : "oijeknhn2fb",
+  "history_input" : "#!/bin/bash\n\ndays_back=30\n\npermanent_location=\"/groups/ESS3/zsun/cmaq/ai_results/\"\ncmaq_gif_location=\"/groups/ESS/share/projects/SWUS3km/graph/12km/\"\n\nfor i in $(seq 0 $days_back)\ndo\n  end_day=$i\n  echo \"$end_day days ago\"\n  begin_day=$((i))\n  # Setting env variables\n  YYYYMMDD_POST=$(date -d $begin_day' day ago' '+%Y%m%d')\n  #/groups/ESS/share/projects/SWUS3km/graph/12km/20221108/FORECAST_O3_20221108.gif\n  cp -u $cmaq_gif_location/$YYYYMMDD_POST/\"FORECAST_O3_\"$YYYYMMDD_POST.gif $permanent_location/gifs/\n  cp -u $cmaq_gif_location/$YYYYMMDD_POST/obsoverlay/gif/OBS-FORECAST_O3_$YYYYMMDD_POST.gif $permanent_location/gifs/\n  \ndone\n\n\n",
+  "history_output" : "0 days ago\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230818/FORECAST_O3_20230818.gif': No such file or directory\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230818/obsoverlay/gif/OBS-FORECAST_O3_20230818.gif': No such file or directory\n1 days ago\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230817/obsoverlay/gif/OBS-FORECAST_O3_20230817.gif': No such file or directory\n2 days ago\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230816/obsoverlay/gif/OBS-FORECAST_O3_20230816.gif': No such file or directory\n3 days ago\n4 days ago\n5 days ago\n6 days ago\n7 days ago\n8 days ago\n9 days ago\n10 days ago\n11 days ago\n12 days ago\n13 days ago\n14 days ago\n15 days ago\n16 days ago\n17 days ago\n18 days ago\n19 days ago\n20 days ago\n21 days ago\n22 days ago\n23 days ago\n24 days ago\n25 days ago\n26 days ago\n27 days ago\n28 days ago\n29 days ago\n30 days ago\n",
+  "history_begin_time" : 1692387016046,
+  "history_end_time" : 1692387019944,
+  "history_notes" : null,
+  "history_process" : "nndpw6",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "51a83fxajx0",
+  "history_input" : null,
+  "history_output" : "Authentication Failed. Wrong Password.",
+  "history_begin_time" : 1692387972762,
+  "history_end_time" : 1692387972818,
+  "history_notes" : null,
+  "history_process" : "gn54f0",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
+  "history_id" : "xqb6y102bpm",
+  "history_input" : null,
+  "history_output" : "Authentication Failed. Wrong Password.",
+  "history_begin_time" : 1692387972582,
+  "history_end_time" : 1692387972650,
+  "history_notes" : null,
+  "history_process" : "fsk7f2",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+}]

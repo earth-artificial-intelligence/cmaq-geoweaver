@@ -1,0 +1,151 @@
+[{
+  "history_id" : "nv0jlzxb444",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1691609409505,
+  "history_end_time" : 1691609409505,
+  "history_notes" : null,
+  "history_process" : "6up921",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "fraaixoas5g",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1691609409542,
+  "history_end_time" : 1691609409542,
+  "history_notes" : null,
+  "history_process" : "xpdg66",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "wv31r0wi1u7",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1691609409546,
+  "history_end_time" : 1691609409546,
+  "history_notes" : null,
+  "history_process" : "xlayd5",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "4na8x03qu7l",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1691609409547,
+  "history_end_time" : 1691609409547,
+  "history_notes" : null,
+  "history_process" : "argv3i",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "2pwru4z7f0d",
+  "history_input" : "# use the trained model to predict on the testing data and save the results to prediction_rf.csv\n\nimport pandas as pd\nimport pickle\nfrom pathlib import Path\nfrom time import sleep\nimport glob, os\nfrom sklearn.metrics import r2_score, mean_squared_error\nfrom cmaq_ai_utils import *\n\ncreate_and_clean_folder(f\"{cmaq_folder}/prediction_files/\")\n\n# importing data\n# final=pd.read_csv(f\"{cmaq_folder}/testing_input_hourly/testing.csv\")\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\n\n# load the model from disk\n# filename = f'{cmaq_folder}/models/rf_pycaret.sav'\n\nfilename = f'{model_folder}/rf_pycaret_o3_one_year_good.sav'\nloaded_model = pickle.load(open(filename, 'rb'))\n\nfor testing_df in df_from_each_hourly_file:\n  #print(testing_df['YYYYMMDDHH'].values[0])\n  file_dateTime = testing_df['YYYYMMDDHH'].values[0]\n  #X = testing_df.drop(['YYYYMMDDHH','Latitude','Longitude'],axis=1)\n  testing_df['time_of_day'] = (testing_df['hours'] % 24 + 4) // 4\n\n  # Make coords even more coarse by rounding to closest multiple of 5 \n  # (e.g., 40, 45, 85, 55)\n  #testing_df['Latitude_ExtraCoarse'] = 0.1 * round(testing_df['Latitude']/0.1)\n  #testing_df['Longitude_ExtraCoarse'] = 0.1 * round(testing_df['Longitude']/0.1)\n  X = testing_df.drop(['YYYYMMDDHH','Latitude','Longitude', 'CO(moles/s)'],axis=1)\n  \n  #print(X.columns)\n\n# # making prediction\n  pred = loaded_model.predict(X)\n\n# adding prediction values to test dataset\n  #testing_df['prediction'] = testing_df['CMAQ12KM_O3(ppb)'].tolist()\n  testing_df['prediction'] = pred\n\n  testing_df = testing_df[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]\n# saving the dataset into local drive\n  print(f'Saving: {cmaq_folder}/prediction_files/prediction_rf_{file_dateTime}.csv')\n  testing_df.to_csv(f'{cmaq_folder}/prediction_files/prediction_rf_{file_dateTime}.csv',index=False)",
+  "history_output" : "",
+  "history_begin_time" : 1691609422154,
+  "history_end_time" : 1691610005182,
+  "history_notes" : null,
+  "history_process" : "l8vlic",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
+  "history_id" : "chsoooe6mi6",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1691609409574,
+  "history_end_time" : 1691609409574,
+  "history_notes" : null,
+  "history_process" : "wny2dz",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "0cgi4v3a3n6",
+  "history_input" : "# load the prediction_rf.csv into a NetCDF file for visualization\nfrom cmaq_ai_utils import *\n\n# end_date = datetime.today()\n# base = end_date - timedelta(days=2)\n#sdate = date(2022, 8, 6)   # start date\n#edate = date(2022, 8, 8)   # end date\ntoday = datetime.today()\nedate = today\nsdate = today - timedelta(days=7)\ndays = get_days_list_for_prediction(sdate, edate)\n\nprediction_path = f\"{cmaq_folder}/prediction_files/\"\n\nall_hourly_files = sorted(glob.glob(os.path.join(prediction_path, \"*.csv\")))\n# print(\"overall hourly files: \", all_hourly_files)\nreal_hour_list = [12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11]\ntime_step_in_netcdf_list = range(0,24)\n\nfor i in range(len(days)-1):\n  print(days[i])\n  current_day = days[i]\n  next_day = days[i+1]\n  \n  cmaq_cdf_file = \"/scratch/yli74/forecast/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_\"+current_day+\".nc\"\n  \n  target_cdf_file = f'{cmaq_folder}/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_'+current_day+'_ML_extracted.nc'\n  \n  if not os.path.exists(cmaq_cdf_file):\n    print(f\"{cmaq_cdf_file} doesn't exist\")\n    continue\n    \n  if os.path.exists(target_cdf_file):\n    print(f\"{target_cdf_file} already exists\")\n    continue\n  \n  df_cdf = xr.open_dataset(cmaq_cdf_file)\n  daily_hourly_files = []\n  for k in real_hour_list:\n    real_hour_value = real_hour_list[k]\n    if real_hour_value<12:\n      day = next_day\n    else:\n      day = current_day\n    #daily_hourly_files.append(f'{test_folder}/test_data_{day}_{turn_2_digits(real_hour_value)}.csv')\n    daily_hourly_files.append(f'{cmaq_folder}/prediction_files/prediction_rf_{day}{turn_2_digits(real_hour_value)}.csv')\n  \n  daily_hourly_files = sorted(daily_hourly_files)\n  #print(\"single day hourly files: \", all_hourly_files[i*24:(i+1)*24])\n  print(\"single day hourly files: \", daily_hourly_files)\n  df_from_each_hourly_file = (pd.read_csv(f) for f in daily_hourly_files)\n  \n  df_csv = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n  reshaped_prediction = df_csv['prediction'].to_numpy().reshape(24, 1, 265, 442).astype(np.float32)\n  print(reshaped_prediction.shape)\n  \n  # retain only two essential variables\n  clean_df_cdf = df_cdf[['O3', 'TFLAG']]\n  print(\"O3 attrs is: \", df_cdf.O3.attrs)\n  \n  # reduce VAR dim to 1\n  new_tflag = df_cdf['TFLAG'].to_numpy()\n  new_tflag = new_tflag[:, 0, :].reshape(24, 1, 2)\n  \n  # Apply changes to data variable in nc file\n  clean_df_cdf['O3'] = (['TSTEP', 'LAY', 'ROW', 'COL'], reshaped_prediction)\n  clean_df_cdf['TFLAG'] = (['TSTEP', 'VAR', 'DATE-TIME'], new_tflag)\n\n  clean_df_cdf.O3.attrs = df_cdf.O3.attrs\n  clean_df_cdf.TFLAG.attrs = df_cdf.TFLAG.attrs\n  clean_df_cdf.attrs['VGLVLS'] = \"1.f, 0.9941f\"\n  clean_df_cdf.attrs['VAR-LIST'] = \"O3              \"\n#   create_and_clean_folder(f\"{cmaq_folder}/prediction_nc_files\")\n  clean_df_cdf.to_netcdf(target_cdf_file,)\n\n  print(f'Saved updated netCDF file: {target_cdf_file}')\n  ",
+  "history_output" : "20230802\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230802_ML_extracted.nc already exists\n20230803\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230803_ML_extracted.nc already exists\n20230804\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230804_ML_extracted.nc already exists\n20230805\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230805_ML_extracted.nc already exists\n20230806\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230806_ML_extracted.nc already exists\n20230807\n/scratch/yli74/forecast/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_20230807.nc doesn't exist\n20230808\n/scratch/yli74/forecast/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_20230808.nc doesn't exist\n",
+  "history_begin_time" : 1691610005660,
+  "history_end_time" : 1691610010211,
+  "history_notes" : null,
+  "history_process" : "3asyzj",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "910zexdg5d2",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1691609409586,
+  "history_end_time" : 1691609409586,
+  "history_notes" : null,
+  "history_process" : "9xdvh6",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "o71kf0jgwn2",
+  "history_input" : "# get hourly CMAQ data into csv for prediction\n\nfrom cmaq_ai_utils import *\n\n\n#edate = datetime.today()\n#sdate = edate - timedelta(days=1)\n# today = datetime.today()\n# edate = today\n# sdate = today - timedelta(days=days_back)\n\n#sdate = date(2022, 8, 6)   # start date\n#edate = date(2022, 8, 8)   # end date\n# days = get_days_list_for_prediction(sdate, edate)\n\nreal_hour_list = [12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11]\ntime_step_in_netcdf_list = range(0,24)\n\ntest_folder = f\"{cmaq_folder}/testing_input_hourly/\"\ncreate_and_clean_folder(test_folder)\n\nfor x in range(len(days)-1):\n  current_day = days[x]\n  next_day = days[x+1]\n  print(\"Getting data for: \"+current_day)\n  \n  # read cmaq results\n  cmaq_file = \"/scratch/yli74/forecast/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_\"+current_day+\".nc\"\n  if not os.path.exists(cmaq_file):\n    print(f\"CMAQ file {cmaq_file} doesn't exist\")\n    continue\n  \n  target_cdf_file = f'{cmaq_folder}/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_'+current_day+'_ML_extracted.nc'\n    \n  if os.path.exists(target_cdf_file):\n    print(f\"{target_cdf_file} already exists\")\n    continue\n  \n  df_cmaq = xr.open_dataset(cmaq_file)\n  \n  # read mcip results \n  mcip_file = \"/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/METCRO2D_\"+current_day+\".nc\"\n  df_mcip = xr.open_dataset(mcip_file)\n  \n  # read emissions results \n  df_emis = xr.open_dataset(\"/groups/ESS/share/projects/SWUS3km/data/cmaqdata/emis2021/12km/all/emis_mole_all_\"+current_day+\"_AQF5X_cmaq_cb6ae7_2017gb_17j.ncf\")\n  \n  for k in time_step_in_netcdf_list:\n    real_hour_value = real_hour_list[k]\n    \n    if real_hour_value<12:\n      day = next_day\n    else:\n      day = current_day\n    \n    df_hourly = pd.DataFrame()\n    \n    #print(\"df_cmaq.variables['O3'] shape: \", df_cmaq.variables['O3'].shape)\n    #print(\"df_cmaq.variables['O3'][:] shape: \", df_cmaq.variables['O3'][:].shape)\n    #print(\"df_cmaq.variables['O3'][:].values[k, 0].shape\", df_cmaq.variables['O3'][:].values[k, 0].shape)\n    # CMAQ data\n    # O3 variable\n    o3=df_cmaq.variables['O3'][:].values[k, 0]\n    cmaq_O3=list(np.ravel(o3).transpose())\n    #print(\"o3 shape: \", o3.shape)\n    #print(\"cmaq_O3 shape: \", np.ravel(o3).transpose().shape)\n    \n    # NO2\n    no2=df_cmaq.variables['NO2'][:].values[k, 0]\n    cmaq_NO2=list(np.ravel(no2).transpose())\n    \n    # CO\n    co=df_cmaq.variables['CO'][:].values[k, 0]\n    cmaq_CO=list(np.ravel(co).transpose())\n    \n    # PM25_CO\n    pm25=df_cmaq.variables['PM25_OC'][:].values[k, 0]\n    cmaq_PM25_CO=list(np.ravel(pm25).transpose())\n    \n    # EMIS data\n    co_emis=df_emis.variables['CO'][:].values[k, 0]\n    CO_emi=list(np.ravel(co_emis).transpose())    \n    \n    # MCIP data\n    # CO variable\n    prsfc=df_mcip.variables['PRSFC'][:].values[k, 0]\n    PRSFC=list(np.ravel(prsfc).transpose())\n    \n    # NO2\n    pbl=df_mcip.variables['PBL'][:].values[k, 0]\n    PBL=list(np.ravel(pbl).transpose())\n    \n    # TEMP2\n    temp2=df_mcip.variables['TEMP2'][:].values[k, 0]\n    TEMP2=list(np.ravel(temp2).transpose())\n    \n    # WSPD10\n    wspd10=df_mcip.variables['WSPD10'][:].values[k, 0]\n    WSPD10=list(np.ravel(wspd10).transpose())\n    \n    # WDIR10\n    wdir10=df_mcip.variables['WDIR10'][:].values[k, 0]\n    WDIR10=list(np.ravel(wdir10).transpose())\n    \n    # RGRND\n    rgrnd=df_mcip.variables['RGRND'][:].values[k, 0]\n    RGRND=list(np.ravel(rgrnd).transpose())\n    \n    # CFRAC\n    cfrac=df_mcip.variables['CFRAC'][:].values[k, 0]\n    CFRAC=list(np.ravel(cfrac).transpose())\n    \n    ## LAT/LON data\n    df_coords = xr.open_dataset('/home/yli74/scripts/plots/2020fire/GRIDCRO2D')\n    \n    lat = df_coords.variables['LAT'][:].values[0,0]\n    #print(\"lat shape\", lat.shape)\n    lat_flt=np.ravel(lat)\n    LAT=lat_flt #np.tile(lat_flt,1)\n    \n    lon = df_coords.variables['LON'][:].values[0,0]\n    lon_flt=np.ravel(lon)\n    LON=lon_flt #np.tile(lon_flt,1)\n    \n    df_hourly['Latitude'] = LAT\n    df_hourly['Longitude'] = LON\n    df_hourly['YYYYMMDDHH'] = day+turn_2_digits(real_hour_value)\n    df_hourly['CMAQ12KM_O3(ppb)'] = cmaq_O3\n    df_hourly['CMAQ12KM_NO2(ppb)'] = cmaq_NO2\n    df_hourly['CMAQ12KM_CO(ppm)'] = cmaq_CO\n    df_hourly['CMAQ_OC(ug/m3)'] = cmaq_PM25_CO\n    df_hourly['CO(moles/s)'] = CO_emi\n    df_hourly['PRSFC(Pa)'] = PRSFC\n    df_hourly['PBL(m)'] = PBL\n    df_hourly['TEMP2(K)'] = TEMP2\n    df_hourly['WSPD10(m/s)'] = WSPD10\n    df_hourly['WDIR10(degree)'] = WDIR10\n    df_hourly['RGRND(W/m2)'] = RGRND\n    df_hourly['CFRAC'] = CFRAC\n    df_hourly['month'] = df_hourly['YYYYMMDDHH'].str[4:6]\n    df_hourly['day'] = df_hourly['YYYYMMDDHH'].str[6:8]\n    df_hourly['hours'] = df_hourly['YYYYMMDDHH'].str[8:10]\n    print(f'Saving file: test_data_{day}_{turn_2_digits(real_hour_value)}.csv')\n    df_hourly.to_csv(f'{test_folder}/test_data_{day}_{turn_2_digits(real_hour_value)}.csv',index=False)\n\nprint('Done with preparing testing data!')",
+  "history_output" : "Getting data for: 20230710\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230710_ML_extracted.nc already exists\nGetting data for: 20230711\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230711_ML_extracted.nc already exists\nGetting data for: 20230712\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230712_ML_extracted.nc already exists\nGetting data for: 20230713\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230713_ML_extracted.nc already exists\nGetting data for: 20230714\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230714_ML_extracted.nc already exists\nGetting data for: 20230715\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230715_ML_extracted.nc already exists\nGetting data for: 20230716\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230716_ML_extracted.nc already exists\nGetting data for: 20230717\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230717_ML_extracted.nc already exists\nGetting data for: 20230718\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230718_ML_extracted.nc already exists\nGetting data for: 20230719\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230719_ML_extracted.nc already exists\nGetting data for: 20230720\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230720_ML_extracted.nc already exists\nGetting data for: 20230721\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230721_ML_extracted.nc already exists\nGetting data for: 20230722\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230722_ML_extracted.nc already exists\nGetting data for: 20230723\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230723_ML_extracted.nc already exists\nGetting data for: 20230724\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230724_ML_extracted.nc already exists\nGetting data for: 20230725\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230725_ML_extracted.nc already exists\nGetting data for: 20230726\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230726_ML_extracted.nc already exists\nGetting data for: 20230727\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230727_ML_extracted.nc already exists\nGetting data for: 20230728\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230728_ML_extracted.nc already exists\nGetting data for: 20230729\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230729_ML_extracted.nc already exists\nGetting data for: 20230730\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230730_ML_extracted.nc already exists\nGetting data for: 20230731\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230731_ML_extracted.nc already exists\nGetting data for: 20230801\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230801_ML_extracted.nc already exists\nGetting data for: 20230802\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230802_ML_extracted.nc already exists\nGetting data for: 20230803\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230803_ML_extracted.nc already exists\nGetting data for: 20230804\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230804_ML_extracted.nc already exists\nGetting data for: 20230805\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230805_ML_extracted.nc already exists\nGetting data for: 20230806\n/groups/ESS/zsun/cmaq//prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_20230806_ML_extracted.nc already exists\nGetting data for: 20230807\nCMAQ file /scratch/yli74/forecast/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_20230807.nc doesn't exist\nGetting data for: 20230808\nCMAQ file /scratch/yli74/forecast/12km/POST/COMBINE3D_ACONC_v531_gcc_AQF5X_20230808.nc doesn't exist\nDone with preparing testing data!\n",
+  "history_begin_time" : 1691609410422,
+  "history_end_time" : 1691609417129,
+  "history_notes" : null,
+  "history_process" : "ex3vh9",
+  "host_id" : "100001",
+  "indicator" : "Done"
+},{
+  "history_id" : "7cvoksrxyov",
+  "history_input" : "# merge all hourly testing data into daily files\n\nimport pandas as pd\nimport glob\nimport os\nfrom pathlib import Path\nfrom cmaq_ai_utils import *\n\ntesting_path = f'{cmaq_folder}/testing_input_hourly'\nall_hourly_files = glob.glob(os.path.join(testing_path, \"test_data_*.csv\"))   \n# advisable to use os.path.join as this makes concatenation OS independent\n\ndf_from_each_hourly_file = (pd.read_csv(f) for f in all_hourly_files)\ncmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n\n# dropping unnecessary variables\ncmaq['YYYYMMDDHH'] = cmaq['YYYYMMDDHH'].map(str)\ncmaq['month'] = cmaq['YYYYMMDDHH'].str[4:6]\ncmaq['day'] = cmaq['YYYYMMDDHH'].str[6:8]\ncmaq['hours'] = cmaq['YYYYMMDDHH'].str[8:10]\n\nremove_file(f\"{testing_path}/testing.csv\")\ncmaq.to_csv(f\"{testing_path}/testing.csv\",index=False)\n\nprint('Done with generating testing.csv!')",
+  "history_output" : "Traceback (most recent call last):\n  File \"test_data.py\", line 14, in <module>\n    cmaq = pd.concat(df_from_each_hourly_file, ignore_index=True)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/util/_decorators.py\", line 311, in wrapper\n    return func(*args, **kwargs)\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/core/reshape/concat.py\", line 346, in concat\n    op = _Concatenator(\n  File \"/home/zsun/anaconda3/lib/python3.8/site-packages/pandas/core/reshape/concat.py\", line 403, in __init__\n    raise ValueError(\"No objects to concatenate\")\nValueError: No objects to concatenate\n",
+  "history_begin_time" : 1691609418633,
+  "history_end_time" : 1691609420584,
+  "history_notes" : null,
+  "history_process" : "b8uv5z",
+  "host_id" : "100001",
+  "indicator" : "Failed"
+},{
+  "history_id" : "1z7f941okid",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1691609409626,
+  "history_end_time" : 1691609409626,
+  "history_notes" : null,
+  "history_process" : "h76ld0",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "wr1ftt1ghqw",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1691609409630,
+  "history_end_time" : 1691609409630,
+  "history_notes" : null,
+  "history_process" : "s6hbic",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "ixlh31ah8vb",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1691609409636,
+  "history_end_time" : 1691609409636,
+  "history_notes" : null,
+  "history_process" : "pvzabv",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "wa4upx8kixc",
+  "history_input" : "No code saved",
+  "history_output" : "Skipped",
+  "history_begin_time" : 1691609409640,
+  "history_end_time" : 1691609409640,
+  "history_notes" : null,
+  "history_process" : "8i9ptn",
+  "host_id" : "100001",
+  "indicator" : "Skipped"
+},{
+  "history_id" : "z0u3ezyrwh1",
+  "history_input" : "#!/bin/bash\n\ndays_back=30\n\npermanent_location=\"/groups/ESS3/zsun/cmaq/ai_results/\"\ncmaq_gif_location=\"/groups/ESS/share/projects/SWUS3km/graph/12km/\"\n\nfor i in $(seq 0 $days_back)\ndo\n  end_day=$i\n  echo \"$end_day days ago\"\n  begin_day=$((i))\n  # Setting env variables\n  YYYYMMDD_POST=$(date -d $begin_day' day ago' '+%Y%m%d')\n  #/groups/ESS/share/projects/SWUS3km/graph/12km/20221108/FORECAST_O3_20221108.gif\n  cp -u $cmaq_gif_location/$YYYYMMDD_POST/\"FORECAST_O3_\"$YYYYMMDD_POST.gif $permanent_location/gifs/\n  cp -u $cmaq_gif_location/$YYYYMMDD_POST/obsoverlay/gif/OBS-FORECAST_O3_$YYYYMMDD_POST.gif $permanent_location/gifs/\n  \ndone\n\n\n",
+  "history_output" : "0 days ago\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230809/FORECAST_O3_20230809.gif': No such file or directory\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230809/obsoverlay/gif/OBS-FORECAST_O3_20230809.gif': No such file or directory\n1 days ago\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230808/FORECAST_O3_20230808.gif': No such file or directory\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230808/obsoverlay/gif/OBS-FORECAST_O3_20230808.gif': No such file or directory\n2 days ago\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230807/obsoverlay/gif/OBS-FORECAST_O3_20230807.gif': No such file or directory\n3 days ago\ncp: cannot stat '/groups/ESS/share/projects/SWUS3km/graph/12km//20230806/obsoverlay/gif/OBS-FORECAST_O3_20230806.gif': No such file or directory\n4 days ago\n5 days ago\n6 days ago\n7 days ago\n8 days ago\n9 days ago\n10 days ago\n11 days ago\n12 days ago\n13 days ago\n14 days ago\n15 days ago\n16 days ago\n17 days ago\n18 days ago\n19 days ago\n20 days ago\n21 days ago\n22 days ago\n23 days ago\n24 days ago\n25 days ago\n26 days ago\n27 days ago\n28 days ago\n29 days ago\n30 days ago\n",
+  "history_begin_time" : 1691609410423,
+  "history_end_time" : 1691609412600,
+  "history_notes" : null,
+  "history_process" : "nndpw6",
+  "host_id" : "100001",
+  "indicator" : "Done"
+}]

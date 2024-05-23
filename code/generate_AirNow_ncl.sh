@@ -1,4 +1,6 @@
 #!/bin/bash
+
+
 # generate images and gif from the prediction NetCDF files and overlay the AirNow station observation on the top
 
 cmaq_folder="/groups/ESS/zsun/cmaq"
@@ -11,6 +13,7 @@ export graph_dir="/groups/ESS/zsun/cmaq/plots"
 
 export obs_dir_NCL="/groups/ESS/share/projects/SWUS3km/data/OBS/AirNow/AQF5X"
 
+source /home/zsun/.bashrc
 module load ncl
 
 rm $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
@@ -49,7 +52,7 @@ cdf_file= addfile(grid_dir+"/GRIDCRO2D_"+date+".nc","r")
 cdf_file2= addfile(grid_dir+"/METCRO2D_"+date+".nc","r")
 
 time = cdf_file1->TFLAG(:,0,:)
-o3 = cdf_file1->O3(:,:,:) ;ppb
+o3 = cdf_file1->O3(:,0,:,:) ;ppb
 wspd10=cdf_file2->WSPD10(:,0,:,:)
 wdir10=cdf_file2->WDIR10(:,0,:,:)
 
@@ -314,7 +317,10 @@ print("ncl business is done")
 exit
 EOF
 
-days_back=3
+days_back=7
+# for regular workflow run, assign false
+# for refreshing all the previous generated gifs, assign true
+force=false
 
 for i in $(seq 1 $days_back)
 do
@@ -338,11 +344,15 @@ do
   fi
   
   predict_gif_file=$permanent_location/gifs/"Airnow_"$YYYYMMDD_POST.gif
-  if [ -f "$predict_gif_file" ]; then
-    echo "$predict_gif_file exists. Skipping..."
-    continue
+  if [ "$force" != true ] ; then
+    if [ -f "$predict_gif_file" ]; then
+      echo "$predict_gif_file exists. Skipping..."
+      continue
+    else
+      echo "$predict_gif_file doesn't exist. Generating..."
+    fi
   else
-    echo "$predict_gif_file doesn't exist. Generating..."
+    echo "force to regenerate $predict_gif_file.."
   fi
   
   rm -rf $cmaq_folder/plots/* # clean everything first
@@ -366,4 +376,7 @@ else
     echo "Removing ncl file: geoweaver_plot_daily_O3_Airnow.ncl..."
 	#rm $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
 fi
+
+
+
 
