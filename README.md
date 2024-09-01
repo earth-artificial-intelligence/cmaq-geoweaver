@@ -61,4 +61,3 @@ Open Geoweaver running on your local machine. [video guidance](https://youtu.be/
 3. Once the execution is complete, the results will be available immediately.
 
 By following these steps, you will be able to set up and execute the snow cover mapping workflow using Geoweaver.
-
