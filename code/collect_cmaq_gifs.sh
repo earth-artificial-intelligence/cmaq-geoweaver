@@ -1,6 +1,6 @@
 #!/bin/bash
 
-days_back=40
+days_back=90
 
 permanent_location="/groups/ESS3/zsun/cmaq/ai_results/"
 cmaq_gif_location="/groups/ESS/share/projects/SWUS3km/graph/12km/"

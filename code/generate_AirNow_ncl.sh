@@ -1,23 +1,40 @@
 #!/bin/bash
+# Specify the name of the script you want to submit
+SCRIPT_NAME="generate_airnow_ncl_slurm.sh"
+echo "write the slurm script into ${SCRIPT_NAME}"
+cat > ${SCRIPT_NAME} << 'EOF'
+#!/bin/bash
+#SBATCH -J generate_images_ncl_slurm       # Job name
+#SBATCH --output=/scratch/%u/%x-%N-%j.out  # Output file`
+#SBATCH --error=/scratch/%u/%x-%N-%j.err   # Error file`
+#SBATCH -n 1               # Number of tasks
+#SBATCH -c 4               # Number of CPUs per task (threads)
+#SBATCH --mem=20G          # Memory per node (use units like G for gigabytes) - this job must need 200GB lol
+#SBATCH -t 0-03:00         # Runtime in D-HH:MM format
 
+module load ncl
+module load imagemagick
 
 # generate images and gif from the prediction NetCDF files and overlay the AirNow station observation on the top
 
-cmaq_folder="/groups/ESS/zsun/cmaq"
-mkdir $cmaq_folder"/plots"
-permanent_location=/groups/ESS3/zsun/cmaq/ai_results/
+cmaq_folder='/groups/ESS/zsun/cmaq'
+echo "cmaq_folder="$cmaq_folder
+mkdir -p $cmaq_folder"/airnow_plots"
+permanent_location="/groups/ESS3/zsun/cmaq/ai_results/"
 
 export postdata_dir=$cmaq_folder"/prediction_nc_files"
-export mcip_dir="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km"
-export graph_dir="/groups/ESS/zsun/cmaq/plots"
+export mcip_dir="/scratch/sma8/forecast/mcip/12km"
+export graph_dir=$cmaq_folder"/airnow_plots"
 
-export obs_dir_NCL="/groups/ESS/share/projects/SWUS3km/data/OBS/AirNow/AQF5X"
+export obs_dir_NCL="/scratch/sma8/forecast/OBS/AirNow/AQF5X/"
 
 source /home/zsun/.bashrc
 module load ncl
 
 rm $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
-cat <<EOF >>$cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
+
+echo "saving script to $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl"
+cat << 'INNER_EOF' >>$cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/contributed.ncl"
@@ -65,8 +82,6 @@ nx = dimsizes(o3(0,0,:))
 print(max(temp))
 print(min(temp))
 print(avg(temp))
-
-
 
 print(nt+" "+ny+" "+nx)
 print(max(o3))
@@ -255,7 +270,7 @@ do it = 0, nt-1
   hollowres@gsMarkerSizeF    = 0.008
 
 ;;;;;;;;;   Plot Ozone
-  pname=plot_dir+"/OBS-FORECAST_O3_"+rundate+runtime
+  pname=plot_dir+"/"+date+"/OBS-FORECAST_O3_"+rundate+runtime
   wks = gsn_open_wks("png",pname)
   gsn_define_colormap(wks, "WhiteBlueGreenYellowRed")
 
@@ -315,9 +330,9 @@ delete(res)
 end
 print("ncl business is done")
 exit
-EOF
+INNER_EOF
 
-days_back=7
+days_back=90
 # for regular workflow run, assign false
 # for refreshing all the previous generated gifs, assign true
 force=false
@@ -344,6 +359,7 @@ do
   fi
   
   predict_gif_file=$permanent_location/gifs/"Airnow_"$YYYYMMDD_POST.gif
+  echo "predict_gif_file = $predict_gif_file"
   if [ "$force" != true ] ; then
     if [ -f "$predict_gif_file" ]; then
       echo "$predict_gif_file exists. Skipping..."
@@ -355,15 +371,18 @@ do
     echo "force to regenerate $predict_gif_file.."
   fi
   
-  rm -rf $cmaq_folder/plots/* # clean everything first
+  mkdir -p $cmaq_folder/airnow_plots/$YYYYMMDD_POST/
+  rm -rf $cmaq_folder/airnow_plots/$YYYYMMDD_POST/* # clean everything first
 
+  echo "Running $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl"
   ncl $cmaq_folder/geoweaver_plot_daily_O3_Airnow.ncl
 
-  convert -delay 100 $cmaq_folder/plots/OBS*.png $cmaq_folder/plots/"Airnow_"$YYYYMMDD_POST.gif
+  echo "convert -delay 100 $cmaq_folder/airnow_plots/$YYYYMMDD_POST/OBS*.png $cmaq_folder/airnow_plots/$YYYYMMDD_POST/Airnow_$YYYYMMDD_POST.gif"
+  convert -delay 100 $cmaq_folder/airnow_plots/$YYYYMMDD_POST/OBS*.png $cmaq_folder/airnow_plots/$YYYYMMDD_POST/Airnow_$YYYYMMDD_POST.gif
 
   # copy the result files to permanent location
-  echo "Copy Airnow gif to permanent location"
-  cp $cmaq_folder/plots/"Airnow_"$YYYYMMDD_POST.gif $permanent_location/gifs/
+  echo "Copy Airnow gif to permanent location $cmaq_folder/airnow_plots/$YYYYMMDD_POST/Airnow_$YYYYMMDD_POST.gif to $permanent_location/gifs/"
+  cp $cmaq_folder/airnow_plots/$YYYYMMDD_POST/Airnow_$YYYYMMDD_POST.gif $permanent_location/gifs/
 
 done
 
@@ -379,4 +398,64 @@ fi
 
 
 
+EOF
+
+# Submit the Slurm job and wait for it to finish
+echo "sbatch ${SCRIPT_NAME}"
+
+# Submit the Slurm job
+job_id=$(sbatch ${SCRIPT_NAME} | awk '{print $4}')
+echo "job_id="${job_id}
+
+if [ -z "${job_id}" ]; then
+    echo "job id is empty. something wrong with the slurm job submission."
+    exit 1
+fi
+
+# Wait for the Slurm job to finish
+file_name=$(find /scratch/zsun -name '*'${job_id}'.out' -print -quit)
+previous_content=$(cat file_name)
+exit_code=0
+while true; do
+    # Capture the current content
+    file_name=$(find /scratch/zsun -name '*'${job_id}'.out' -print -quit)
+    current_content=$(<"${file_name}")
+
+    # Compare current content with previous content
+    diff_result=$(diff <(echo "$previous_content") <(echo "$current_content"))
+    # Check if there is new content
+    if [ -n "$diff_result" ]; then
+        # Print the newly added content
+        echo "$diff_result"
+    fi
+    # Update previous content
+    previous_content="$current_content"
+
+
+    job_status=$(scontrol show job ${job_id} | awk '/JobState=/{print $1}')
+    #echo "job_status "$job_status
+    #if [[ $job_status == "JobState=COMPLETED" ]]; then
+    #    break
+    #fi
+    if [[ $job_status == *"COMPLETED"* ]]; then
+        echo "Job $job_id has finished with state: $job_status"
+        break;
+    elif [[ $job_status == *"CANCELLED"* || $job_status == *"FAILED"* || $job_status == *"TIMEOUT"* || $job_status == *"NODE_FAIL"* || $job_status == *"PREEMPTED"* || $job_status == *"OUT_OF_MEMORY"* ]]; then
+        echo "Job $job_id has finished with state: $job_status"
+        exit_code=1
+        break;
+    fi
+    sleep 10  # Adjust the sleep interval as needed
+done
+
+echo "Slurm job ($job_id) has finished."
+
+echo "Print the job's output logs"
+sacct --format=JobID,JobName,State,ExitCode,MaxRSS,Start,End -j $job_id
+find /scratch/zsun/ -type f -name "*${job_id}.out" -exec cat {} \;
+cat /scratch/zsun/test_data_slurm-*-$job_id.out
+
+echo "All slurm job for ${SCRIPT_NAME} finishes."
+
+exit $exit_code
 

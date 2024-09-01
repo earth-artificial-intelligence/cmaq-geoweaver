@@ -1,4 +1,17 @@
 #!/bin/bash
+# Specify the name of the script you want to submit
+pwd
+SCRIPT_NAME="evaluate_prediction_ncl_slurm.sh"
+echo "write the slurm script into ${SCRIPT_NAME}"
+cat > ${SCRIPT_NAME} << 'EOF'
+#!/bin/bash
+#SBATCH -J generate_images_ncl_slurm       # Job name
+#SBATCH --output=/scratch/%u/%x-%N-%j.out  # Output file`
+#SBATCH --error=/scratch/%u/%x-%N-%j.err   # Error file`
+#SBATCH -n 1               # Number of tasks
+#SBATCH -c 4               # Number of CPUs per task (threads)
+#SBATCH --mem=20G          # Memory per node (use units like G for gigabytes) - this job must need 200GB lol
+#SBATCH -t 0-01:00         # Runtime in D-HH:MM format
 
 
 # evaluate the prediction accuracy
@@ -23,7 +36,7 @@ module load ncl
 
 rm $cmaq_folder/geoweaver_eva_daily_O3.ncl
 
-cat <<EOF >> $cmaq_folder/geoweaver_eva_daily_O3.ncl
+cat << 'INNER_EOF' >> $cmaq_folder/geoweaver_eva_daily_O3.ncl
 
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 load "/opt/sw/spack/apps/linux-centos8-cascadelake/gcc-9.3.0-openmpi-4.0.4/ncl-6.6.2-fr/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
@@ -262,9 +275,9 @@ delete(tt)
 end
 
 exit
-EOF
+INNER_EOF
 
-days_back=7
+days_back=30
 force=true
 for i in $(seq 1 $days_back)
 do
@@ -277,14 +290,14 @@ do
   export eddate_file=$(date -d $end_day' day ago' '+%Y%m%d') #This needs to be auto date
   export wfname=$cmaq_folder"/results/geoweaver_evalution_"$YYYYMMDD_POST"_results.txt"
 
-  export obs_dir_NCL="/groups/ESS/share/projects/SWUS3km/data/OBS/AirNow/AQF5X"
+  export obs_dir_NCL="/scratch/sma8/forecast/OBS/AirNow/AQF5X/"
   export ofname="/AQF5X_Hourly_"
 
   export postdata_dir=$cmaq_folder"/prediction_nc_files/"
 
   export mfname="COMBINE3D_ACONC_v531_gcc_AQF5X_"$stdate_file"_ML_extracted.nc"
 
-  export grid_fname="/groups/ESS/share/projects/SWUS3km/data/cmaqdata/mcip/12km/GRIDCRO2D_"$YYYYMMDD_POST".nc" 
+  export grid_fname="/scratch/sma8/forecast/mcip/12km/GRIDCRO2D_"$YYYYMMDD_POST".nc" 
   echo "Current Day: "$stdate_file
   # determine if the prediction netcdf is there
   predict_nc_file=$cmaq_folder"/prediction_nc_files/COMBINE3D_ACONC_v531_gcc_AQF5X_"$stdate_file"_ML_extracted.nc"
@@ -319,5 +332,67 @@ do
   
 done
 
+
+
+EOF
+
+# Submit the Slurm job and wait for it to finish
+echo "sbatch ${SCRIPT_NAME}"
+
+# Submit the Slurm job
+job_id=$(sbatch ${SCRIPT_NAME} | awk '{print $4}')
+echo "job_id="${job_id}
+
+if [ -z "${job_id}" ]; then
+    echo "job id is empty. something wrong with the slurm job submission."
+    exit 1
+fi
+
+# Wait for the Slurm job to finish
+file_name=$(find /scratch/zsun -name '*'${job_id}'.out' -print -quit)
+previous_content=$(cat file_name)
+exit_code=0
+while true; do
+    # Capture the current content
+    file_name=$(find /scratch/zsun -name '*'${job_id}'.out' -print -quit)
+    current_content=$(<"${file_name}")
+
+    # Compare current content with previous content
+    diff_result=$(diff <(echo "$previous_content") <(echo "$current_content"))
+    # Check if there is new content
+    if [ -n "$diff_result" ]; then
+        # Print the newly added content
+        echo "$diff_result"
+    fi
+    # Update previous content
+    previous_content="$current_content"
+
+
+    job_status=$(scontrol show job ${job_id} | awk '/JobState=/{print $1}')
+    #echo "job_status "$job_status
+    #if [[ $job_status == "JobState=COMPLETED" ]]; then
+    #    break
+    #fi
+    if [[ $job_status == *"COMPLETED"* ]]; then
+        echo "Job $job_id has finished with state: $job_status"
+        break;
+    elif [[ $job_status == *"CANCELLED"* || $job_status == *"FAILED"* || $job_status == *"TIMEOUT"* || $job_status == *"NODE_FAIL"* || $job_status == *"PREEMPTED"* || $job_status == *"OUT_OF_MEMORY"* ]]; then
+        echo "Job $job_id has finished with state: $job_status"
+        exit_code=1
+        break;
+    fi
+    sleep 10  # Adjust the sleep interval as needed
+done
+
+echo "Slurm job ($job_id) has finished."
+
+echo "Print the job's output logs"
+sacct --format=JobID,JobName,State,ExitCode,MaxRSS,Start,End -j $job_id
+find /scratch/zsun/ -type f -name "*${job_id}.out" -exec cat {} \;
+cat /scratch/zsun/test_data_slurm-*-$job_id.out
+
+echo "All slurm job for ${SCRIPT_NAME} finishes."
+
+exit $exit_code
 
 

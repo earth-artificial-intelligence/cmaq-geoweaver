@@ -66,7 +66,7 @@ def turn_2_digits(a):
 #sdate = today - timedelta(days=4)
 
 #print(get_days_list_for_prediction(sdate, edate))
-days_back = 60
+days_back = 7
 days_forward = 7
 today = datetime.today()
 edate = today + timedelta(days=days_forward)

@@ -22,7 +22,7 @@ cat > ${SCRIPT_NAME} << EOF
 # Activate your customized virtual environment
 source /home/zsun/anaconda3/bin/activate
 
-python << INNER_EOF
+python -u << INNER_EOF
 
 
 # use the trained model to predict on the testing data and save the results to prediction_rf.csv
@@ -34,9 +34,12 @@ from time import sleep
 import os
 from sklearn.metrics import r2_score, mean_squared_error
 from cmaq_ai_utils import *
+from pathlib import Path
+import datetime as dt
 
-print("create and clean the prediction folder")
-create_and_clean_folder(f"{cmaq_folder}/prediction_files/")
+# never delete the input folder. must have some copy.
+# print("create and clean the prediction folder")
+#create_and_clean_folder(f"{cmaq_folder}/prediction_files/")
 
 # importing data
 # final=pd.read_csv(f"{cmaq_folder}/testing_input_hourly/testing.csv")
@@ -47,60 +50,92 @@ testing_path = f'{cmaq_folder}/testing_input_hourly'
 # load the model from disk
 # filename = f'{cmaq_folder}/models/rf_pycaret.sav'
 
-print("start to load model")
+def parse_date_from_file_name(filename: str):
+    # Extract date and time parts from the filename
+    date_part = filename.split('_')[2]
+    time_part = filename.split('_')[3].split('.')[0]
 
-filename = f'{model_folder}/rf_pycaret_o3_one_year_good.sav'
-loaded_model = pickle.load(open(filename, 'rb'))
+    # Convert the extracted parts to a datetime object
+    date_time = dt.datetime.strptime(date_part + time_part, "%Y%m%d%H")
 
-print("model is loaded")
+    # Convert the datetime object to the desired format (YYYYMMDDHH)
+    formatted_date_time = date_time.strftime("%Y%m%d%H")
 
-#for testing_df in df_from_each_hourly_file:
-file_list = os.listdir(testing_path)
+    # Print the formatted date and time
+    # print("Formatted Date and Time:", formatted_date_time)
+    return formatted_date_time
 
-# Initialize a flag to indicate if the final CSV file needs a header
-write_header = True
+def do_prediction():
 
-for file_name in file_list:
-    if file_name.endswith('.csv') and file_name.startswith('test_data_'):  # Adjust the file extension as needed
-      print(f"adding {file_name}")
-      file_path = os.path.join(testing_path, file_name)
-      testing_df = pd.read_csv(file_path)
-      # Perform any desired data processing on 'df' here
-      # dropping unnecessary variables
-      print("adding month, day, and hours")
-      testing_df['YYYYMMDDHH'] = testing_df['YYYYMMDDHH'].map(str)
-      testing_df['month'] = pd.to_numeric(testing_df['YYYYMMDDHH'].str[4:6], errors='coerce', downcast='integer')
-      testing_df['day'] = pd.to_numeric(testing_df['YYYYMMDDHH'].str[6:8], errors='coerce', downcast='integer')
-      testing_df['hours'] = pd.to_numeric(testing_df['YYYYMMDDHH'].str[8:10], errors='coerce', downcast='integer')
+    print("start to load model")
 
-      print(testing_df['YYYYMMDDHH'].values[0])
-      print(testing_df['month'].values[0])
-      file_dateTime = testing_df['YYYYMMDDHH'].values[0]
-      print(f"file_dateTime={file_dateTime}")
-      #X = testing_df.drop(['YYYYMMDDHH','Latitude','Longitude'],axis=1)
-      testing_df['time_of_day'] = (testing_df['hours'] % 24 + 4) // 4
+    filename = f'{model_folder}/rf_pycaret_o3_one_year_good.sav'
+    loaded_model = pickle.load(open(filename, 'rb'))
 
-      # Make coords even more coarse by rounding to closest multiple of 5 
-      # (e.g., 40, 45, 85, 55)
-      #testing_df['Latitude_ExtraCoarse'] = 0.1 * round(testing_df['Latitude']/0.1)
-      #testing_df['Longitude_ExtraCoarse'] = 0.1 * round(testing_df['Longitude']/0.1)
-      X = testing_df.drop(['YYYYMMDDHH','Latitude','Longitude', 'CO(moles/s)'],axis=1)
+    print("model is loaded")
 
-      print(X.columns)
+    #for testing_df in df_from_each_hourly_file:
+    file_list = os.listdir(testing_path)
 
-      # # making prediction
-      pred = loaded_model.predict(X)
+    # Initialize a flag to indicate if the final CSV file needs a header
+    write_header = True
 
-      # adding prediction values to test dataset
-      #testing_df['prediction'] = testing_df['CMAQ12KM_O3(ppb)'].tolist()
-      testing_df['prediction'] = pred
+    for file_name in file_list:
+        if file_name.endswith('.csv') and file_name.startswith('test_data_'):  # Adjust the file extension as needed
+            file_dateTime = parse_date_from_file_name(file_name)
 
-      testing_df = testing_df[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]
-      # saving the dataset into local drive
-      print(f'Saving: {cmaq_folder}/prediction_files/prediction_rf_{file_dateTime}.csv')
-      testing_df.to_csv(f'{cmaq_folder}/prediction_files/prediction_rf_{file_dateTime}.csv',index=False)
-        
-print("Prediction is all done.")
+            final_file_path = f'{cmaq_folder}/prediction_files/prediction_rf_{file_dateTime}.csv'
+            file_path = os.path.join(testing_path, file_name)
+
+            if Path(final_file_path).is_file():
+                print(f"The file {file_path} exists. Skipped.")
+                continue
+
+            print(f"adding {file_name}")
+            testing_df = pd.read_csv(file_path)
+            # Perform any desired data processing on 'df' here
+            # dropping unnecessary variables
+            #   print("adding month, day, and hours")
+            testing_df['YYYYMMDDHH'] = testing_df['YYYYMMDDHH'].map(str)
+            testing_df['month'] = pd.to_numeric(testing_df['YYYYMMDDHH'].str[4:6], errors='coerce', downcast='integer')
+            testing_df['day'] = pd.to_numeric(testing_df['YYYYMMDDHH'].str[6:8], errors='coerce', downcast='integer')
+            testing_df['hours'] = pd.to_numeric(testing_df['YYYYMMDDHH'].str[8:10], errors='coerce', downcast='integer')
+
+            #   print(testing_df['YYYYMMDDHH'].values[0])
+            #   print(testing_df['month'].values[0])
+            # file_dateTime = testing_df['YYYYMMDDHH'].values[0]
+            #   print(f"file_dateTime={file_dateTime}")
+
+            
+
+            #X = testing_df.drop(['YYYYMMDDHH','Latitude','Longitude'],axis=1)
+            testing_df['time_of_day'] = (testing_df['hours'] % 24 + 4) // 4
+
+            # Make coords even more coarse by rounding to closest multiple of 5 
+            # (e.g., 40, 45, 85, 55)
+            #testing_df['Latitude_ExtraCoarse'] = 0.1 * round(testing_df['Latitude']/0.1)
+            #testing_df['Longitude_ExtraCoarse'] = 0.1 * round(testing_df['Longitude']/0.1)
+            X = testing_df.drop(['YYYYMMDDHH','Latitude','Longitude', 'CO(moles/s)'],axis=1)
+
+            print(X.columns)
+
+            # # making prediction
+            pred = loaded_model.predict(X)
+
+            # adding prediction values to test dataset
+            #testing_df['prediction'] = testing_df['CMAQ12KM_O3(ppb)'].tolist()
+            testing_df['prediction'] = pred
+
+            testing_df = testing_df[['Latitude', 'Longitude','YYYYMMDDHH','prediction']]
+            # saving the dataset into local drive
+            print(f'Saving: {final_file_path}')
+            testing_df.to_csv(final_file_path,index=False)
+            
+    print("Prediction is all done.")
+
+
+if __name__ == "__main__":
+    do_prediction()
 
 INNER_EOF
 
@@ -108,19 +143,6 @@ EOF
 
 # Submit the Slurm job and wait for it to finish
 echo "sbatch ${SCRIPT_NAME}"
-# should have another check. if there is another job running, should cancel it before submitting a new job.
-
-# Find and cancel existing running jobs with the same script name
-#existing_jobs=$(squeue -h -o "%A %j" -u $(whoami) | awk -v script="$SCRIPT_NAME" '$2 == script {print $1}')
-
-# if [ -n "$existing_jobs" ]; then
-#     echo "Canceling existing jobs with the script name '$SCRIPT_NAME'..."
-#     for job_id in $existing_jobs; do
-#         scancel $job_id
-#     done
-# else
-#     echo "No existing jobs with the script name '$SCRIPT_NAME' found."
-# fi
 
 # Submit the Slurm job
 job_id=$(sbatch ${SCRIPT_NAME} | awk '{print $4}')
@@ -132,14 +154,36 @@ if [ -z "${job_id}" ]; then
 fi
 
 # Wait for the Slurm job to finish
+file_name=$(find /scratch/zsun -name '*'${job_id}'.out' -print -quit)
+previous_content=$(cat file_name)
+exit_code=0
 while true; do
+    # Capture the current content
+    file_name=$(find /scratch/zsun -name '*'${job_id}'.out' -print -quit)
+    current_content=$(<"${file_name}")
+
+    # Compare current content with previous content
+    diff_result=$(diff <(echo "$previous_content") <(echo "$current_content"))
+    # Check if there is new content
+    if [ -n "$diff_result" ]; then
+        # Print the newly added content
+        echo "$diff_result"
+    fi
+    # Update previous content
+    previous_content="$current_content"
+
+
     job_status=$(scontrol show job ${job_id} | awk '/JobState=/{print $1}')
     #echo "job_status "$job_status
     #if [[ $job_status == "JobState=COMPLETED" ]]; then
     #    break
     #fi
-    if [[ $job_status == *"COMPLETED"* || $job_status == *"CANCELLED"* || $job_status == *"FAILED"* || $job_status == *"TIMEOUT"* || $job_status == *"NODE_FAIL"* || $job_status == *"PREEMPTED"* || $job_status == *"OUT_OF_MEMORY"* ]]; then
+    if [[ $job_status == *"COMPLETED"* ]]; then
         echo "Job $job_id has finished with state: $job_status"
+        break;
+    elif [[ $job_status == *"CANCELLED"* || $job_status == *"FAILED"* || $job_status == *"TIMEOUT"* || $job_status == *"NODE_FAIL"* || $job_status == *"PREEMPTED"* || $job_status == *"OUT_OF_MEMORY"* ]]; then
+        echo "Job $job_id has finished with state: $job_status"
+        exit_code=1
         break;
     fi
     sleep 10  # Adjust the sleep interval as needed
@@ -150,8 +194,9 @@ echo "Slurm job ($job_id) has finished."
 echo "Print the job's output logs"
 sacct --format=JobID,JobName,State,ExitCode,MaxRSS,Start,End -j $job_id
 find /scratch/zsun/ -type f -name "*${job_id}.out" -exec cat {} \;
-
-#cat /scratch/zsun/test_data_slurm-*-$job_id.out
+cat /scratch/zsun/test_data_slurm-*-$job_id.out
 
 echo "All slurm job for ${SCRIPT_NAME} finishes."
+
+exit $exit_code
 

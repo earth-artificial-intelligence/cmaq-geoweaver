@@ -33,6 +33,9 @@ echo "Copying CMAQ evaluation metrics to public server.."
 #scp -i /home/zsun/.ssh/id_geobrain_no.pem /groups/ESS/share/projects/SWUS3km/graph/12km/alleva_12km_o3_fore.txt zsun@129.174.131.229:/var/www/html/cmaq_site/evaluation/
 rsync -u -e "ssh -i /home/zsun/.ssh/id_geobrain_no.pem" -avz /groups/ESS/share/projects/SWUS3km/graph/12km/alleva_12km_o3_fore.txt zsun@129.174.131.229:/var/www/html/cmaq_site/evaluation/alleva_12km_o3_fore.txt
 
+#echo "Copying CMAQ netcdf files to public server"
+#rsync -u -e "ssh -i /home/zsun/.ssh/id_geobrain_no.pem" -avz "/groups/ESS3/zsun/cmaq/ai_results/netcdfs/*2024*" zsun@129.174.131.229:/var/www/html/cmaq_site/netcdfs/
+
 echo "Done"
 
 
